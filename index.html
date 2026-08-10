@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ElectroShop - Tienda de Tecnología</title>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="#inicio" aria-label="ElectroShop - Inicio">
+                <img src="" alt="Logo ElectroShop">
+            </a>
+            <ul>
+                <li><a href="#productos-destacados">Productos destacados</a></li>
+                <li><a href="#filtros">Filtros</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+            </ul>
+            <form role="search" aria-label="Buscar productos">
+                <label for="busqueda" class="sr-only">Buscar productos</label>
+                <input type="search" id="busqueda" name="busqueda" placeholder="Buscar productos...">
+                <button type="submit">Buscar</button>
+            </form>
+            <a href="#carrito" aria-label="Carrito de compras">Carrito</a>
+        </nav>
+    </header>
+
+    <main>
+        <section id="inicio" aria-labelledby="inicio-titulo">
+            <article>
+                <h1 id="inicio-titulo">Bienvenido a ElectroShop</h1>
+                <p>La mejor tecnología al mejor precio. Encontrá laptops, celulares, accesorios y más.</p>
+                <button type="button">Ver ofertas</button>
+            </article>
+        </section>
+
+        <aside id="filtros" aria-labelledby="filtros-titulo">
+            <h2 id="filtros-titulo">Filtros</h2>
+            <form>
+                <fieldset>
+                    <legend>Categoría</legend>
+                    <label><input type="checkbox" name="categoria" value="laptops"> Laptops</label>
+                    <label><input type="checkbox" name="categoria" value="celulares"> Celulares</label>
+                    <label><input type="checkbox" name="categoria" value="accesorios"> Accesorios</label>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Precio</legend>
+                    <label for="precio-minimo">Precio mínimo</label>
+                    <input type="number" id="precio-minimo" name="precio_minimo" min="0" step="100">
+                    <label for="precio-maximo">Precio máximo</label>
+                    <input type="number" id="precio-maximo" name="precio_maximo" min="0" step="100">
+                </fieldset>
+
+                <fieldset>
+                    <legend>Marca</legend>
+                    <select name="marca" id="marca">
+                        <option value="">Todas</option>
+                        <option value="apple">Apple</option>
+                        <option value="samsung">Samsung</option>
+                        <option value="lenovo">Lenovo</option>
+                        <option value="hp">HP</option>
+                    </select>
+                </fieldset>
+
+                <button type="submit">Aplicar filtros</button>
+            </form>
+        </aside>
+
+        <section id="productos-destacados" aria-labelledby="productos-titulo">
+            <h2 id="productos-titulo">Productos destacados</h2>
+
+            <article>
+                <img src="" alt="Notebook Lenovo IdeaPad 15">
+                <h3>Notebook Lenovo IdeaPad 15</h3>
+                <p>Ideal para estudio y trabajo con procesador Ryzen 5 y 16GB de RAM.</p>
+                <p><strong>Precio:</strong> $1.200.000</p>
+                <p><strong>Descuento:</strong> 10%</p>
+                <button type="button">Agregar al carrito</button>
+            </article>
+
+            <article>
+                <img src="" alt="Smartphone Samsung Galaxy A54">
+                <h3>Smartphone Samsung Galaxy A54</h3>
+                <p>Pantalla Super AMOLED de 6.4 pulgadas y batería de larga duración.</p>
+                <p><strong>Precio:</strong> $650.000</p>
+                <p><strong>Descuento:</strong> 15%</p>
+                <button type="button">Agregar al carrito</button>
+            </article>
+
+            <article>
+                <img src="" alt="Auriculares Inalámbricos Sony WH-CH520">
+                <h3>Auriculares Inalámbricos Sony WH-CH520</h3>
+                <p>Sonido de calidad con conectividad Bluetooth y 50 horas de batería.</p>
+                <p><strong>Precio:</strong> $120.000</p>
+                <p><strong>Descuento:</strong> 5%</p>
+                <button type="button">Agregar al carrito</button>
+            </article>
+        </section>
+    </main>
+
+    <footer id="contacto">
+        <section aria-labelledby="contacto-titulo">
+            <h2 id="contacto-titulo">Contacto</h2>
+            <p>Email: contacto@electroshop.com.ar</p>
+            <p>Teléfono: +54 11 2345-6789</p>
+            <p>Dirección: Av. Corrientes 1234, CABA</p>
+        </section>
+
+        <section aria-labelledby="redes-titulo">
+            <h2 id="redes-titulo">Seguinos</h2>
+            <ul>
+                <li><a href="#" rel="noopener">Instagram</a></li>
+                <li><a href="#" rel="noopener">Facebook</a></li>
+                <li><a href="#" rel="noopener">X</a></li>
+            </ul>
+        </section>
+
+        <p>&copy; 2026 ElectroShop. Todos los derechos reservados.</p>
+    </footer>
+</body>
+</html>
