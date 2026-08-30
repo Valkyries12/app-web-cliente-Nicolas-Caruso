@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dojang Store - Taekwondo</title>
+</head>
+<body>
+    <header>
+        <nav aria-label="Navegación principal">
+            <a href="index.html"><img src="" alt="Logo Dojang Store"></a>
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="taekwondo.html">Taekwondo</a></li>
+                <li><a href="equipo-gimnasio.html">Equipo de gimnasio</a></li>
+                <li><a href="contacto.html">Contacto</a></li>
+            </ul>
+            <form role="search" aria-label="Buscar productos">
+                <label for="busqueda" class="sr-only">Buscar productos</label>
+                <input type="search" id="busqueda" name="busqueda" placeholder="Buscar productos...">
+                <button type="submit">Buscar</button>
+            </form>
+            <a href="#" aria-label="Carrito de compras">Carrito (0)</a>
+        </nav>
+    </header>
+
+    <main>
+        <section aria-labelledby="producto-titulo">
+            <h2 id="producto-titulo">Productos de Taekwondo</h2>
+
+            <aside aria-labelledby="filtros-titulo">
+                <h2 id="filtros-titulo">Filtros</h2>
+                <form>
+                    <fieldset>
+                        <legend>Categoría</legend>
+                        <label><input type="checkbox" name="categoria" value="doboks"> Doboks</label>
+                        <label><input type="checkbox" name="categoria" value="cinturones"> Cinturones</label>
+                        <label><input type="checkbox" name="categoria" value="protecciones"> Protecciones</label>
+                        <label><input type="checkbox" name="categoria" value="calzado"> Calzado</label>
+                    </fieldset>
+
+                    <fieldset>
+                        <legend>Marca</legend>
+                        <select name="marca" id="marca">
+                            <option value="">Todas</option>
+                            <option value="adidas">Adidas</option>
+                            <option value="mooto">Mooto</option>
+                            <option value="daedo">Daedo</option>
+                        </select>
+                    </fieldset>
+
+                    <fieldset>
+                        <legend>Precio</legend>
+                        <label for="precio-minimo">Precio mínimo</label>
+                        <input type="number" id="precio-minimo" name="precio_minimo" min="0" step="100">
+                        <label for="precio-maximo">Precio máximo</label>
+                        <input type="number" id="precio-maximo" name="precio_maximo" min="0" step="100">
+                    </fieldset>
+
+                    <button type="submit">Aplicar filtros</button>
+                </form>
+            </aside>
+
+            <section aria-labelledby="productos-taekwondo">
+                <article>
+                    <img src="" alt="Dobok blanco Adidas" width="200">
+                    <h3>Dobok Clásico Blanco</h3>
+                    <p>$85.000</p>
+                    <p>Dobok de algodón 100% para practica y competencia.</p>
+                    <button type="button">Agregar al carrito</button>
+                </article>
+                <article>
+                    <img src="" alt="Cinturón negro" width="200">
+                    <h3>Cinturón Negro</h3>
+                    <p>$12.000</p>
+                    <p>Cinturón de algodón para cinturones negros y grados dan.</p>
+                    <button type="button">Agregar al carrito</button>
+                </article>
+                <article>
+                    <img src="" alt="Casco protector" width="200">
+                    <h3>Casco Protector</h3>
+                    <p>$45.000</p>
+                    <p>Casco con sistema de ventilación para protección facial.</p>
+                    <button type="button">Agregar al carrito</button>
+                </article>
+                <article>
+                    <img src="" alt="Pechera" width="200">
+                    <h3>Pechera Protector</h3>
+                    <p>$38.000</p>
+                    <p>Pechera homologada para competencias oficiales.</p>
+                    <button type="button">Agregar al carrito</button>
+                </article>
+                <article>
+                    <img src="" alt="Tibiales" width="200">
+                    <h3>Tibiales</h3>
+                    <p>$25.000</p>
+                    <p>Tibiales de espuma protectora para kumite.</p>
+                    <button type="button">Agregar al carrito</button>
+                </article>
+                <article>
+                    <img src="" alt="Guantes" width="200">
+                    <h3>Guantes de Protección</h3>
+                    <p>$18.000</p>
+                    <p>Guantes acolchados para entrenamiento y contacto ligero.</p>
+                    <button type="button">Agregar al carrito</button>
+                </article>
+            </section>
+        </section>
+    </main>
+
+    <footer id="contacto">
+        <section aria-labelledby="contacto-titulo">
+            <h2 id="contacto-titulo">Contacto</h2>
+            <address>
+                <p>Email: contacto@dojangstore.com.ar</p>
+                <p>Teléfono: +54 11 2345-6789</p>
+                <p>Dirección: Av. Corrientes 1234, CABA</p>
+            </address>
+        </section>
+
+        <section aria-labelledby="redes-titulo">
+            <h2 id="redes-titulo">Seguinos</h2>
+            <ul>
+                <li><a href="#" rel="noopener">Instagram</a></li>
+                <li><a href="#" rel="noopener">Facebook</a></li>
+                <li><a href="#" rel="noopener">X</a></li>
+            </ul>
+        </section>
+
+        <p>&copy; 2026 Dojang Store. Todos los derechos reservados.</p>
+    </footer>
+</body>
+</html>

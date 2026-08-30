@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dojang Store - Equipo de gimnasio</title>
+</head>
+<body>
+    <header>
+        <nav aria-label="Navegación principal">
+            <a href="index.html"><img src="" alt="Logo Dojang Store"></a>
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="taekwondo.html">Taekwondo</a></li>
+                <li><a href="equipo-gimnasio.html">Equipo de gimnasio</a></li>
+                <li><a href="contacto.html">Contacto</a></li>
+            </ul>
+            <form role="search" aria-label="Buscar productos">
+                <label for="busqueda" class="sr-only">Buscar productos</label>
+                <input type="search" id="busqueda" name="busqueda" placeholder="Buscar productos...">
+                <button type="submit">Buscar</button>
+            </form>
+            <a href="#" aria-label="Carrito de compras">Carrito (0)</a>
+        </nav>
+    </header>
+
+    <main>
+        <section aria-labelledby="equipo-titulo">
+            <h2 id="equipo-titulo">Equipo de Gimnasio</h2>
+
+            <aside aria-labelledby="filtros-titulo">
+                <h2 id="filtros-titulo">Filtros</h2>
+                <form>
+                    <fieldset>
+                        <legend>Categoría</legend>
+                        <label><input type="checkbox" name="categoria" value="tatamis"> Tatamis</label>
+                        <label><input type="checkbox" name="categoria" value="pesas"> Pesas</label>
+                        <label><input type="checkbox" name="categoria" value="bandas"> Bandas elásticas</label>
+                        <label><input type="checkbox" name="categoria" value="accesorios"> Accesorios</label>
+                    </fieldset>
+
+                    <fieldset>
+                        <legend>Marca</legend>
+                        <select name="marca" id="marca">
+                            <option value="">Todas</option>
+                            <option value="everlast">Everlast</option>
+                            <option value="sonnos">Sonnos</option>
+                            <option value="miramont">Miramont</option>
+                        </select>
+                    </fieldset>
+
+                    <fieldset>
+                        <legend>Precio</legend>
+                        <label for="precio-minimo">Precio mínimo</label>
+                        <input type="number" id="precio-minimo" name="precio_minimo" min="0" step="100">
+                        <label for="precio-maximo">Precio máximo</label>
+                        <input type="number" id="precio-maximo" name="precio_maximo" min="0" step="100">
+                    </fieldset>
+
+                    <button type="submit">Aplicar filtros</button>
+                </form>
+            </aside>
+
+            <section aria-labelledby="productos-ejercicio">
+                <article>
+                    <img src="" alt="Tatami encastrable" width="200">
+                    <h3>Tatami Encastrable</h3>
+                    <p>$120.000</p>
+                    <p>Tatami de espuma para pisos de entrenamiento.</p>
+                    <button type="button">Agregar al carrito</button>
+                </article>
+                <article>
+                    <img src="" alt="Bolsa de pie" width="200">
+                    <h3>Bolsa de Pie</h3>
+                    <p>$35.000</p>
+                    <p>Bolsa de boxeo para golpeos y entrenamientos.</p>
+                    <button type="button">Agregar al carrito</button>
+                </article>
+                <article>
+                    <img src="" alt="Mancuernas" width="200">
+                    <h3>Mancuernas</h3>
+                    <p>$45.000</p>
+                    <p>Par de mancuernas de 5kg cada una.</p>
+                    <button type="button">Agregar al carrito</button>
+                </article>
+                <article>
+                    <img src="" alt="Banda elástica" width="200">
+                    <h3>Banda Elástica</h3>
+                    <p>$8.000</p>
+                    <p>Banda de resistencia para entrenamiento de fuerza.</p>
+                    <button type="button">Agregar al carrito</button>
+                </article>
+                <article>
+                    <img src="" alt="Colchoneta" width="200">
+                    <h3>Colchoneta</h3>
+                    <p>$28.000</p>
+                    <p>Colchoneta gruesa para suelo y estiramientos.</p>
+                    <button type="button">Agregar al carrito</button>
+                </article>
+                <article>
+                    <img src="" alt="Soga" width="200">
+                    <h3>Sopa de Saltar</h3>
+                    <p>$12.000</p>
+                    <p>Sopa de saltar para cardio y agilidad.</p>
+                    <button type="button">Agregar al carrito</button>
+                </article>
+            </section>
+        </section>
+    </main>
+
+    <footer id="contacto">
+        <section aria-labelledby="contacto-titulo">
+            <h2 id="contacto-titulo">Contacto</h2>
+            <address>
+                <p>Email: contacto@dojangstore.com.ar</p>
+                <p>Teléfono: +54 11 2345-6789</p>
+                <p>Dirección: Av. Corrientes 1234, CABA</p>
+            </address>
+        </section>
+
+        <section aria-labelledby="redes-titulo">
+            <h2 id="redes-titulo">Seguinos</h2>
+            <ul>
+                <li><a href="#" rel="noopener">Instagram</a></li>
+                <li><a href="#" rel="noopener">Facebook</a></li>
+                <li><a href="#" rel="noopener">X</a></li>
+            </ul>
+        </section>
+
+        <p>&copy; 2026 Dojang Store. Todos los derechos reservados.</p>
+    </footer>
+</body>
+</html>

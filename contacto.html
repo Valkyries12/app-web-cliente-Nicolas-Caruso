@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dojang Store - Contacto</title>
+</head>
+<body>
+    <header>
+        <nav aria-label="Navegación principal">
+            <a href="index.html"><img src="" alt="Logo Dojang Store"></a>
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="taekwondo.html">Taekwondo</a></li>
+                <li><a href="equipo-gimnasio.html">Equipo de gimnasio</a></li>
+                <li><a href="contacto.html">Contacto</a></li>
+            </ul>
+            <form role="search" aria-label="Buscar productos">
+                <label for="busqueda" class="sr-only">Buscar productos</label>
+                <input type="search" id="busqueda" name="busqueda" placeholder="Buscar productos...">
+                <button type="submit">Buscar</button>
+            </form>
+            <a href="#" aria-label="Carrito de compras">Carrito (0)</a>
+        </nav>
+    </header>
+
+    <main>
+        <section aria-labelledby="contacto-titulo">
+            <h2 id="contacto-titulo">Contacto</h2>
+
+            <form action="#" method="POST">
+                <fieldset>
+                    <legend>Formulario de contacto</legend>
+
+                    <div>
+                        <label for="nombre">Nombre</label>
+                        <input type="text" id="nombre" name="nombre" required>
+                    </div>
+
+                    <div>
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+
+                    <div>
+                        <label for="asunto">Asunto</label>
+                        <select id="asunto" name="asunto">
+                            <option value="consulta-producto">Consulta sobre un producto</option>
+                            <option value="envio">Consulta de envío y entrega</option>
+                            <option value="otro">Otro</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label for="mensaje">Mensaje</label>
+                        <textarea id="mensaje" name="mensaje" rows="5" required></textarea>
+                    </div>
+
+                    <button type="submit">Enviar mensaje</button>
+                </fieldset>
+            </form>
+        </section>
+    </main>
+
+    <footer id="contacto">
+        <section aria-labelledby="contacto-titulo">
+            <h2 id="contacto-titulo">Contacto</h2>
+            <address>
+                <p>Email: contacto@dojangstore.com.ar</p>
+                <p>Teléfono: +54 11 2345-6789</p>
+                <p>Dirección: Av. Corrientes 1234, CABA</p>
+            </address>
+        </section>
+
+        <section aria-labelledby="redes-titulo">
+            <h2 id="redes-titulo">Seguinos</h2>
+            <ul>
+                <li><a href="#" rel="noopener">Instagram</a></li>
+                <li><a href="#" rel="noopener">Facebook</a></li>
+                <li><a href="#" rel="noopener">X</a></li>
+            </ul>
+        </section>
+
+        <p>&copy; 2026 Dojang Store. Todos los derechos reservados.</p>
+    </footer>
+</body>
+</html>
