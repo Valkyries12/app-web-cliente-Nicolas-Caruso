@@ -114,12 +114,21 @@
 <script src="js/cart.js"></script>
 <script src="js/main.js"></script>
 <script>
-function renderCart(){
-  const listEl = document.getElementById("cartItemsList");
-  const layoutEl = document.getElementById("cartLayout");
-  if(!listEl || !layoutEl) return;
-  if(cart.length === 0){
-    layoutEl.innerHTML = `<div class="carrito__vacio" style="grid-column:1/-1;">
+// Cart page - vanilla global (uses shoppingCart global)
+
+/**
+ * Renderiza el contenido de la página del carrito.
+ */
+function renderCart() {
+  const cartItemsListElement = document.getElementById('cartItemsList');
+  const cartLayoutElement = document.getElementById('cartLayout');
+
+  if (!cartItemsListElement || !cartLayoutElement) {
+    return;
+  }
+
+  if (shoppingCart.length === 0) {
+    cartLayoutElement.innerHTML = `<div class="carrito__vacio" style="grid-column:1/-1;">
       <svg class="icono"><use href="#i-cart"/></svg>
       <h3 style="font-size:22px;margin-bottom:10px;">Tu carrito está vacío</h3>
       <p style="margin-bottom:20px;">Explorá el catálogo y encontrá tu próximo equipo.</p>
@@ -127,27 +136,49 @@ function renderCart(){
     </div>`;
     return;
   }
-  listEl.innerHTML = cart.map(cartItemRowHTML).join("");
-  const sub = document.getElementById("cartSubtotal");
-  const ship = document.getElementById("cartShipping");
-  const tot = document.getElementById("cartTotal");
-  if(sub) sub.textContent = formatPrice(cartSubtotal());
-  if(ship) ship.textContent = formatPrice(shippingCost());
-  if(tot) tot.textContent = formatPrice(cartSubtotal() + shippingCost());
+
+  cartItemsListElement.innerHTML = shoppingCart.map(cartItemRowHTML).join('');
+
+  const subtotalElement = document.getElementById('cartSubtotal');
+  const shippingElement = document.getElementById('cartShipping');
+  const totalElement = document.getElementById('cartTotal');
+
+  if (subtotalElement) {
+    subtotalElement.textContent = formatPrice(calculateCartSubtotal());
+  }
+
+  if (shippingElement) {
+    shippingElement.textContent = formatPrice(calculateShippingCost());
+  }
+
+  if (totalElement) {
+    totalElement.textContent = formatPrice(calculateCartSubtotal() + calculateShippingCost());
+  }
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  const listEl = document.getElementById("cartItemsList");
-  if(listEl){
-    listEl.addEventListener("click", e => {
-      const rm = e.target.closest("[data-remove]");
-      const minus = e.target.closest("[data-qtyminus]");
-      const plus = e.target.closest("[data-qtyplus]");
-      if(rm) removeFromCart(Number(rm.dataset.remove));
-      if(minus) changeCartQty(Number(minus.dataset.qtyminus), -1);
-      if(plus) changeCartQty(Number(plus.dataset.qtyplus), 1);
+document.addEventListener('DOMContentLoaded', () => {
+  const cartItemsListElement = document.getElementById('cartItemsList');
+
+  if (cartItemsListElement) {
+    cartItemsListElement.addEventListener('click', (clickEvent) => {
+      const removeButton = clickEvent.target.closest('[data-remove]');
+      const decreaseButton = clickEvent.target.closest('[data-qtyminus]');
+      const increaseButton = clickEvent.target.closest('[data-qtyplus]');
+
+      if (removeButton) {
+        removeFromCart(Number(removeButton.dataset.remove));
+      }
+
+      if (decreaseButton) {
+        changeCartQty(Number(decreaseButton.dataset.qtyminus), -1);
+      }
+
+      if (increaseButton) {
+        changeCartQty(Number(increaseButton.dataset.qtyplus), 1);
+      }
     });
   }
+
   renderCart();
 });
 </script>

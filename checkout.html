@@ -168,32 +168,63 @@
 <script src="js/cart.js"></script>
 <script src="js/main.js"></script>
 <script>
-function setCheckoutStep(n){
-  [1,2,3].forEach(i => {
-    document.getElementById("checkoutStep"+i).classList.toggle("compra__panel--activo", i===n);
-    const dot = document.getElementById("stepDot"+i);
-    dot.classList.toggle("paso--activo", i===n);
-    dot.classList.toggle("paso--completo", i<n);
+// Checkout page - vanilla global (uses shoppingCart global)
+
+/**
+ * Activa el paso del checkout (1=envío, 2=pago, 3=confirmación).
+ * @param {number} stepNumber - Paso a activar
+ */
+function setCheckoutStep(stepNumber) {
+  const checkoutSteps = [1, 2, 3];
+
+  checkoutSteps.forEach((stepIndex) => {
+    const stepPanelElement = document.getElementById('checkoutStep' + stepIndex);
+    stepPanelElement.classList.toggle('compra__panel--activo', stepIndex === stepNumber);
+
+    const stepDotElement = document.getElementById('stepDot' + stepIndex);
+    stepDotElement.classList.toggle('paso--activo', stepIndex === stepNumber);
+    stepDotElement.classList.toggle('paso--completo', stepIndex < stepNumber);
   });
-  window.scrollTo({top:0, behavior:"smooth"});
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
-function renderCheckoutSummary(){
-  const list = document.getElementById("checkoutMiniList");
-  if(!list) return;
-  list.innerHTML = cart.map(item =>
-    `<div class="resumen__item"><span>${item.qty}× ${item.product.name}</span><b>${formatPrice(item.qty*item.product.price)}</b></div>`
-  ).join("") || `<p style="font-size:13px;">Tu carrito está vacío.</p>`;
-  document.getElementById("checkoutSubtotal").textContent = formatPrice(cartSubtotal());
-  document.getElementById("checkoutShipping").textContent = formatPrice(shippingCost());
-  document.getElementById("checkoutTotal").textContent = formatPrice(cartSubtotal() + shippingCost());
+
+/**
+ * Renderiza el resumen del pedido en el lateral del checkout a partir del carrito actual.
+ */
+function renderCheckoutSummary() {
+  const checkoutListElement = document.getElementById('checkoutMiniList');
+
+  if (!checkoutListElement) {
+    return;
+  }
+
+  checkoutListElement.innerHTML =
+    shoppingCart
+      .map(
+        (cartItem) =>
+          `<div class="resumen__item"><span>${cartItem.qty}× ${cartItem.product.name}</span><b>${formatPrice(cartItem.qty * cartItem.product.price)}</b></div>`
+      )
+      .join('') || `<p style="font-size:13px;">Tu carrito está vacío.</p>`;
+
+  document.getElementById('checkoutSubtotal').textContent = formatPrice(calculateCartSubtotal());
+  document.getElementById('checkoutShipping').textContent = formatPrice(calculateShippingCost());
+  document.getElementById('checkoutTotal').textContent = formatPrice(
+    calculateCartSubtotal() + calculateShippingCost()
+  );
 }
-document.addEventListener("DOMContentLoaded", renderCheckoutSummary);
-// pago__opcion visual toggle
-document.querySelectorAll(".pago__opcion").forEach(el=>{
-  el.addEventListener("click", ()=>{
-    document.querySelectorAll(".pago__opcion").forEach(o=>o.classList.remove("pago__opcion--seleccionada"));
-    el.classList.add("pago__opcion--seleccionada");
-    el.querySelector("input").checked = true;
+
+document.addEventListener('DOMContentLoaded', renderCheckoutSummary);
+
+// Payment option visual toggle
+document.querySelectorAll('.pago__opcion').forEach((paymentOptionElement) => {
+  paymentOptionElement.addEventListener('click', () => {
+    document
+      .querySelectorAll('.pago__opcion')
+      .forEach((paymentOption) => paymentOption.classList.remove('pago__opcion--seleccionada'));
+
+    paymentOptionElement.classList.add('pago__opcion--seleccionada');
+    paymentOptionElement.querySelector('input').checked = true;
   });
 });
 </script>

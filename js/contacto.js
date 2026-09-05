@@ -1,19 +1,32 @@
-/* KIHAP - contacto.js vanilla */
+/* KIHAP - contacto.js vanilla global */
+
+// ─────────────────────────────────────────────
+// Contact form handling
+// ─────────────────────────────────------------
+
 document.addEventListener('DOMContentLoaded', () => {
-  const form = document.getElementById('contactForm');
-  const successBox = document.getElementById('successBox');
-  if (form) {
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-      form.style.display = 'none';
-      successBox.classList.add('contacto__exito--visible');
+  const contactForm = document.getElementById('contactForm');
+  const successMessageBox = document.getElementById('successBox');
+
+  if (contactForm) {
+    contactForm.addEventListener('submit', (submitEvent) => {
+      submitEvent.preventDefault();
+
+      contactForm.style.display = 'none';
+      successMessageBox.classList.add('contacto__exito--visible');
     });
   }
 });
+
+/**
+ * Restablece el formulario de contacto a su estado inicial.
+ * Vuelve a mostrar el formulario y oculta el mensaje de éxito.
+ */
 function resetContactForm() {
-  const form = document.getElementById('contactForm');
-  const successBox = document.getElementById('successBox');
-  form.reset();
-  form.style.display = 'block';
-  successBox.classList.remove('contacto__exito--visible');
+  const contactForm = document.getElementById('contactForm');
+  const successMessageBox = document.getElementById('successBox');
+
+  contactForm.reset();
+  contactForm.style.display = 'block';
+  successMessageBox.classList.remove('contacto__exito--visible');
 }

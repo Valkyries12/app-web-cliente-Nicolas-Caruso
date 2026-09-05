@@ -1,5 +1,24 @@
-/* KIHAP - Datos de productos - Vanilla JS */
-const products = [
+/* KIHAP - Product catalog data - Vanilla JS (global) */
+
+// ─────────────────────────────────────────────
+// Product Catalog - Ecommerce master data
+// ─────────────────────────────────────────────
+
+/**
+ * @typedef {Object} Product
+ * @property {number} id - Identificador único del producto
+ * @property {string} name - Nombre visible del producto
+ * @property {string} category - Clave de categoría del producto
+ * @property {number} price - Precio en ARS (entero, sin centavos)
+ * @property {string[]|null} sizes - Talles disponibles o null si no aplica
+ * @property {string[]|null} colors - Colores hexadecimales disponibles o null si no aplica
+ * @property {boolean} featured - Si el producto se muestra en la sección destacados
+ * @property {string|undefined} badge - Texto de etiqueta promocional
+ * @property {string} desc - Descripción larga del producto
+ */
+
+/** @type {Product[]} */
+const PRODUCT_CATALOG = [
   {
     id: 1,
     name: 'Dobok Kukkiwon Trainer',
@@ -86,20 +105,53 @@ const products = [
   },
 ];
 
-const catLabel = { doboks: 'Doboks', protecciones: 'Protecciones', cinturones: 'Cinturones', accesorios: 'Accesorios' };
-const catClass = {
+// ─────────────────────────────────────────────
+// Category display maps (UPPER_SNAKE_CASE global)
+// ─────────────────────────────────------------
+
+/** Etiqueta visible de categoría por clave de categoría */
+const CATEGORY_LABELS = {
+  doboks: 'Doboks',
+  protecciones: 'Protecciones',
+  cinturones: 'Cinturones',
+  accesorios: 'Accesorios',
+};
+
+/** Clase de estilo de fondo por clave de categoría */
+const CATEGORY_STYLE_MAP = {
   doboks: 'tarjeta-producto__media--oscuro',
   protecciones: 'tarjeta-producto__media--rojo',
   cinturones: 'tarjeta-producto__media--cinturon',
   accesorios: 'tarjeta-producto__media--azul',
 };
-const catIcon = {
+
+/** ID de ícono SVG por clave de categoría */
+const CATEGORY_ICON_MAP = {
   doboks: 'i-cat-dobok',
   protecciones: 'i-cat-shield',
   cinturones: 'i-cat-belt',
   accesorios: 'i-cat-pad',
 };
 
-function formatPrice(n) {
-  return '$' + n.toLocaleString('es-AR');
+// ─────────────────────────────────────────────
+// Pricing helpers
+// ─────────────────────────────────------------
+
+/**
+ * Formatea un monto al formato de pesos argentinos.
+ * @param {number} priceAmount - Valor del precio en ARS
+ * @returns {string} Precio formateado (ej. "$45.000")
+ */
+function formatPrice(priceAmount) {
+  return '$' + priceAmount.toLocaleString('es-AR');
 }
+
+// ─────────────────────────────────────────────
+// Legacy aliases (vanilla global compatibility)
+// Keep old names available for inline page scripts
+// that still reference products / catLabel / etc.
+// ─────────────────────────────────------------
+const products = PRODUCT_CATALOG;
+const catLabel = CATEGORY_LABELS;
+const catClass = CATEGORY_STYLE_MAP;
+const catIcon = CATEGORY_ICON_MAP;

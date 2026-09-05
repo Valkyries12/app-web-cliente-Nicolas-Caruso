@@ -1,140 +1,279 @@
-/* KIHAP - producto.js vanilla - detalle dinámico ?id= */
-let currentProduct = products[0];
-let detailSize = null;
-let detailColor = null;
-let detailQty = 1;
+/* KIHAP - producto.js vanilla global - dynamic detail ?id= */
 
-function productCardHTML(p) {
-  const media = `<div class="tarjeta-producto__media ${catClass[p.category]}"><svg class="icono" style="color:${p.category === 'cinturones' ? 'var(--ink)' : '#fff'}"><use href="#${catIcon[p.category]}"/></svg></div>`;
-  return `<div class="tarjeta-producto" data-id="${p.id}">
-    ${media}
+// ─────────────────────────────────────────────
+// Product detail state
+// ─────────────────────────────────------------
+
+/** @type {import("./products.js").Product} */
+let selectedProduct = PRODUCT_CATALOG[0];
+
+/** @type {string|null} */
+let selectedSize = null;
+
+/** @type {string|null} */
+let selectedColor = null;
+
+/** @type {number} */
+let selectedQuantity = 1;
+
+// Legacy aliases for cart.js compatibility (vanilla global)
+let currentProduct = selectedProduct;
+let detailSize = selectedSize;
+let detailColor = selectedColor;
+let detailQty = selectedQuantity;
+
+// ─────────────────────────────────────────────
+// Product card helpers (detail page)
+// ─────────────────────────────────------------
+
+/**
+ * Genera el markup del bloque visual de una tarjeta de producto.
+ * @param {import("./products.js").Product} product - Producto a renderizar
+ * @returns {string} HTML del área visual
+ */
+function productMediaHTML(product) {
+  const iconColor = product.category === 'cinturones' ? 'var(--ink)' : '#fff';
+
+  return `<div class="tarjeta-producto__media ${CATEGORY_STYLE_MAP[product.category]}"><svg class="icono" style="color:${iconColor}"><use href="#${CATEGORY_ICON_MAP[product.category]}"/></svg></div>`;
+}
+
+/**
+ * Genera el markup completo de la tarjeta de producto.
+ * @param {import("./products.js").Product} product - Producto a renderizar
+ * @returns {string} HTML de la tarjeta
+ */
+function productCardHTML(product) {
+  const mediaMarkup = `<div class="tarjeta-producto__media ${CATEGORY_STYLE_MAP[product.category]}"><svg class="icono" style="color:${product.category === 'cinturones' ? 'var(--ink)' : '#fff'}"><use href="#${CATEGORY_ICON_MAP[product.category]}"/></svg></div>`;
+
+  return `<div class="tarjeta-producto" data-id="${product.id}">
+    ${mediaMarkup}
     <div class="tarjeta-producto__cuerpo">
-      <span class="tarjeta-producto__categoria">${catLabel[p.category]}</span>
-      <span class="tarjeta-producto__nombre">${p.name}</span>
-      <span class="tarjeta-producto__precio">${formatPrice(p.price)}</span>
-      <button class="tarjeta-producto__accion" data-quickadd="${p.id}"><svg class="icono" style="width:14px;height:14px"><use href="#i-cart"/></svg> Agregar</button>
+      <span class="tarjeta-producto__categoria">${CATEGORY_LABELS[product.category]}</span>
+      <span class="tarjeta-producto__nombre">${product.name}</span>
+      <span class="tarjeta-producto__precio">${formatPrice(product.price)}</span>
+      <button class="tarjeta-producto__accion" data-quickadd="${product.id}"><svg class="icono" style="width:14px;height:14px"><use href="#i-cart"/></svg> Agregar</button>
     </div>
   </div>`;
 }
-function productCardHTMLWithBadge(p) {
-  let html = productCardHTML(p);
-  if (p.badge && !html.includes('tarjeta-producto__etiqueta')) {
-    html = html.replace(
+
+/**
+ * Genera el markup de la tarjeta incluyendo la etiqueta promocional cuando existe.
+ * @param {import("./products.js").Product} product - Producto a renderizar
+ * @returns {string} HTML de la tarjeta con etiqueta
+ */
+function productCardHTMLWithBadge(product) {
+  let cardMarkup = productCardHTML(product);
+
+  if (product.badge && !cardMarkup.includes('tarjeta-producto__etiqueta')) {
+    cardMarkup = cardMarkup.replace(
       '<svg class="icono"',
-      '<span class="tarjeta-producto__etiqueta">' + p.badge + '</span><svg class="icono"',
+      '<span class="tarjeta-producto__etiqueta">' + product.badge + '</span><svg class="icono"'
     );
   }
-  return html;
+
+  return cardMarkup;
 }
 
-function renderDetalle() {
-  const p = currentProduct;
-  document.getElementById('breadcrumbName').textContent = p.name;
-  document.getElementById('detalleCat').textContent = catLabel[p.category];
-  document.getElementById('detalleName').textContent = p.name;
-  document.getElementById('detallePrice').textContent = formatPrice(p.price);
-  document.getElementById('tabDescripcion').innerHTML = `<p>${p.desc}</p>`;
+// ─────────────────────────────────────────────
+// Detail rendering
+// ─────────────────────────────────------------
 
-  const mediaColor = catClass[p.category];
-  const iconColor = p.category === 'cinturones' ? 'var(--ink)' : '#fff';
-  document.getElementById('galleryMain').className = 'galeria__principal ' + mediaColor;
-  document.getElementById('galleryMain').innerHTML =
-    `<svg class="icono" style="color:${iconColor}"><use href="#${catIcon[p.category]}"/></svg>`;
-  document.getElementById('galleryThumbs').innerHTML = [1, 2, 3]
+/**
+ * Renderiza el contenido de la página de detalle para el producto actualmente seleccionado.
+ */
+function renderProductDetail() {
+  const product = selectedProduct;
+
+  document.getElementById('breadcrumbName').textContent = product.name;
+  document.getElementById('detalleCat').textContent = CATEGORY_LABELS[product.category];
+  document.getElementById('detalleName').textContent = product.name;
+  document.getElementById('detallePrice').textContent = formatPrice(product.price);
+  document.getElementById('tabDescripcion').innerHTML = `<p>${product.desc}</p>`;
+
+  const mediaBackgroundClass = CATEGORY_STYLE_MAP[product.category];
+  const iconColor = product.category === 'cinturones' ? 'var(--ink)' : '#fff';
+
+  const galleryMainElement = document.getElementById('galleryMain');
+  galleryMainElement.className = 'galeria__principal ' + mediaBackgroundClass;
+  galleryMainElement.innerHTML =
+    `<svg class="icono" style="color:${iconColor}"><use href="#${CATEGORY_ICON_MAP[product.category]}"/></svg>`;
+
+  const thumbnailNumbers = [1, 2, 3];
+  document.getElementById('galleryThumbs').innerHTML = thumbnailNumbers
     .map(
-      (n, i) =>
-        `<div class="galeria__miniatura ${mediaColor} ${i === 0 ? 'galeria__miniatura--activa' : ''}"><svg class="icono" style="color:${iconColor}"><use href="#${catIcon[p.category]}"/></svg></div>`,
+      (thumbnailNumber, thumbnailIndex) =>
+        `<div class="galeria__miniatura ${mediaBackgroundClass} ${thumbnailIndex === 0 ? 'galeria__miniatura--activa' : ''}"><svg class="icono" style="color:${iconColor}"><use href="#${CATEGORY_ICON_MAP[product.category]}"/></svg></div>`
     )
     .join('');
 
-  const sizeBlock = document.getElementById('sizeBlock');
-  if (p.sizes) {
-    sizeBlock.style.display = 'block';
-    document.getElementById('sizeRow').innerHTML = p.sizes
+  const sizeBlockElement = document.getElementById('sizeBlock');
+
+  if (product.sizes) {
+    sizeBlockElement.style.display = 'block';
+    document.getElementById('sizeRow').innerHTML = product.sizes
       .map(
-        (s) =>
-          `<button class="opcion ${s === detailSize ? 'opcion--seleccionada' : ''}" data-size="${s}">${s}</button>`,
+        (sizeOption) =>
+          `<button class="opcion ${sizeOption === selectedSize ? 'opcion--seleccionada' : ''}" data-size="${sizeOption}">${sizeOption}</button>`
       )
       .join('');
   } else {
-    sizeBlock.style.display = 'none';
+    sizeBlockElement.style.display = 'none';
   }
 
-  const colorBlock = document.getElementById('colorBlock');
-  if (p.colors) {
-    colorBlock.style.display = 'block';
-    document.getElementById('colorRow').innerHTML = p.colors
+  const colorBlockElement = document.getElementById('colorBlock');
+
+  if (product.colors) {
+    colorBlockElement.style.display = 'block';
+    document.getElementById('colorRow').innerHTML = product.colors
       .map(
-        (c) =>
-          `<button class="opcion__color ${c === detailColor ? 'opcion__color--seleccionada' : ''}" data-color="${c}" style="${c === '#FFFFFF' ? 'border-color:#DDD9CF' : ''}"><i style="background:${c}"></i></button>`,
+        (colorOption) =>
+          `<button class="opcion__color ${colorOption === selectedColor ? 'opcion__color--seleccionada' : ''}" data-color="${colorOption}" style="${colorOption === '#FFFFFF' ? 'border-color:#DDD9CF' : ''}"><i style="background:${colorOption}"></i></button>`
       )
       .join('');
   } else {
-    colorBlock.style.display = 'none';
+    colorBlockElement.style.display = 'none';
   }
 
-  document.getElementById('detailQty').textContent = detailQty;
+  document.getElementById('detailQty').textContent = selectedQuantity;
 
-  const related = products.filter((pr) => pr.category === p.category && pr.id !== p.id).slice(0, 4);
-  const fallback = related.length ? related : products.filter((pr) => pr.id !== p.id).slice(0, 4);
-  document.getElementById('relatedGrid').innerHTML = fallback.map(productCardHTMLWithBadge).join('');
+  const relatedProducts = PRODUCT_CATALOG.filter(
+    (catalogProduct) => catalogProduct.category === product.category && catalogProduct.id !== product.id
+  ).slice(0, 4);
+
+  const fallbackProducts =
+    relatedProducts.length > 0
+      ? relatedProducts
+      : PRODUCT_CATALOG.filter((catalogProduct) => catalogProduct.id !== product.id).slice(0, 4);
+
+  document.getElementById('relatedGrid').innerHTML = fallbackProducts
+    .map(productCardHTMLWithBadge)
+    .join('');
+
+  // Keep legacy globals in sync
+  currentProduct = selectedProduct;
+  detailSize = selectedSize;
+  detailColor = selectedColor;
+  detailQty = selectedQuantity;
 }
 
-function changeDetailQty(delta) {
-  detailQty = Math.max(1, detailQty + delta);
-  document.getElementById('detailQty').textContent = detailQty;
+// Backwards-compatible alias
+function renderDetalle() {
+  renderProductDetail();
 }
+
+// ─────────────────────────────────────────────
+// Detail actions
+// ─────────────────────────────────------------
+
+/**
+ * Cambia la cantidad seleccionada según un delta, mínimo 1.
+ * @param {number} quantityDelta - Cantidad a sumar (negativa para restar)
+ */
+function changeDetailQty(quantityDelta) {
+  selectedQuantity = Math.max(1, selectedQuantity + quantityDelta);
+  document.getElementById('detailQty').textContent = selectedQuantity;
+
+  // Keep legacy global in sync
+  detailQty = selectedQuantity;
+}
+
+/**
+ * Agrega el detalle del producto actualmente seleccionado al carrito.
+ */
 function addDetailToCartHandler() {
-  addDetailToCart(currentProduct, detailSize, detailColor, detailQty);
+  addDetailToCart(selectedProduct, selectedSize, selectedColor, selectedQuantity);
 }
+
+/**
+ * Agrega la selección actual al carrito y navega a la página del carrito.
+ */
 function buyNow() {
-  addDetailToCart(currentProduct, detailSize, detailColor, detailQty);
+  addDetailToCart(selectedProduct, selectedSize, selectedColor, selectedQuantity);
   location.href = 'carrito.html';
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  const params = new URLSearchParams(location.search);
-  const id = Number(params.get('id')) || 1;
-  currentProduct = products.find((p) => p.id === id) || products[0];
-  detailSize = currentProduct.sizes ? currentProduct.sizes[0] : null;
-  detailColor = currentProduct.colors ? currentProduct.colors[0] : null;
-  detailQty = 1;
-  renderDetalle();
+// ─────────────────────────────────────────────
+// Page initialization
+// ─────────────────────────────────------------
 
-  document.getElementById('sizeRow').addEventListener('click', (e) => {
-    const btn = e.target.closest('[data-size]');
-    if (btn) {
-      detailSize = btn.dataset.size;
-      renderDetalle();
+document.addEventListener('DOMContentLoaded', () => {
+  const urlParams = new URLSearchParams(location.search);
+  const productIdFromUrl = Number(urlParams.get('id')) || 1;
+
+  selectedProduct =
+    PRODUCT_CATALOG.find((catalogProduct) => catalogProduct.id === productIdFromUrl) ||
+    PRODUCT_CATALOG[0];
+
+  selectedSize = selectedProduct.sizes ? selectedProduct.sizes[0] : null;
+  selectedColor = selectedProduct.colors ? selectedProduct.colors[0] : null;
+  selectedQuantity = 1;
+
+  // Sync legacy globals
+  currentProduct = selectedProduct;
+  detailSize = selectedSize;
+  detailColor = selectedColor;
+  detailQty = selectedQuantity;
+
+  renderProductDetail();
+
+  const sizeRowElement = document.getElementById('sizeRow');
+  sizeRowElement.addEventListener('click', (clickEvent) => {
+    const optionButton = clickEvent.target.closest('[data-size]');
+
+    if (optionButton) {
+      selectedSize = optionButton.dataset.size;
+      detailSize = selectedSize;
+      renderProductDetail();
     }
   });
-  document.getElementById('colorRow').addEventListener('click', (e) => {
-    const btn = e.target.closest('[data-color]');
-    if (btn) {
-      detailColor = btn.dataset.color;
-      renderDetalle();
+
+  const colorRowElement = document.getElementById('colorRow');
+  colorRowElement.addEventListener('click', (clickEvent) => {
+    const optionButton = clickEvent.target.closest('[data-color]');
+
+    if (optionButton) {
+      selectedColor = optionButton.dataset.color;
+      detailColor = selectedColor;
+      renderProductDetail();
     }
   });
-  document.querySelectorAll('.pestanas__boton').forEach((tab) => {
-    tab.addEventListener('click', () => {
-      document.querySelectorAll('.pestanas__boton').forEach((t) => t.classList.remove('pestanas__boton--activo'));
-      document.querySelectorAll('.pestanas__panel').forEach((p) => p.classList.remove('pestanas__panel--activo'));
-      tab.classList.add('pestanas__boton--activo');
-      document.querySelector(`[data-tabpanel="${tab.dataset.tab}"]`).classList.add('pestanas__panel--activo');
+
+  document.querySelectorAll('.pestanas__boton').forEach((tabButton) => {
+    tabButton.addEventListener('click', () => {
+      document.querySelectorAll('.pestanas__boton').forEach((tabButtonItem) => {
+        tabButtonItem.classList.remove('pestanas__boton--activo');
+      });
+
+      document.querySelectorAll('.pestanas__panel').forEach((panelElement) => {
+        panelElement.classList.remove('pestanas__panel--activo');
+      });
+
+      tabButton.classList.add('pestanas__boton--activo');
+
+      const targetPanelSelector = `[data-tabpanel="${tabButton.dataset.tab}"]`;
+      document.querySelector(targetPanelSelector).classList.add('pestanas__panel--activo');
     });
   });
-  document.body.addEventListener('click', (e) => {
-    const quickBtn = e.target.closest('[data-quickadd]');
-    if (quickBtn) {
-      e.preventDefault();
-      e.stopPropagation();
-      const p = products.find((pr) => pr.id === Number(quickBtn.dataset.quickadd));
-      quickAddToCart(p);
+
+  document.body.addEventListener('click', (clickEvent) => {
+    const quickAddButton = clickEvent.target.closest('[data-quickadd]');
+
+    if (quickAddButton) {
+      clickEvent.preventDefault();
+      clickEvent.stopPropagation();
+
+      const productToAdd = PRODUCT_CATALOG.find(
+        (catalogProduct) => catalogProduct.id === Number(quickAddButton.dataset.quickadd)
+      );
+
+      quickAddToCart(productToAdd);
       return;
     }
-    const card = e.target.closest('.tarjeta-producto');
-    if (card) {
-      location.href = 'producto.html?id=' + card.dataset.id;
+
+    const productCardElement = clickEvent.target.closest('.tarjeta-producto');
+
+    if (productCardElement) {
+      location.href = 'producto.html?id=' + productCardElement.dataset.id;
     }
   });
 });
