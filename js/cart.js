@@ -17,9 +17,9 @@ function showToast(text){
   const toast = document.getElementById("toast");
   if(!toast) return;
   document.getElementById("toastText").textContent = text;
-  toast.classList.add("show");
+  toast.classList.add("aviso--visible");
   clearTimeout(window._toastTimer);
-  window._toastTimer = setTimeout(() => toast.classList.remove("show"), 2000);
+  window._toastTimer = setTimeout(() => toast.classList.remove("aviso--visible"), 2000);
 }
 
 function quickAddToCart(p){
@@ -63,18 +63,18 @@ function cartItemRowHTML(item, idx){
   const metaParts = [];
   if(item.size) metaParts.push("Talle " + item.size);
   if(item.color) metaParts.push(`<span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:${item.color};vertical-align:middle;margin-right:4px;border:1px solid #ddd"></span>Color`);
-  return `<div class="cart-item">
-    <div class="cart-thumb ${catClass[p.category]}"><svg class="icon" style="color:${iconColor}"><use href="#${catIcon[p.category]}"/></svg></div>
+  return `<div class="carrito__item">
+    <div class="carrito__thumb ${catClass[p.category]}"><svg class="icono" style="color:${iconColor}"><use href="#${catIcon[p.category]}"/></svg></div>
     <div>
-      <div class="cart-item-name">${p.name}</div>
-      <div class="cart-item-meta">${metaParts.join(" · ") || "&nbsp;"}</div>
-      <button class="cart-item-remove" data-remove="${idx}">Quitar</button>
+      <div class="carrito__nombre">${p.name}</div>
+      <div class="carrito__meta">${metaParts.join(" · ") || "&nbsp;"}</div>
+      <button class="carrito__quitar" data-remove="${idx}">Quitar</button>
     </div>
-    <div class="qty-stepper" style="height:40px;">
-      <button data-qtyminus="${idx}"><svg class="icon"><use href="#i-minus"/></svg></button>
-      <span>${item.qty}</span>
-      <button data-qtyplus="${idx}"><svg class="icon"><use href="#i-plus"/></svg></button>
+    <div class="cantidad" style="height:40px;">
+      <button class="cantidad__boton" data-qtyminus="${idx}"><svg class="icono"><use href="#i-minus"/></svg></button>
+      <span class="cantidad__valor">${item.qty}</span>
+      <button class="cantidad__boton" data-qtyplus="${idx}"><svg class="icono"><use href="#i-plus"/></svg></button>
     </div>
-    <div class="cart-item-price">${formatPrice(item.qty * p.price)}</div>
+    <div class="carrito__precio">${formatPrice(item.qty * p.price)}</div>
   </div>`;
 }

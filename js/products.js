@@ -19,7 +19,7 @@ const products = [
 ];
 
 const catLabel = {doboks:"Doboks", protecciones:"Protecciones", cinturones:"Cinturones", accesorios:"Accesorios"};
-const catClass = {doboks:"cat-ink", protecciones:"cat-red", cinturones:"cat-belt", accesorios:"cat-blue"};
+const catClass = {doboks:"tarjeta-producto__media--oscuro", protecciones:"tarjeta-producto__media--rojo", cinturones:"tarjeta-producto__media--cinturon", accesorios:"tarjeta-producto__media--azul"};
 const catIcon  = {doboks:"i-cat-dobok", protecciones:"i-cat-shield", cinturones:"i-cat-belt", accesorios:"i-cat-pad"};
 
 function formatPrice(n){ return "$" + n.toLocaleString("es-AR"); }

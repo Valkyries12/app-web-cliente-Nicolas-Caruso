@@ -22,57 +22,57 @@
   <symbol id="i-cat-pad" viewBox="0 0 48 48"><rect x="9" y="5" width="22" height="30" rx="4"/><line x1="20" y1="35" x2="20" y2="43"/><rect x="13" y="41" width="14" height="4" rx="2"/></symbol>
 </svg>
 
-<div class="rank-stripe"></div>
+<div class="franja__cinturon"></div>
 
-<header class="topbar">
-  <div class="wrap topbar-inner">
-    <a href="index.html" class="logo" style="text-decoration:none;color:inherit"><span>KIH</span><em>A</em><span>P</span></a>
-    <button class="hamburger" id="hamburgerBtn" aria-label="Abrir menú"><svg class="icon"><use href="#i-menu"/></svg></button>
-    <nav class="main-nav" id="mainNav">
-      <a class="nav-link" href="index.html">Inicio</a>
-      <a class="nav-link" href="catalogo.html">Catálogo</a>
-      <a class="nav-link" href="contacto.html">Contacto</a>
+<header class="cabecera">
+  <div class="contenedor cabecera__interior">
+    <a href="index.html" class="cabecera__marca"><span>KIH</span><em class="cabecera__marca-acento">A</em><span>P</span></a>
+    <button class="cabecera__menu" id="hamburgerBtn" aria-label="Abrir menú"><svg class="icono"><use href="#i-menu"/></svg></button>
+    <nav class="navegacion" id="mainNav">
+      <a class="navegacion__enlace" href="index.html">Inicio</a>
+      <a class="navegacion__enlace" href="catalogo.html">Catálogo</a>
+      <a class="navegacion__enlace" href="contacto.html">Contacto</a>
     </nav>
-    <div class="topbar-actions">
-      <a class="cart-btn" href="carrito.html">
-        <svg class="icon"><use href="#i-cart"/></svg>
+    <div class="cabecera__acciones">
+      <a class="boton-carrito" href="carrito.html">
+        <svg class="icono"><use href="#i-cart"/></svg>
         Carrito
-        <span class="cart-badge" id="cartBadge">0</span>
+        <span class="boton-carrito__insignia" id="cartBadge">0</span>
       </a>
     </div>
   </div>
 </header>
 
 <main>
-  <div class="wrap page-header">
-    <div class="breadcrumb"><a href="index.html">Inicio</a> / Carrito</div>
+  <div class="contenedor encabezado-pagina">
+    <div class="migas"><a class="migas__enlace" href="index.html">Inicio</a> / Carrito</div>
     <h2 style="font-size:38px;">Tu carrito</h2>
   </div>
 
-  <div class="wrap carrito-layout" id="cartLayout">
+  <div class="contenedor carrito__distribucion" id="cartLayout">
     <div>
       <div id="cartItemsList"></div>
-      <a class="btn btn-ghost btn-sm" style="margin-top:20px;" href="catalogo.html">Seguir comprando</a>
+      <a class="boton boton--fantasma boton--pequeno" style="margin-top:20px;" href="catalogo.html">Seguir comprando</a>
     </div>
 
-    <div class="summary-box">
-      <h3>Resumen del pedido</h3>
-      <div class="summary-row"><span>Subtotal</span><span id="cartSubtotal">$0</span></div>
-      <div class="summary-row"><span>Envío estimado</span><span id="cartShipping">$0</span></div>
-      <div class="promo-row">
+    <div class="resumen">
+      <h3 class="resumen__titulo">Resumen del pedido</h3>
+      <div class="resumen__fila"><span>Subtotal</span><span id="cartSubtotal">$0</span></div>
+      <div class="resumen__fila"><span>Envío estimado</span><span id="cartShipping">$0</span></div>
+      <div class="resumen__promo">
         <input type="text" placeholder="Código de descuento">
-        <button class="btn btn-ghost btn-sm">Aplicar</button>
+        <button class="boton boton--fantasma boton--pequeno">Aplicar</button>
       </div>
-      <div class="summary-row total"><span>Total</span><span id="cartTotal">$0</span></div>
-      <a class="btn btn-primary btn-block" style="margin-top:18px;" href="checkout.html">Iniciar compra</a>
+      <div class="resumen__fila resumen__fila--total"><span>Total</span><span id="cartTotal">$0</span></div>
+      <a class="boton boton--primario boton--bloque" style="margin-top:18px;" href="checkout.html">Iniciar compra</a>
     </div>
   </div>
 </main>
 
-<footer>
-  <div class="wrap footer-grid">
+<footer class="pie">
+  <div class="contenedor pie__grilla">
     <div>
-      <div class="logo"><span>KIH</span><em>A</em><span>P</span></div>
+      <div class="cabecera__marca"><span>KIH</span><em class="cabecera__marca-acento">A</em><span>P</span></div>
       <p>Equipamiento de taekwondo para cada cinturón: doboks, protecciones y accesorios homologados WT.</p>
     </div>
     <div>
@@ -96,19 +96,19 @@
     <div>
       <h4>Newsletter</h4>
       <p>Enterate de nuevos productos y promociones.</p>
-      <div class="promo-row" style="margin-top:12px;">
+      <div class="resumen__promo" style="margin-top:12px;">
         <input type="email" placeholder="Tu email">
-        <button class="btn btn-primary btn-sm">Sumarme</button>
+        <button class="boton boton--primario boton--pequeno">Sumarme</button>
       </div>
     </div>
   </div>
-  <div class="wrap foot-bottom">
+  <div class="contenedor pie__inferior">
     <span>© 2026 KIHAP. Todos los derechos reservados.</span>
     <span>Mockup de sitio — contenido de ejemplo</span>
   </div>
 </footer>
 
-<div class="toast" id="toast"><svg class="icon"><use href="#i-check"/></svg><span id="toastText">Agregado al carrito</span></div>
+<div class="aviso" id="toast"><svg class="icono"><use href="#i-check"/></svg><span id="toastText">Agregado al carrito</span></div>
 
 <script src="js/products.js"></script>
 <script src="js/cart.js"></script>
@@ -119,11 +119,11 @@ function renderCart(){
   const layoutEl = document.getElementById("cartLayout");
   if(!listEl || !layoutEl) return;
   if(cart.length === 0){
-    layoutEl.innerHTML = `<div class="empty-cart" style="grid-column:1/-1;">
-      <svg class="icon"><use href="#i-cart"/></svg>
+    layoutEl.innerHTML = `<div class="carrito__vacio" style="grid-column:1/-1;">
+      <svg class="icono"><use href="#i-cart"/></svg>
       <h3 style="font-size:22px;margin-bottom:10px;">Tu carrito está vacío</h3>
       <p style="margin-bottom:20px;">Explorá el catálogo y encontrá tu próximo equipo.</p>
-      <a class="btn btn-primary" href="catalogo.html">Ir al catálogo</a>
+      <a class="boton boton--primario" href="catalogo.html">Ir al catálogo</a>
     </div>`;
     return;
   }

@@ -20,40 +20,40 @@
   <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5.2l3.4 2"/></symbol>
 </svg>
 
-<div class="rank-stripe"></div>
+<div class="franja__cinturon"></div>
 
-<header class="topbar">
-  <div class="wrap topbar-inner">
-    <a href="index.html" class="logo" style="text-decoration:none;color:inherit"><span>KIH</span><em>A</em><span>P</span></a>
-    <button class="hamburger" id="hamburgerBtn" aria-label="Abrir menú"><svg class="icon"><use href="#i-menu"/></svg></button>
-    <nav class="main-nav" id="mainNav">
-      <a class="nav-link" href="index.html">Inicio</a>
-      <a class="nav-link" href="catalogo.html">Catálogo</a>
-      <a class="nav-link active" href="contacto.html">Contacto</a>
+<header class="cabecera">
+  <div class="contenedor cabecera__interior">
+    <a href="index.html" class="cabecera__marca"><span>KIH</span><em class="cabecera__marca-acento">A</em><span>P</span></a>
+    <button class="cabecera__menu" id="hamburgerBtn" aria-label="Abrir menú"><svg class="icono"><use href="#i-menu"/></svg></button>
+    <nav class="navegacion" id="mainNav">
+      <a class="navegacion__enlace" href="index.html">Inicio</a>
+      <a class="navegacion__enlace" href="catalogo.html">Catálogo</a>
+      <a class="navegacion__enlace navegacion__enlace--activo" href="contacto.html">Contacto</a>
     </nav>
-    <div class="topbar-actions">
-      <a class="cart-btn" href="carrito.html">
-        <svg class="icon"><use href="#i-cart"/></svg>
+    <div class="cabecera__acciones">
+      <a class="boton-carrito" href="carrito.html">
+        <svg class="icono"><use href="#i-cart"/></svg>
         Carrito
-        <span class="cart-badge" id="cartBadge">0</span>
+        <span class="boton-carrito__insignia" id="cartBadge">0</span>
       </a>
     </div>
   </div>
 </header>
 
 <main>
-  <div class="wrap page-header">
-    <div class="breadcrumb"><a href="index.html">Inicio</a> / Contacto</div>
+  <div class="contenedor encabezado-pagina">
+    <div class="migas"><a class="migas__enlace" href="index.html">Inicio</a> / Contacto</div>
     <h2 style="font-size:38px;">Contacto</h2>
     <p style="margin-top:10px;max-width:60ch;">¿Tenés dudas sobre talles, envíos o algún producto? Escribinos y te respondemos a la brevedad.</p>
   </div>
 
-  <div class="wrap contacto-layout">
-    <div class="contact-form-box">
+  <div class="contenedor contacto__distribucion">
+    <div class="contacto__formulario-contenedor">
       <form id="contactForm">
-        <div class="field"><label>Nombre y apellido</label><input type="text" required placeholder="Tu nombre"></div>
-        <div class="field"><label>Email</label><input type="email" required placeholder="tuemail@correo.com"></div>
-        <div class="field">
+        <div class="formulario__campo"><label>Nombre y apellido</label><input type="text" required placeholder="Tu nombre"></div>
+        <div class="formulario__campo"><label>Email</label><input type="email" required placeholder="tuemail@correo.com"></div>
+        <div class="formulario__campo">
           <label>Asunto</label>
           <select required>
             <option value="">Elegí un motivo</option>
@@ -64,21 +64,21 @@
             <option>Otro</option>
           </select>
         </div>
-        <div class="field"><label>Mensaje</label><textarea required rows="5" placeholder="Contanos en qué te podemos ayudar"></textarea></div>
-        <button type="submit" class="btn btn-primary btn-block">Enviar mensaje</button>
+        <div class="formulario__campo"><label>Mensaje</label><textarea required rows="5" placeholder="Contanos en qué te podemos ayudar"></textarea></div>
+        <button type="submit" class="boton boton--primario boton--bloque">Enviar mensaje</button>
       </form>
 
-      <div class="success-box" id="successBox">
-        <div class="icon-circle"><svg class="icon"><use href="#i-check"/></svg></div>
+      <div class="contacto__exito" id="successBox">
+        <div class="confirmacion__circulo"><svg class="icono"><use href="#i-check"/></svg></div>
         <h3 style="font-size:20px;margin-bottom:8px;">Mensaje enviado</h3>
         <p>Gracias por escribirnos. Te vamos a contestar dentro de las próximas 24 horas hábiles.</p>
-        <button class="btn btn-ghost btn-sm" style="margin-top:18px;" onclick="resetContactForm()">Enviar otro mensaje</button>
+        <button class="boton boton--fantasma boton--pequeno" style="margin-top:18px;" onclick="resetContactForm()">Enviar otro mensaje</button>
       </div>
     </div>
 
     <div>
-      <div class="map-card">
-        <div class="map-svg-wrap">
+      <div class="mapa">
+        <div class="mapa__lienzo">
           <svg viewBox="0 0 400 310" width="100%" height="100%">
             <rect width="400" height="310" fill="#EAE7DD"/>
             <g stroke="#D3CFC1" stroke-width="2">
@@ -103,21 +103,21 @@
             </g>
           </svg>
         </div>
-        <div class="info-list">
-          <div class="info-row">
-            <div class="icon-wrap"><svg class="icon"><use href="#i-pin"/></svg></div>
+        <div class="info">
+          <div class="info__fila">
+            <div class="info__icono-contenedor"><svg class="icono"><use href="#i-pin"/></svg></div>
             <div><h5>KIHAP Tienda — Mendoza</h5><p>Av. San Martín 1245, Ciudad de Mendoza</p></div>
           </div>
-          <div class="info-row">
-            <div class="icon-wrap"><svg class="icon"><use href="#i-phone"/></svg></div>
+          <div class="info__fila">
+            <div class="info__icono-contenedor"><svg class="icono"><use href="#i-phone"/></svg></div>
             <div><h5>Teléfono</h5><p>+54 261 400 5566</p></div>
           </div>
-          <div class="info-row">
-            <div class="icon-wrap"><svg class="icon"><use href="#i-mail"/></svg></div>
+          <div class="info__fila">
+            <div class="info__icono-contenedor"><svg class="icono"><use href="#i-mail"/></svg></div>
             <div><h5>Email</h5><p>hola@kihap.com.ar</p></div>
           </div>
-          <div class="info-row">
-            <div class="icon-wrap"><svg class="icon"><use href="#i-clock"/></svg></div>
+          <div class="info__fila">
+            <div class="info__icono-contenedor"><svg class="icono"><use href="#i-clock"/></svg></div>
             <div><h5>Horarios</h5><p>Lunes a viernes 9 a 19 h · Sábados 9 a 13 h</p></div>
           </div>
         </div>
@@ -126,10 +126,10 @@
   </div>
 </main>
 
-<footer>
-  <div class="wrap footer-grid">
+<footer class="pie">
+  <div class="contenedor pie__grilla">
     <div>
-      <div class="logo"><span>KIH</span><em>A</em><span>P</span></div>
+      <div class="cabecera__marca"><span>KIH</span><em class="cabecera__marca-acento">A</em><span>P</span></div>
       <p>Equipamiento de taekwondo para cada cinturón: doboks, protecciones y accesorios homologados WT.</p>
     </div>
     <div>
@@ -153,19 +153,19 @@
     <div>
       <h4>Newsletter</h4>
       <p>Enterate de nuevos productos y promociones.</p>
-      <div class="promo-row" style="margin-top:12px;">
+      <div class="resumen__promo" style="margin-top:12px;">
         <input type="email" placeholder="Tu email">
-        <button class="btn btn-primary btn-sm">Sumarme</button>
+        <button class="boton boton--primario boton--pequeno">Sumarme</button>
       </div>
     </div>
   </div>
-  <div class="wrap foot-bottom">
+  <div class="contenedor pie__inferior">
     <span>© 2026 KIHAP. Todos los derechos reservados.</span>
     <span>Mockup de sitio — contenido de ejemplo</span>
   </div>
 </footer>
 
-<div class="toast" id="toast"><svg class="icon"><use href="#i-check"/></svg><span id="toastText">Agregado al carrito</span></div>
+<div class="aviso" id="toast"><svg class="icono"><use href="#i-check"/></svg><span id="toastText">Agregado al carrito</span></div>
 
 <script src="js/products.js"></script>
 <script src="js/cart.js"></script>
