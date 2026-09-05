@@ -1,0 +1,1123 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KIHAP — Equipamiento de Taekwondo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#16171A;
+    --ink-soft:#3A3B3E;
+    --paper:#F6F4EF;
+    --paper-2:#EDEAE1;
+    --red:#C41E3A;
+    --red-dark:#9E1830;
+    --blue:#14487A;
+    --stone:#8A8680;
+    --line:#DDD9CF;
+    --white:#FFFFFF;
+    --font-display:'Barlow Condensed',sans-serif;
+    --font-body:'Inter',sans-serif;
+    --belt-stripe: linear-gradient(90deg,
+      #fff 0%, #fff 16.6%,
+      #E8B93A 16.6%, #E8B93A 33.2%,
+      #3F8F52 33.2%, #3F8F52 49.8%,
+      #2C5F8A 49.8%, #2C5F8A 66.4%,
+      #B23A3A 66.4%, #B23A3A 83%,
+      #16171A 83%, #16171A 100%);
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;}
+  html,body{background:var(--paper);color:var(--ink);font-family:var(--font-body);-webkit-font-smoothing:antialiased;}
+  h1,h2,h3,h4{font-family:var(--font-display);font-weight:600;margin:0;line-height:1.05;letter-spacing:.2px;}
+  p{margin:0;color:var(--ink-soft);line-height:1.55;}
+  button{font-family:var(--font-body);cursor:pointer;}
+  a{color:inherit;}
+  .icon{width:20px;height:20px;stroke:currentColor;stroke-width:1.8;fill:none;stroke-linecap:round;stroke-linejoin:round;display:block;}
+  .icon.filled{fill:currentColor;stroke:none;}
+
+  .rank-stripe{height:5px;background:var(--belt-stripe);}
+
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px;}
+  @media (max-width:720px){.wrap{padding:0 18px;}}
+
+  /* Header */
+  header.topbar{position:sticky;top:0;z-index:50;background:rgba(246,244,239,.94);backdrop-filter:blur(6px);border-bottom:1px solid var(--line);}
+  .topbar-inner{display:flex;align-items:center;justify-content:space-between;height:74px;}
+  .logo{display:flex;align-items:baseline;gap:2px;font-family:var(--font-display);font-weight:700;font-size:26px;letter-spacing:.5px;}
+  .logo em{font-style:normal;color:var(--red);}
+  nav.main-nav{display:flex;align-items:center;gap:6px;}
+  .nav-link{background:none;border:none;padding:8px 14px;font-size:15px;font-weight:500;color:var(--ink-soft);border-bottom:2px solid transparent;}
+  .nav-link:hover{color:var(--ink);}
+  .nav-link.active{color:var(--ink);border-bottom-color:var(--red);font-weight:600;}
+  .topbar-actions{display:flex;align-items:center;gap:14px;}
+  .cart-btn{position:relative;display:flex;align-items:center;gap:8px;background:var(--ink);color:var(--white);border:none;border-radius:3px;padding:9px 14px 9px 12px;font-size:14px;font-weight:600;}
+  .cart-btn .icon{width:18px;height:18px;}
+  .cart-badge{position:absolute;top:-7px;right:-7px;background:var(--red);color:#fff;font-size:11px;font-weight:700;border-radius:20px;min-width:18px;height:18px;display:flex;align-items:center;justify-content:center;padding:0 4px;border:2px solid var(--paper);}
+  .hamburger{display:none;background:none;border:1px solid var(--line);border-radius:3px;padding:8px;}
+  @media (max-width:860px){
+    nav.main-nav{position:absolute;top:74px;left:0;right:0;background:var(--paper);border-bottom:1px solid var(--line);flex-direction:column;align-items:stretch;padding:6px 0;display:none;}
+    nav.main-nav.open{display:flex;}
+    .nav-link{text-align:left;padding:12px 28px;border-bottom:1px solid var(--paper-2);border-left:2px solid transparent;}
+    .nav-link.active{border-left-color:var(--red);border-bottom-color:var(--paper-2);}
+    .hamburger{display:flex;}
+  }
+
+  /* Pages */
+  .page{display:none;}
+  .page.active{display:block;}
+  section{padding:64px 0;}
+  .section-tight{padding:40px 0;}
+
+  .eyebrow{font-size:13px;color:var(--red);font-weight:600;margin-bottom:6px;}
+
+  /* Buttons */
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:3px;font-weight:600;font-size:15px;padding:13px 24px;border:1.5px solid transparent;transition:background .15s ease, color .15s ease, border-color .15s ease;}
+  .btn-primary{background:var(--red);color:#fff;}
+  .btn-primary:hover{background:var(--red-dark);}
+  .btn-dark{background:var(--ink);color:#fff;}
+  .btn-dark:hover{background:#000;}
+  .btn-outline{background:transparent;color:var(--ink);border-color:var(--ink);}
+  .btn-outline:hover{background:var(--ink);color:#fff;}
+  .btn-ghost{background:transparent;color:var(--ink-soft);border-color:var(--line);}
+  .btn-ghost:hover{border-color:var(--ink);color:var(--ink);}
+  .btn-block{width:100%;}
+  .btn-sm{padding:9px 16px;font-size:13px;}
+  .btn:disabled{opacity:.4;cursor:not-allowed;}
+
+  /* HERO */
+  .hero{padding:64px 0 56px;overflow:hidden;}
+  .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center;}
+  @media (max-width:900px){.hero-grid{grid-template-columns:1fr;gap:36px;}}
+  .hero h1{font-size:clamp(42px,6vw,68px);}
+  .hero p.lead{font-size:18px;margin-top:18px;max-width:46ch;}
+  .hero-ctas{display:flex;gap:14px;margin-top:30px;flex-wrap:wrap;}
+  .hero-figure{position:relative;background:var(--ink);border-radius:4px;aspect-ratio:4/3.4;display:flex;align-items:center;justify-content:center;overflow:hidden;}
+  .hero-figure svg{width:78%;height:78%;}
+  .kick-trail{stroke:var(--red);stroke-width:3;fill:none;stroke-linecap:round;stroke-dasharray:340;stroke-dashoffset:340;animation:drawtrail 1.4s .3s ease-out forwards;}
+  @keyframes drawtrail{to{stroke-dashoffset:0;}}
+  .fighter{stroke:#F6F4EF;stroke-width:2.4;fill:none;stroke-linecap:round;stroke-linejoin:round;}
+
+  .trust-row{display:flex;gap:36px;flex-wrap:wrap;padding:28px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-top:8px;}
+  .trust-item{display:flex;align-items:center;gap:12px;font-size:14px;font-weight:500;color:var(--ink-soft);flex:1;min-width:220px;}
+  .trust-item .icon{color:var(--red);flex-shrink:0;}
+
+  /* Categories */
+  .section-head{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:32px;gap:20px;flex-wrap:wrap;}
+  .section-head h2{font-size:36px;}
+  .cat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;}
+  @media (max-width:820px){.cat-grid{grid-template-columns:repeat(2,1fr);}}
+  .cat-card{background:var(--white);border:1px solid var(--line);border-radius:4px;padding:26px 20px;display:flex;flex-direction:column;gap:14px;text-align:left;transition:border-color .15s ease;}
+  .cat-card:hover{border-color:var(--ink);}
+  .cat-card .icon-wrap{width:46px;height:46px;border-radius:3px;display:flex;align-items:center;justify-content:center;}
+  .cat-card .icon-wrap .icon{width:24px;height:24px;color:#fff;}
+  .cat-card h3{font-size:20px;font-weight:600;}
+  .cat-card span{font-size:13px;color:var(--stone);}
+
+  /* Product grid */
+  .product-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;}
+  @media (max-width:980px){.product-grid{grid-template-columns:repeat(3,1fr);}}
+  @media (max-width:720px){.product-grid{grid-template-columns:repeat(2,1fr);}}
+  .product-card{background:var(--white);border:1px solid var(--line);border-radius:4px;overflow:hidden;cursor:pointer;transition:border-color .15s ease, transform .15s ease;display:flex;flex-direction:column;}
+  .product-card:hover{border-color:var(--ink);}
+  .product-media{aspect-ratio:1/1;display:flex;align-items:center;justify-content:center;position:relative;}
+  .product-media .icon{width:40%;height:40%;}
+  .badge-tag{position:absolute;top:10px;left:10px;background:var(--white);color:var(--ink);font-size:11px;font-weight:700;padding:4px 8px;border-radius:2px;letter-spacing:.3px;}
+  .product-info{padding:14px 16px 16px;display:flex;flex-direction:column;gap:6px;flex:1;}
+  .product-cat{font-size:11.5px;color:var(--stone);font-weight:600;}
+  .product-name{font-size:15.5px;font-weight:600;line-height:1.3;}
+  .product-price{font-size:16px;font-weight:700;margin-top:auto;padding-top:8px;}
+  .btn-add{margin-top:10px;background:var(--paper-2);color:var(--ink);border:none;border-radius:3px;padding:9px;font-size:13px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:6px;}
+  .btn-add:hover{background:var(--ink);color:#fff;}
+
+  .cat-ink{background:var(--ink);}
+  .cat-red{background:var(--red);}
+  .cat-blue{background:var(--blue);}
+  .cat-belt{background:var(--belt-stripe);}
+  .cat-belt .icon{color:var(--ink);background:#fff;border-radius:50%;padding:22%;}
+
+  /* Footer */
+  footer{background:var(--ink);color:#D9D7D1;padding:56px 0 26px;margin-top:40px;}
+  .footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1.1fr;gap:36px;}
+  @media (max-width:820px){.footer-grid{grid-template-columns:1fr 1fr;}}
+  footer h4{color:#fff;font-size:14px;font-weight:600;margin-bottom:14px;font-family:var(--font-body);letter-spacing:.2px;}
+  footer .logo{color:#fff;margin-bottom:12px;}
+  footer p{color:#B9B7B1;font-size:14px;max-width:34ch;}
+  footer ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px;}
+  footer a{font-size:14px;color:#B9B7B1;}
+  footer a:hover{color:#fff;}
+  .foot-bottom{margin-top:44px;padding-top:22px;border-top:1px solid #2B2C2F;display:flex;justify-content:space-between;font-size:12.5px;color:#83817B;flex-wrap:wrap;gap:10px;}
+
+  /* Catalogo */
+  .page-header{padding:44px 0 28px;border-bottom:1px solid var(--line);}
+  .breadcrumb{font-size:13px;color:var(--stone);margin-bottom:10px;}
+  .breadcrumb button{background:none;border:none;color:var(--stone);font-size:13px;padding:0;}
+  .breadcrumb button:hover{color:var(--ink);text-decoration:underline;}
+  .catalogo-layout{display:grid;grid-template-columns:230px 1fr;gap:40px;align-items:flex-start;padding:40px 0 80px;}
+  @media (max-width:860px){.catalogo-layout{grid-template-columns:1fr;}}
+  .filter-block{border-bottom:1px solid var(--line);padding-bottom:20px;margin-bottom:20px;}
+  .filter-block h4{font-size:14px;font-weight:600;margin-bottom:12px;}
+  .check-row{display:flex;align-items:center;gap:9px;padding:6px 0;font-size:14px;color:var(--ink-soft);cursor:pointer;}
+  .check-row input{accent-color:var(--red);width:15px;height:15px;}
+  .size-chip-row{display:flex;flex-wrap:wrap;gap:8px;}
+  .size-chip{border:1px solid var(--line);background:#fff;font-size:12.5px;padding:6px 10px;border-radius:2px;color:var(--ink-soft);}
+  .size-chip:hover{border-color:var(--ink);color:var(--ink);}
+  .clear-filters{font-size:13px;color:var(--red);background:none;border:none;padding:0;font-weight:600;}
+  .catalog-toolbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px;flex-wrap:wrap;gap:14px;}
+  .result-count{font-size:14px;color:var(--stone);}
+  select{font-family:var(--font-body);font-size:14px;padding:9px 12px;border:1px solid var(--line);border-radius:3px;background:#fff;color:var(--ink);}
+
+  /* Detalle */
+  .detalle-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;padding:36px 0 70px;align-items:flex-start;}
+  @media (max-width:860px){.detalle-grid{grid-template-columns:1fr;gap:30px;}}
+  .gallery-main{aspect-ratio:1/1;border-radius:4px;display:flex;align-items:center;justify-content:center;margin-bottom:12px;}
+  .gallery-main .icon{width:34%;height:34%;}
+  .gallery-thumbs{display:flex;gap:10px;}
+  .thumb{width:64px;height:64px;border-radius:3px;border:1.5px solid var(--line);display:flex;align-items:center;justify-content:center;cursor:pointer;}
+  .thumb.active{border-color:var(--ink);}
+  .thumb .icon{width:46%;height:46%;}
+  .detalle-cat{font-size:13px;font-weight:600;color:var(--red);text-transform:none;margin-bottom:8px;}
+  .detalle-name{font-size:32px;margin-bottom:12px;}
+  .stars{display:flex;align-items:center;gap:6px;margin-bottom:16px;}
+  .stars .icon{width:15px;height:15px;color:var(--ink);}
+  .stars .icon.off{color:var(--line);}
+  .stars span{font-size:13px;color:var(--stone);margin-left:4px;}
+  .detalle-price{font-size:28px;font-weight:700;margin-bottom:20px;}
+  .opt-block{margin-bottom:22px;}
+  .opt-block h4{font-size:13px;font-weight:600;margin-bottom:10px;color:var(--ink-soft);}
+  .opt-row{display:flex;gap:9px;flex-wrap:wrap;}
+  .opt-btn{border:1.5px solid var(--line);background:#fff;padding:9px 15px;border-radius:3px;font-size:14px;font-weight:500;color:var(--ink-soft);}
+  .opt-btn:hover{border-color:var(--ink);}
+  .opt-btn.selected{border-color:var(--ink);background:var(--ink);color:#fff;}
+  .color-dot{width:34px;height:34px;border-radius:50%;border:2px solid var(--line);padding:2px;position:relative;}
+  .color-dot.selected{border-color:var(--ink);}
+  .color-dot i{display:block;width:100%;height:100%;border-radius:50%;}
+  .qty-stepper{display:inline-flex;align-items:center;border:1.5px solid var(--line);border-radius:3px;}
+  .qty-stepper button{background:none;border:none;width:38px;height:40px;display:flex;align-items:center;justify-content:center;color:var(--ink-soft);}
+  .qty-stepper button:hover{color:var(--ink);}
+  .qty-stepper span{width:36px;text-align:center;font-weight:600;font-size:14px;}
+  .detalle-ctas{display:flex;gap:12px;margin-top:26px;flex-wrap:wrap;}
+  .detalle-ctas .btn{flex:1;min-width:180px;}
+  .stock-note{display:flex;align-items:center;gap:8px;font-size:13px;color:#3F8F52;margin-top:16px;font-weight:600;}
+  .stock-note .icon{width:15px;height:15px;}
+
+  .tabs{margin-top:44px;border-top:1px solid var(--line);}
+  .tab-heads{display:flex;gap:0;}
+  .tab-head{padding:16px 20px;font-size:14px;font-weight:600;color:var(--stone);background:none;border:none;border-bottom:2px solid transparent;margin-bottom:-1px;}
+  .tab-head.active{color:var(--ink);border-bottom-color:var(--red);}
+  .tab-panel{display:none;padding:22px 2px 6px;font-size:14.5px;color:var(--ink-soft);line-height:1.7;max-width:70ch;}
+  .tab-panel.active{display:block;}
+
+  .related-head{margin:70px 0 24px;}
+
+  /* Carrito */
+  .carrito-layout{display:grid;grid-template-columns:1fr 340px;gap:44px;padding:40px 0 80px;align-items:flex-start;}
+  @media (max-width:900px){.carrito-layout{grid-template-columns:1fr;}}
+  .cart-item{display:grid;grid-template-columns:76px 1fr auto auto;gap:16px;align-items:center;padding:18px 0;border-bottom:1px solid var(--line);}
+  @media (max-width:560px){.cart-item{grid-template-columns:60px 1fr;grid-template-rows:auto auto;}}
+  .cart-thumb{width:76px;height:76px;border-radius:3px;display:flex;align-items:center;justify-content:center;}
+  .cart-thumb .icon{width:44%;height:44%;}
+  .cart-item-name{font-size:15px;font-weight:600;margin-bottom:4px;}
+  .cart-item-meta{font-size:12.5px;color:var(--stone);}
+  .cart-item-remove{background:none;border:none;color:var(--stone);font-size:12.5px;font-weight:600;padding:0;margin-top:8px;}
+  .cart-item-remove:hover{color:var(--red);}
+  .cart-item-price{font-weight:700;font-size:15px;text-align:right;min-width:80px;}
+  .summary-box{border:1px solid var(--line);border-radius:4px;padding:26px 24px;background:#fff;position:sticky;top:96px;}
+  .summary-box h3{font-size:20px;margin-bottom:20px;}
+  .summary-row{display:flex;justify-content:space-between;font-size:14.5px;padding:9px 0;color:var(--ink-soft);}
+  .summary-row.total{border-top:1px solid var(--line);margin-top:8px;padding-top:16px;font-weight:700;color:var(--ink);font-size:17px;}
+  .promo-row{display:flex;gap:8px;margin:16px 0;}
+  .promo-row input{flex:1;border:1px solid var(--line);border-radius:3px;padding:10px 12px;font-size:13.5px;font-family:var(--font-body);}
+  .empty-cart{text-align:center;padding:80px 20px;}
+  .empty-cart .icon{width:56px;height:56px;color:var(--line);margin:0 auto 18px;}
+
+  /* Checkout */
+  .steps-indicator{display:flex;align-items:center;gap:10px;padding:30px 0;}
+  .step-dot{display:flex;align-items:center;gap:10px;font-size:14px;font-weight:600;color:var(--stone);}
+  .step-dot .num{width:28px;height:28px;border-radius:50%;border:1.5px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:13px;color:var(--stone);}
+  .step-dot.active{color:var(--ink);}
+  .step-dot.active .num{background:var(--ink);border-color:var(--ink);color:#fff;}
+  .step-dot.done .num{background:#3F8F52;border-color:#3F8F52;color:#fff;}
+  .step-line{width:40px;height:1px;background:var(--line);}
+  .checkout-layout{display:grid;grid-template-columns:1fr 340px;gap:44px;padding:0 0 80px;align-items:flex-start;}
+  @media (max-width:900px){.checkout-layout{grid-template-columns:1fr;}}
+  .checkout-panel{display:none;}
+  .checkout-panel.active{display:block;}
+  .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  .form-grid.cols-3{grid-template-columns:1fr 1fr 1fr;}
+  @media (max-width:560px){.form-grid,.form-grid.cols-3{grid-template-columns:1fr;}}
+  .field{display:flex;flex-direction:column;gap:6px;margin-bottom:16px;}
+  .field label{font-size:13px;font-weight:600;color:var(--ink-soft);}
+  .field input,.field textarea,.field select{font-family:var(--font-body);border:1px solid var(--line);border-radius:3px;padding:12px 13px;font-size:14.5px;color:var(--ink);background:#fff;}
+  .field input:focus,.field textarea:focus,.field select:focus{outline:2px solid var(--ink);outline-offset:1px;}
+  .pay-options{display:flex;flex-direction:column;gap:10px;margin-bottom:20px;}
+  .pay-option{display:flex;align-items:center;gap:12px;border:1.5px solid var(--line);border-radius:4px;padding:16px;cursor:pointer;}
+  .pay-option.selected{border-color:var(--ink);}
+  .pay-option input{accent-color:var(--ink);width:16px;height:16px;}
+  .pay-option .icon{color:var(--ink-soft);}
+  .step-actions{display:flex;justify-content:space-between;margin-top:26px;gap:12px;}
+  .mini-summary-list{display:flex;flex-direction:column;gap:12px;margin-bottom:14px;max-height:260px;overflow:auto;}
+  .mini-summary-item{display:flex;justify-content:space-between;font-size:13.5px;color:var(--ink-soft);gap:10px;}
+  .mini-summary-item b{color:var(--ink);font-weight:600;}
+  .confirm-box{text-align:center;padding:60px 20px;}
+  .confirm-box .icon-circle{width:64px;height:64px;border-radius:50%;background:#3F8F52;display:flex;align-items:center;justify-content:center;margin:0 auto 22px;}
+  .confirm-box .icon-circle .icon{color:#fff;width:30px;height:30px;}
+  .confirm-box h2{font-size:28px;margin-bottom:10px;}
+  .order-num{display:inline-block;background:var(--paper-2);padding:8px 16px;border-radius:3px;font-weight:700;letter-spacing:.5px;margin:18px 0 26px;}
+
+  /* Contacto */
+  .contacto-layout{display:grid;grid-template-columns:1fr 1fr;gap:48px;padding:44px 0 30px;align-items:flex-start;}
+  @media (max-width:900px){.contacto-layout{grid-template-columns:1fr;}}
+  .contact-form-box{border:1px solid var(--line);border-radius:4px;padding:32px;background:#fff;}
+  .success-box{display:none;text-align:center;padding:50px 10px;}
+  .success-box.active{display:block;}
+  .success-box .icon-circle{width:56px;height:56px;border-radius:50%;background:#3F8F52;display:flex;align-items:center;justify-content:center;margin:0 auto 18px;}
+  .success-box .icon-circle .icon{color:#fff;width:26px;height:26px;}
+  .map-card{border:1px solid var(--line);border-radius:4px;overflow:hidden;background:#fff;}
+  .map-svg-wrap{background:#EAE7DD;aspect-ratio:4/3.1;}
+  .info-list{padding:22px 26px;display:flex;flex-direction:column;gap:16px;}
+  .info-row{display:flex;gap:14px;align-items:flex-start;}
+  .info-row .icon-wrap{width:34px;height:34px;border-radius:3px;background:var(--paper-2);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .info-row .icon-wrap .icon{width:17px;height:17px;color:var(--red);}
+  .info-row h5{font-size:14px;font-weight:600;margin-bottom:3px;}
+  .info-row p{font-size:13.5px;}
+  .toast{position:fixed;bottom:26px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;padding:13px 22px;border-radius:4px;font-size:14px;font-weight:600;display:flex;align-items:center;gap:10px;opacity:0;pointer-events:none;transition:opacity .25s ease, transform .25s ease;z-index:100;}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+  .toast .icon{color:#3F8F52;width:17px;height:17px;}
+</style>
+</head>
+<body>
+
+<svg style="display:none" aria-hidden="true">
+  <symbol id="i-cart" viewBox="0 0 24 24"><path d="M3 3h2l.4 2M7 13h10l3-8H6.4M7 13L5.4 5M7 13l-1.5 6h11"/><circle cx="9" cy="20" r="1.4"/><circle cx="17" cy="20" r="1.4"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></symbol>
+  <symbol id="i-close" viewBox="0 0 24 24"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24" class="filled"><path d="M12 3.2l2.7 5.6 6.1.7-4.5 4.2 1.2 6.1-5.5-3-5.5 3 1.2-6.1L3.2 9.5l6.1-.7z"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></symbol>
+  <symbol id="i-minus" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M4 12.5l5 5L20 6.5"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 22s7-7.4 7-12.4A7 7 0 105 9.6C5 14.6 12 22 12 22z"/><circle cx="12" cy="9.6" r="2.4"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24"><path d="M5 4h3l1.5 4L8 9.6a12 12 0 006.4 6.4L16 14l4 1.5V19a2 2 0 01-2.2 2C9.8 20.6 3.4 14.2 3 6.2A2 2 0 015 4z"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 6.5l9 6.5 9-6.5"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5.2l3.4 2"/></symbol>
+  <symbol id="i-truck" viewBox="0 0 24 24"><rect x="2" y="7" width="13" height="9" rx="1"/><path d="M15 10h4l3 3v3h-7z"/><circle cx="7" cy="18.5" r="1.6"/><circle cx="18" cy="18.5" r="1.6"/></symbol>
+  <symbol id="i-ruler" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="10" rx="1"/><path d="M7 7v3M11 7v3M15 7v3M19 7v3"/></symbol>
+  <symbol id="i-shield-check" viewBox="0 0 24 24"><path d="M12 3l7 3v6c0 5-3.2 8-7 9-3.8-1-7-4-7-9V6z"/><path d="M9 12l2 2 4-4"/></symbol>
+  <symbol id="i-chevron-down" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></symbol>
+  <symbol id="i-cat-dobok" viewBox="0 0 48 48"><path d="M15 8 L24 15 L33 8 L33 14 L38 19 L34 41 L14 41 L10 19 L15 14 Z"/><line x1="15" y1="26" x2="33" y2="26"/></symbol>
+  <symbol id="i-cat-shield" viewBox="0 0 48 48"><path d="M24 5 L40 11 V22 C40 32 33 39.5 24 43 C15 39.5 8 32 8 22 V11 Z"/><path d="M17 23.5 L22 28.5 L31 17.5"/></symbol>
+  <symbol id="i-cat-belt" viewBox="0 0 48 48"><line x1="4" y1="24" x2="44" y2="24" stroke-width="6"/><rect x="17" y="15" width="14" height="18" rx="2"/><line x1="21" y1="33" x2="16" y2="43"/><line x1="27" y1="33" x2="32" y2="43"/></symbol>
+  <symbol id="i-cat-pad" viewBox="0 0 48 48"><rect x="9" y="5" width="22" height="30" rx="4"/><line x1="20" y1="35" x2="20" y2="43"/><rect x="13" y="41" width="14" height="4" rx="2"/></symbol>
+</svg>
+
+<div class="rank-stripe"></div>
+
+<header class="topbar">
+  <div class="wrap topbar-inner">
+    <div class="logo"><span>KIH</span><em>A</em><span>P</span></div>
+    <button class="hamburger" id="hamburgerBtn" aria-label="Abrir menú"><svg class="icon"><use href="#i-menu"/></svg></button>
+    <nav class="main-nav" id="mainNav">
+      <button class="nav-link active" data-nav="inicio">Inicio</button>
+      <button class="nav-link" data-nav="catalogo">Catálogo</button>
+      <button class="nav-link" data-nav="contacto">Contacto</button>
+    </nav>
+    <div class="topbar-actions">
+      <button class="cart-btn" data-nav="carrito">
+        <svg class="icon"><use href="#i-cart"/></svg>
+        Carrito
+        <span class="cart-badge" id="cartBadge">0</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- ================= INICIO ================= -->
+<section class="page active" data-page="inicio" id="page-inicio">
+
+  <div class="wrap hero">
+    <div class="hero-grid">
+      <div>
+        <p class="eyebrow">Equipamiento oficial de Taekwondo</p>
+        <h1>Cada movimiento<br>cuenta.</h1>
+        <p class="lead">Doboks, protecciones y accesorios homologados WT para entrenar todos los días y competir con confianza, del blanco al negro.</p>
+        <div class="hero-ctas">
+          <button class="btn btn-primary" data-nav="catalogo">Ver catálogo</button>
+          <button class="btn btn-outline" onclick="document.getElementById('categorias').scrollIntoView({behavior:'smooth'})">Explorar categorías</button>
+        </div>
+      </div>
+      <div class="hero-figure">
+        <svg viewBox="0 0 300 260">
+          <path class="kick-trail" d="M40 210 Q120 230 180 150 Q210 105 255 95"/>
+          <g class="fighter">
+            <circle cx="150" cy="60" r="14"/>
+            <path d="M150 74 L150 118"/>
+            <path d="M150 84 L118 100"/>
+            <path d="M150 84 L182 70"/>
+            <path d="M150 118 L112 150"/>
+            <path d="M150 118 L215 100"/>
+            <path d="M215 100 L255 95"/>
+            <line x1="128" y1="205" x2="112" y2="150" stroke-width="2.4"/>
+            <line x1="128" y1="205" x2="140" y2="150" stroke-width="2.4"/>
+          </g>
+        </svg>
+      </div>
+    </div>
+
+    <div class="trust-row">
+      <div class="trust-item"><svg class="icon"><use href="#i-truck"/></svg> Envíos a todo el país</div>
+      <div class="trust-item"><svg class="icon"><use href="#i-ruler"/></svg> Talles para niños y adultos</div>
+      <div class="trust-item"><svg class="icon"><use href="#i-shield-check"/></svg> Productos homologados WT</div>
+    </div>
+  </div>
+
+  <div class="wrap section-tight" id="categorias">
+    <div class="section-head">
+      <h2>Comprá por categoría</h2>
+    </div>
+    <div class="cat-grid">
+      <button class="cat-card" onclick="goCatalogFiltered('doboks')">
+        <div class="icon-wrap cat-ink"><svg class="icon"><use href="#i-cat-dobok"/></svg></div>
+        <h3>Doboks</h3>
+        <span>Entrenamiento y competición</span>
+      </button>
+      <button class="cat-card" onclick="goCatalogFiltered('protecciones')">
+        <div class="icon-wrap cat-red"><svg class="icon"><use href="#i-cat-shield"/></svg></div>
+        <h3>Protecciones</h3>
+        <span>Petos, cascos, guantines</span>
+      </button>
+      <button class="cat-card" onclick="goCatalogFiltered('cinturones')">
+        <div class="icon-wrap" style="background:var(--belt-stripe);"><svg class="icon" style="color:var(--ink)"><use href="#i-cat-belt"/></svg></div>
+        <h3>Cinturones</h3>
+        <span>Todos los grados</span>
+      </button>
+      <button class="cat-card" onclick="goCatalogFiltered('accesorios')">
+        <div class="icon-wrap cat-blue"><svg class="icon"><use href="#i-cat-pad"/></svg></div>
+        <h3>Accesorios</h3>
+        <span>Paos, sacos y bolsos</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="wrap section-tight">
+    <div class="section-head">
+      <h2>Más elegidos</h2>
+      <button class="btn btn-ghost btn-sm" data-nav="catalogo">Ver todo el catálogo</button>
+    </div>
+    <div class="product-grid" id="featuredGrid"></div>
+  </div>
+
+</section>
+
+<!-- ================= CATALOGO ================= -->
+<section class="page" data-page="catalogo" id="page-catalogo">
+  <div class="wrap page-header">
+    <div class="breadcrumb"><button data-nav="inicio">Inicio</button> / Catálogo</div>
+    <h2 style="font-size:38px;">Catálogo completo</h2>
+  </div>
+
+  <div class="wrap catalogo-layout">
+    <aside>
+      <div class="filter-block">
+        <h4>Categoría</h4>
+        <label class="check-row"><input type="checkbox" class="cat-filter" value="doboks"> Doboks</label>
+        <label class="check-row"><input type="checkbox" class="cat-filter" value="protecciones"> Protecciones</label>
+        <label class="check-row"><input type="checkbox" class="cat-filter" value="cinturones"> Cinturones</label>
+        <label class="check-row"><input type="checkbox" class="cat-filter" value="accesorios"> Accesorios</label>
+      </div>
+      <div class="filter-block">
+        <h4>Talla</h4>
+        <div class="size-chip-row">
+          <button class="size-chip">XS</button><button class="size-chip">S</button>
+          <button class="size-chip">M</button><button class="size-chip">L</button>
+          <button class="size-chip">XL</button>
+        </div>
+      </div>
+      <div class="filter-block">
+        <h4>Precio</h4>
+        <div class="size-chip-row">
+          <button class="size-chip">Hasta $20.000</button>
+          <button class="size-chip">$20.000–$60.000</button>
+          <button class="size-chip">Más de $60.000</button>
+        </div>
+      </div>
+      <button class="clear-filters" onclick="clearFilters()">Limpiar filtros</button>
+    </aside>
+
+    <div>
+      <div class="catalog-toolbar">
+        <span class="result-count" id="resultCount">8 productos</span>
+        <select id="sortSelect" onchange="renderCatalog()">
+          <option value="relevancia">Ordenar por: Relevancia</option>
+          <option value="menor">Precio: menor a mayor</option>
+          <option value="mayor">Precio: mayor a menor</option>
+          <option value="nuevos">Más nuevos</option>
+        </select>
+      </div>
+      <div class="product-grid" id="catalogGrid"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= DETALLE ================= -->
+<section class="page" data-page="detalle" id="page-detalle">
+  <div class="wrap page-header">
+    <div class="breadcrumb">
+      <button data-nav="inicio">Inicio</button> / <button data-nav="catalogo">Catálogo</button> / <span id="breadcrumbName">Producto</span>
+    </div>
+  </div>
+
+  <div class="wrap detalle-grid">
+    <div>
+      <div class="gallery-main" id="galleryMain"></div>
+      <div class="gallery-thumbs" id="galleryThumbs"></div>
+    </div>
+
+    <div>
+      <p class="detalle-cat" id="detalleCat">Categoría</p>
+      <h1 class="detalle-name" id="detalleName">Nombre del producto</h1>
+      <div class="stars">
+        <svg class="icon"><use href="#i-star"/></svg><svg class="icon"><use href="#i-star"/></svg>
+        <svg class="icon"><use href="#i-star"/></svg><svg class="icon"><use href="#i-star"/></svg>
+        <svg class="icon off"><use href="#i-star"/></svg>
+        <span>(38 reseñas)</span>
+      </div>
+      <p class="detalle-price" id="detallePrice">$0</p>
+
+      <div class="opt-block" id="sizeBlock">
+        <h4>Talle</h4>
+        <div class="opt-row" id="sizeRow"></div>
+      </div>
+
+      <div class="opt-block" id="colorBlock">
+        <h4>Color</h4>
+        <div class="opt-row" id="colorRow"></div>
+      </div>
+
+      <div class="opt-block">
+        <h4>Cantidad</h4>
+        <div class="qty-stepper">
+          <button onclick="changeDetailQty(-1)"><svg class="icon"><use href="#i-minus"/></svg></button>
+          <span id="detailQty">1</span>
+          <button onclick="changeDetailQty(1)"><svg class="icon"><use href="#i-plus"/></svg></button>
+        </div>
+      </div>
+
+      <div class="detalle-ctas">
+        <button class="btn btn-primary" onclick="addDetailToCart()">Agregar al carrito</button>
+        <button class="btn btn-dark" onclick="buyNow()">Comprar ahora</button>
+      </div>
+
+      <div class="stock-note"><svg class="icon"><use href="#i-check"/></svg> En stock — envío en 24/48 h hábiles</div>
+
+      <div class="tabs">
+        <div class="tab-heads">
+          <button class="tab-head active" data-tab="descripcion">Descripción</button>
+          <button class="tab-head" data-tab="talles">Guía de talles</button>
+          <button class="tab-head" data-tab="envios">Envíos y devoluciones</button>
+        </div>
+        <div class="tab-panel active" data-tabpanel="descripcion" id="tabDescripcion"></div>
+        <div class="tab-panel" data-tabpanel="talles">
+          <p>Consultá la tabla de talles en centímetros según altura antes de comprar. Si tenés dudas entre dos talles, te recomendamos elegir el más grande para permitir margen de movimiento durante la práctica.</p>
+        </div>
+        <div class="tab-panel" data-tabpanel="envios">
+          <p>Envíos a todo el país por correo o transporte a sucursal. Retiro sin cargo en nuestro local de Mendoza. Cambios y devoluciones dentro de los 30 días con el producto sin uso y su embalaje original.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="related-head section-head">
+      <h2 style="font-size:28px;">También te puede interesar</h2>
+    </div>
+    <div class="product-grid" id="relatedGrid"></div>
+  </div>
+</section>
+
+<!-- ================= CARRITO ================= -->
+<section class="page" data-page="carrito" id="page-carrito">
+  <div class="wrap page-header">
+    <div class="breadcrumb"><button data-nav="inicio">Inicio</button> / Carrito</div>
+    <h2 style="font-size:38px;">Tu carrito</h2>
+  </div>
+
+  <div class="wrap carrito-layout" id="cartLayout">
+    <div>
+      <div id="cartItemsList"></div>
+      <button class="btn btn-ghost btn-sm" style="margin-top:20px;" data-nav="catalogo">Seguir comprando</button>
+    </div>
+
+    <div class="summary-box">
+      <h3>Resumen del pedido</h3>
+      <div class="summary-row"><span>Subtotal</span><span id="cartSubtotal">$0</span></div>
+      <div class="summary-row"><span>Envío estimado</span><span id="cartShipping">$0</span></div>
+      <div class="promo-row">
+        <input type="text" placeholder="Código de descuento">
+        <button class="btn btn-ghost btn-sm">Aplicar</button>
+      </div>
+      <div class="summary-row total"><span>Total</span><span id="cartTotal">$0</span></div>
+      <button class="btn btn-primary btn-block" style="margin-top:18px;" data-nav="checkout">Iniciar compra</button>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CHECKOUT ================= -->
+<section class="page" data-page="checkout" id="page-checkout">
+  <div class="wrap page-header">
+    <div class="breadcrumb"><button data-nav="inicio">Inicio</button> / <button data-nav="carrito">Carrito</button> / Checkout</div>
+    <h2 style="font-size:38px;">Finalizar compra</h2>
+  </div>
+
+  <div class="wrap">
+    <div class="steps-indicator">
+      <div class="step-dot active" id="stepDot1"><span class="num">1</span> Envío</div>
+      <div class="step-line"></div>
+      <div class="step-dot" id="stepDot2"><span class="num">2</span> Pago</div>
+      <div class="step-line"></div>
+      <div class="step-dot" id="stepDot3"><span class="num">3</span> Confirmación</div>
+    </div>
+  </div>
+
+  <div class="wrap checkout-layout">
+    <div>
+      <!-- Paso 1: envío -->
+      <div class="checkout-panel active" id="checkoutStep1">
+        <h3 style="font-size:20px;margin-bottom:18px;">Datos de envío</h3>
+        <div class="form-grid">
+          <div class="field"><label>Nombre</label><input type="text" placeholder="Ej: Nicolás"></div>
+          <div class="field"><label>Apellido</label><input type="text" placeholder="Ej: Caruso"></div>
+        </div>
+        <div class="form-grid">
+          <div class="field"><label>DNI</label><input type="text" placeholder="00.000.000"></div>
+          <div class="field"><label>Teléfono</label><input type="tel" placeholder="+54 261 000 0000"></div>
+        </div>
+        <div class="field"><label>Email</label><input type="email" placeholder="tuemail@correo.com"></div>
+        <div class="field"><label>Dirección</label><input type="text" placeholder="Calle y número"></div>
+        <div class="form-grid cols-3">
+          <div class="field"><label>Ciudad</label><input type="text" placeholder="Mendoza"></div>
+          <div class="field"><label>Provincia</label><input type="text" placeholder="Mendoza"></div>
+          <div class="field"><label>Código Postal</label><input type="text" placeholder="5500"></div>
+        </div>
+        <div class="step-actions">
+          <span></span>
+          <button class="btn btn-dark" onclick="setCheckoutStep(2)">Continuar a pago</button>
+        </div>
+      </div>
+
+      <!-- Paso 2: pago -->
+      <div class="checkout-panel" id="checkoutStep2">
+        <h3 style="font-size:20px;margin-bottom:18px;">Método de pago</h3>
+        <div class="pay-options">
+          <label class="pay-option selected"><input type="radio" name="pago" checked><svg class="icon"><use href="#i-cart"/></svg> Tarjeta de crédito / débito</label>
+          <label class="pay-option"><input type="radio" name="pago"><svg class="icon"><use href="#i-shield-check"/></svg> Mercado Pago</label>
+          <label class="pay-option"><input type="radio" name="pago"><svg class="icon"><use href="#i-truck"/></svg> Transferencia bancaria</label>
+        </div>
+        <div class="field"><label>Número de tarjeta</label><input type="text" placeholder="0000 0000 0000 0000"></div>
+        <div class="form-grid cols-3">
+          <div class="field"><label>Vencimiento</label><input type="text" placeholder="MM/AA"></div>
+          <div class="field"><label>CVV</label><input type="text" placeholder="123"></div>
+          <div class="field"><label>Titular</label><input type="text" placeholder="Nombre en la tarjeta"></div>
+        </div>
+        <div class="step-actions">
+          <button class="btn btn-ghost" onclick="setCheckoutStep(1)">Volver</button>
+          <button class="btn btn-dark" onclick="setCheckoutStep(3)">Confirmar pedido</button>
+        </div>
+      </div>
+
+      <!-- Paso 3: confirmación -->
+      <div class="checkout-panel" id="checkoutStep3">
+        <div class="confirm-box">
+          <div class="icon-circle"><svg class="icon"><use href="#i-check"/></svg></div>
+          <h2>¡Gracias por tu compra!</h2>
+          <p>Te enviamos un correo con el detalle de tu pedido. Vas a recibir una notificación cuando salga de nuestro depósito.</p>
+          <div class="order-num">Pedido #KH-24897</div>
+          <div>
+            <button class="btn btn-primary" data-nav="inicio">Volver al inicio</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="summary-box">
+      <h3>Tu pedido</h3>
+      <div class="mini-summary-list" id="checkoutMiniList"></div>
+      <div class="summary-row"><span>Subtotal</span><span id="checkoutSubtotal">$0</span></div>
+      <div class="summary-row"><span>Envío</span><span id="checkoutShipping">$0</span></div>
+      <div class="summary-row total"><span>Total</span><span id="checkoutTotal">$0</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CONTACTO ================= -->
+<section class="page" data-page="contacto" id="page-contacto">
+  <div class="wrap page-header">
+    <div class="breadcrumb"><button data-nav="inicio">Inicio</button> / Contacto</div>
+    <h2 style="font-size:38px;">Contacto</h2>
+    <p style="margin-top:10px;max-width:60ch;">¿Tenés dudas sobre talles, envíos o algún producto? Escribinos y te respondemos a la brevedad.</p>
+  </div>
+
+  <div class="wrap contacto-layout">
+    <div class="contact-form-box">
+      <form id="contactForm">
+        <div class="field"><label>Nombre y apellido</label><input type="text" required placeholder="Tu nombre"></div>
+        <div class="field"><label>Email</label><input type="email" required placeholder="tuemail@correo.com"></div>
+        <div class="field">
+          <label>Asunto</label>
+          <select required>
+            <option value="">Elegí un motivo</option>
+            <option>Consulta sobre talles</option>
+            <option>Estado de un pedido</option>
+            <option>Cambios y devoluciones</option>
+            <option>Compras mayoristas / dojang</option>
+            <option>Otro</option>
+          </select>
+        </div>
+        <div class="field"><label>Mensaje</label><textarea required rows="5" placeholder="Contanos en qué te podemos ayudar"></textarea></div>
+        <button type="submit" class="btn btn-primary btn-block">Enviar mensaje</button>
+      </form>
+
+      <div class="success-box" id="successBox">
+        <div class="icon-circle"><svg class="icon"><use href="#i-check"/></svg></div>
+        <h3 style="font-size:20px;margin-bottom:8px;">Mensaje enviado</h3>
+        <p>Gracias por escribirnos. Te vamos a contestar dentro de las próximas 24 horas hábiles.</p>
+        <button class="btn btn-ghost btn-sm" style="margin-top:18px;" onclick="resetContactForm()">Enviar otro mensaje</button>
+      </div>
+    </div>
+
+    <div>
+      <div class="map-card">
+        <div class="map-svg-wrap">
+          <svg viewBox="0 0 400 310" width="100%" height="100%">
+            <rect width="400" height="310" fill="#EAE7DD"/>
+            <g stroke="#D3CFC1" stroke-width="2">
+              <line x1="0" y1="70" x2="400" y2="60"/>
+              <line x1="0" y1="150" x2="400" y2="145"/>
+              <line x1="0" y1="230" x2="400" y2="235"/>
+              <line x1="80" y1="0" x2="70" y2="310"/>
+              <line x1="190" y1="0" x2="195" y2="310"/>
+              <line x1="300" y1="0" x2="310" y2="310"/>
+            </g>
+            <rect x="100" y="85" width="70" height="45" fill="#DEDACD"/>
+            <rect x="220" y="165" width="60" height="50" fill="#DEDACD"/>
+            <rect x="90" y="245" width="80" height="40" fill="#DEDACD"/>
+            <g transform="translate(196,150)">
+              <path d="M0 -30 C-14 -30 -22 -20 -22 -8 C-22 8 0 30 0 30 C0 30 22 8 22 -8 C22 -20 14 -30 0 -30 Z" fill="#C41E3A"/>
+              <circle cx="0" cy="-8" r="7" fill="#fff"/>
+            </g>
+            <g transform="translate(340,35)" stroke="#B7B3A5" stroke-width="1.5" fill="none">
+              <circle cx="0" cy="0" r="18"/>
+              <line x1="0" y1="-18" x2="0" y2="18"/>
+              <line x1="-18" y1="0" x2="18" y2="0"/>
+            </g>
+          </svg>
+        </div>
+        <div class="info-list">
+          <div class="info-row">
+            <div class="icon-wrap"><svg class="icon"><use href="#i-pin"/></svg></div>
+            <div><h5>KIHAP Tienda — Mendoza</h5><p>Av. San Martín 1245, Ciudad de Mendoza</p></div>
+          </div>
+          <div class="info-row">
+            <div class="icon-wrap"><svg class="icon"><use href="#i-phone"/></svg></div>
+            <div><h5>Teléfono</h5><p>+54 261 400 5566</p></div>
+          </div>
+          <div class="info-row">
+            <div class="icon-wrap"><svg class="icon"><use href="#i-mail"/></svg></div>
+            <div><h5>Email</h5><p>hola@kihap.com.ar</p></div>
+          </div>
+          <div class="info-row">
+            <div class="icon-wrap"><svg class="icon"><use href="#i-clock"/></svg></div>
+            <div><h5>Horarios</h5><p>Lunes a viernes 9 a 19 h · Sábados 9 a 13 h</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap footer-grid">
+    <div>
+      <div class="logo"><span>KIH</span><em>A</em><span>P</span></div>
+      <p>Equipamiento de taekwondo para cada cinturón: doboks, protecciones y accesorios homologados WT.</p>
+    </div>
+    <div>
+      <h4>Tienda</h4>
+      <ul>
+        <li><a href="#" data-nav="catalogo">Doboks</a></li>
+        <li><a href="#" data-nav="catalogo">Protecciones</a></li>
+        <li><a href="#" data-nav="catalogo">Cinturones</a></li>
+        <li><a href="#" data-nav="catalogo">Accesorios</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Ayuda</h4>
+      <ul>
+        <li><a href="#" data-nav="contacto">Contacto</a></li>
+        <li><a href="#">Guía de talles</a></li>
+        <li><a href="#">Envíos</a></li>
+        <li><a href="#">Cambios y devoluciones</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Newsletter</h4>
+      <p>Enterate de nuevos productos y promociones.</p>
+      <div class="promo-row" style="margin-top:12px;">
+        <input type="email" placeholder="Tu email">
+        <button class="btn btn-primary btn-sm">Sumarme</button>
+      </div>
+    </div>
+  </div>
+  <div class="wrap foot-bottom">
+    <span>© 2026 KIHAP. Todos los derechos reservados.</span>
+    <span>Mockup de sitio — contenido de ejemplo</span>
+  </div>
+</footer>
+
+<div class="toast" id="toast"><svg class="icon"><use href="#i-check"/></svg><span id="toastText">Agregado al carrito</span></div>
+
+<script>
+/* ---------- Datos de productos ---------- */
+const products = [
+  {id:1, name:"Dobok Kukkiwon Trainer", category:"doboks", price:45000, sizes:["130","140","150","160","170","180"], colors:null, featured:true, badge:"Más vendido",
+    desc:"Dobok de entrenamiento diario en algodón grueso con cuello en V reforzado. Corte cómodo pensado para largas sesiones de práctica, resiste lavados frecuentes sin perder forma."},
+  {id:2, name:"Dobok Competición WT", category:"doboks", price:68000, sizes:["150","160","170","180","190"], colors:null, featured:true, badge:"Nuevo",
+    desc:"Tela liviana de alto rendimiento con corte ajustado, homologada para torneos World Taekwondo. Costuras reforzadas en zonas de mayor tensión."},
+  {id:3, name:"Set Peto + Casco de Sparring", category:"protecciones", price:89000, sizes:["S","M","L","XL"], colors:["#C41E3A","#14487A"], featured:true, badge:"Más vendido",
+    desc:"Peto acolchado compatible con sistemas electrónicos y casco de espuma de alta densidad. Par completo listo para entrenar sparring de contacto controlado."},
+  {id:4, name:"Guantines de Sparring", category:"protecciones", price:15000, sizes:["S","M","L"], colors:["#C41E3A","#14487A"], featured:false,
+    desc:"Espuma de alta densidad con cierre de velcro ajustable para mayor sujeción de muñeca durante el combate."},
+  {id:5, name:"Espinilleras con Empeine", category:"protecciones", price:18000, sizes:["S","M","L"], colors:["#C41E3A","#14487A"], featured:false,
+    desc:"Protección de espinilla y empeine en una sola pieza articulada, pensada para no restar movilidad en la patada."},
+  {id:6, name:"Cinturón Oficial WT", category:"cinturones", price:6000, sizes:["220 cm","240 cm","260 cm","280 cm","300 cm"], colors:["#FFFFFF","#E8B93A","#3F8F52","#2C5F8A","#B23A3A","#16171A"], featured:true, badge:"Todos los grados",
+    desc:"Algodón trenzado grueso disponible en todos los colores de grado, del blanco al negro. Terminación reforzada en las puntas."},
+  {id:7, name:"Paos de Patada Curvos", category:"accesorios", price:22000, sizes:null, colors:null, featured:false,
+    desc:"Par de paos curvos con doble asa y superficie antideslizante, ideales para trabajo de potencia y precisión de patada."},
+  {id:8, name:"Saco de Boxeo 120 cm", category:"accesorios", price:52000, sizes:null, colors:null, featured:false,
+    desc:"Saco relleno de 120 cm para entrenamiento de potencia de golpe y patada. Incluye cadena de sujeción reforzada."},
+];
+
+const catLabel = {doboks:"Doboks", protecciones:"Protecciones", cinturones:"Cinturones", accesorios:"Accesorios"};
+const catClass = {doboks:"cat-ink", protecciones:"cat-red", cinturones:"cat-belt", accesorios:"cat-blue"};
+const catIcon  = {doboks:"i-cat-dobok", protecciones:"i-cat-shield", cinturones:"i-cat-belt", accesorios:"i-cat-pad"};
+
+function formatPrice(n){ return "$" + n.toLocaleString("es-AR"); }
+
+/* ---------- Navegación ---------- */
+function showPage(name){
+  document.querySelectorAll(".page").forEach(p => p.classList.toggle("active", p.dataset.page === name));
+  document.querySelectorAll(".nav-link").forEach(b => b.classList.toggle("active", b.dataset.nav === name));
+  window.scrollTo({top:0, behavior:"instant"});
+  document.getElementById("mainNav").classList.remove("open");
+}
+document.querySelectorAll("[data-nav]").forEach(el => {
+  el.addEventListener("click", (e) => { e.preventDefault(); showPage(el.dataset.nav); });
+});
+document.getElementById("hamburgerBtn").addEventListener("click", () => {
+  document.getElementById("mainNav").classList.toggle("open");
+});
+
+function goCatalogFiltered(cat){
+  document.querySelectorAll(".cat-filter").forEach(cb => cb.checked = (cb.value === cat));
+  renderCatalog();
+  showPage("catalogo");
+}
+
+/* ---------- Tarjetas de producto ---------- */
+function productMediaHTML(p, big){
+  return `<div class="${big ? 'gallery-main' : 'product-media'} ${catClass[p.category]}">
+    <svg class="icon" style="color:${p.category==='cinturones' ? 'var(--ink)' : '#fff'}"><use href="#${catIcon[p.category]}"/></svg>
+  </div>`;
+}
+
+function productCardHTML(p){
+  return `<div class="product-card" data-id="${p.id}">
+    ${productMediaHTML(p,false).replace('class="product-media', `class="product-media` )}
+    <div class="product-info">
+      <span class="product-cat">${catLabel[p.category]}</span>
+      <span class="product-name">${p.name}</span>
+      <span class="product-price">${formatPrice(p.price)}</span>
+      <button class="btn-add" data-quickadd="${p.id}"><svg class="icon" style="width:14px;height:14px"><use href="#i-cart"/></svg> Agregar</button>
+    </div>
+  </div>`;
+}
+// Se agrega el badge si corresponde
+function productCardHTMLWithBadge(p){
+  let html = productCardHTML(p);
+  if(p.badge){
+    html = html.replace('product-media', 'product-media').replace('">\n    <svg', `"><span class="badge-tag">${p.badge}</span>\n    <svg`);
+  }
+  return html;
+}
+
+document.body.addEventListener("click", (e) => {
+  const quickBtn = e.target.closest("[data-quickadd]");
+  if(quickBtn){
+    e.stopPropagation();
+    const p = products.find(pr => pr.id === Number(quickBtn.dataset.quickadd));
+    quickAddToCart(p);
+    return;
+  }
+  const card = e.target.closest(".product-card");
+  if(card){
+    openDetalle(Number(card.dataset.id));
+  }
+});
+
+/* ---------- Inicio: destacados ---------- */
+function renderFeatured(){
+  const featured = products.filter(p => p.featured);
+  document.getElementById("featuredGrid").innerHTML = featured.map(productCardHTMLWithBadge).join("");
+}
+
+/* ---------- Catálogo ---------- */
+function getActiveCategoryFilters(){
+  return Array.from(document.querySelectorAll(".cat-filter:checked")).map(cb => cb.value);
+}
+function clearFilters(){
+  document.querySelectorAll(".cat-filter").forEach(cb => cb.checked = false);
+  renderCatalog();
+}
+function renderCatalog(){
+  const active = getActiveCategoryFilters();
+  let list = active.length ? products.filter(p => active.includes(p.category)) : products.slice();
+  const sort = document.getElementById("sortSelect").value;
+  if(sort === "menor") list.sort((a,b) => a.price - b.price);
+  if(sort === "mayor") list.sort((a,b) => b.price - a.price);
+  if(sort === "nuevos") list.sort((a,b) => b.id - a.id);
+  document.getElementById("catalogGrid").innerHTML = list.map(productCardHTMLWithBadge).join("");
+  document.getElementById("resultCount").textContent = list.length + (list.length === 1 ? " producto" : " productos");
+}
+document.querySelectorAll(".cat-filter").forEach(cb => cb.addEventListener("change", renderCatalog));
+
+/* ---------- Detalle ---------- */
+let currentProduct = products[0];
+let detailSize = null;
+let detailColor = null;
+let detailQty = 1;
+
+function openDetalle(id){
+  currentProduct = products.find(p => p.id === id) || products[0];
+  detailSize = currentProduct.sizes ? currentProduct.sizes[0] : null;
+  detailColor = currentProduct.colors ? currentProduct.colors[0] : null;
+  detailQty = 1;
+  renderDetalle();
+  showPage("detalle");
+}
+
+function renderDetalle(){
+  const p = currentProduct;
+  document.getElementById("breadcrumbName").textContent = p.name;
+  document.getElementById("detalleCat").textContent = catLabel[p.category];
+  document.getElementById("detalleName").textContent = p.name;
+  document.getElementById("detallePrice").textContent = formatPrice(p.price);
+  document.getElementById("tabDescripcion").innerHTML = `<p>${p.desc}</p>`;
+
+  const mediaColor = catClass[p.category];
+  const iconColor = p.category === 'cinturones' ? 'var(--ink)' : '#fff';
+  document.getElementById("galleryMain").className = "gallery-main " + mediaColor;
+  document.getElementById("galleryMain").innerHTML = `<svg class="icon" style="color:${iconColor}"><use href="#${catIcon[p.category]}"/></svg>`;
+  document.getElementById("galleryThumbs").innerHTML = [1,2,3].map((n,i) =>
+    `<div class="thumb ${mediaColor} ${i===0?'active':''}"><svg class="icon" style="color:${iconColor}"><use href="#${catIcon[p.category]}"/></svg></div>`
+  ).join("");
+
+  // Talles
+  const sizeBlock = document.getElementById("sizeBlock");
+  if(p.sizes){
+    sizeBlock.style.display = "block";
+    document.getElementById("sizeRow").innerHTML = p.sizes.map(s =>
+      `<button class="opt-btn ${s===detailSize?'selected':''}" data-size="${s}">${s}</button>`
+    ).join("");
+  } else { sizeBlock.style.display = "none"; }
+
+  // Colores
+  const colorBlock = document.getElementById("colorBlock");
+  if(p.colors){
+    colorBlock.style.display = "block";
+    document.getElementById("colorRow").innerHTML = p.colors.map(c =>
+      `<button class="color-dot ${c===detailColor?'selected':''}" data-color="${c}" style="${c==='#FFFFFF'?'border-color:#DDD9CF':''}"><i style="background:${c}"></i></button>`
+    ).join("");
+  } else { colorBlock.style.display = "none"; }
+
+  document.getElementById("detailQty").textContent = detailQty;
+
+  // Relacionados: misma categoría, excluyendo el actual
+  const related = products.filter(pr => pr.category === p.category && pr.id !== p.id).slice(0,4);
+  const fallback = related.length ? related : products.filter(pr => pr.id !== p.id).slice(0,4);
+  document.getElementById("relatedGrid").innerHTML = fallback.map(productCardHTMLWithBadge).join("");
+}
+
+document.getElementById("sizeRow").addEventListener("click", e => {
+  const btn = e.target.closest("[data-size]");
+  if(btn){ detailSize = btn.dataset.size; renderDetalle(); }
+});
+document.getElementById("colorRow").addEventListener("click", e => {
+  const btn = e.target.closest("[data-color]");
+  if(btn){ detailColor = btn.dataset.color; renderDetalle(); }
+});
+function changeDetailQty(delta){
+  detailQty = Math.max(1, detailQty + delta);
+  document.getElementById("detailQty").textContent = detailQty;
+}
+
+/* ---------- Tabs de detalle ---------- */
+document.querySelectorAll(".tab-head").forEach(tab => {
+  tab.addEventListener("click", () => {
+    document.querySelectorAll(".tab-head").forEach(t => t.classList.remove("active"));
+    document.querySelectorAll(".tab-panel").forEach(p => p.classList.remove("active"));
+    tab.classList.add("active");
+    document.querySelector(`[data-tabpanel="${tab.dataset.tab}"]`).classList.add("active");
+  });
+});
+
+/* ---------- Carrito ---------- */
+let cart = [
+  {product: products[0], size:"160", color:null, qty:1},
+  {product: products[2], size:"M", color:"#C41E3A", qty:1},
+];
+
+function cartCount(){ return cart.reduce((s,i) => s + i.qty, 0); }
+function cartSubtotal(){ return cart.reduce((s,i) => s + i.qty * i.product.price, 0); }
+function shippingCost(){ return cart.length ? 4500 : 0; }
+
+function updateCartBadge(){
+  document.getElementById("cartBadge").textContent = cartCount();
+}
+
+function showToast(text){
+  const toast = document.getElementById("toast");
+  document.getElementById("toastText").textContent = text;
+  toast.classList.add("show");
+  clearTimeout(window._toastTimer);
+  window._toastTimer = setTimeout(() => toast.classList.remove("show"), 2000);
+}
+
+function quickAddToCart(p){
+  const existing = cart.find(i => i.product.id === p.id && !i.size && !i.color);
+  if(existing){ existing.qty += 1; }
+  else { cart.push({product:p, size: p.sizes ? p.sizes[0] : null, color: p.colors ? p.colors[0] : null, qty:1}); }
+  updateCartBadge();
+  renderCart();
+  showToast("Agregado al carrito");
+}
+
+function addDetailToCart(){
+  const existing = cart.find(i => i.product.id === currentProduct.id && i.size === detailSize && i.color === detailColor);
+  if(existing){ existing.qty += detailQty; }
+  else { cart.push({product: currentProduct, size: detailSize, color: detailColor, qty: detailQty}); }
+  updateCartBadge();
+  renderCart();
+  showToast("Agregado al carrito");
+}
+
+function buyNow(){
+  addDetailToCart();
+  showPage("checkout");
+  setCheckoutStep(1);
+}
+
+function removeFromCart(idx){
+  cart.splice(idx,1);
+  updateCartBadge();
+  renderCart();
+}
+function changeCartQty(idx, delta){
+  cart[idx].qty = Math.max(1, cart[idx].qty + delta);
+  updateCartBadge();
+  renderCart();
+}
+
+function cartItemRowHTML(item, idx){
+  const p = item.product;
+  const iconColor = p.category === 'cinturones' ? 'var(--ink)' : '#fff';
+  const metaParts = [];
+  if(item.size) metaParts.push("Talle " + item.size);
+  if(item.color) metaParts.push(`<span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:${item.color};vertical-align:middle;margin-right:4px;border:1px solid #ddd"></span>Color`);
+  return `<div class="cart-item">
+    <div class="cart-thumb ${catClass[p.category]}"><svg class="icon" style="color:${iconColor}"><use href="#${catIcon[p.category]}"/></svg></div>
+    <div>
+      <div class="cart-item-name">${p.name}</div>
+      <div class="cart-item-meta">${metaParts.join(" · ") || "&nbsp;"}</div>
+      <button class="cart-item-remove" data-remove="${idx}">Quitar</button>
+    </div>
+    <div class="qty-stepper" style="height:40px;">
+      <button data-qtyminus="${idx}"><svg class="icon"><use href="#i-minus"/></svg></button>
+      <span>${item.qty}</span>
+      <button data-qtyplus="${idx}"><svg class="icon"><use href="#i-plus"/></svg></button>
+    </div>
+    <div class="cart-item-price">${formatPrice(item.qty * p.price)}</div>
+  </div>`;
+}
+
+function renderCart(){
+  const listEl = document.getElementById("cartItemsList");
+  const layoutEl = document.getElementById("cartLayout");
+  if(cart.length === 0){
+    layoutEl.innerHTML = `<div class="empty-cart" style="grid-column:1/-1;">
+      <svg class="icon"><use href="#i-cart"/></svg>
+      <h3 style="font-size:22px;margin-bottom:10px;">Tu carrito está vacío</h3>
+      <p style="margin-bottom:20px;">Explorá el catálogo y encontrá tu próximo equipo.</p>
+      <button class="btn btn-primary" data-nav="catalogo">Ir al catálogo</button>
+    </div>`;
+    document.querySelectorAll("#cartLayout [data-nav]").forEach(el => el.addEventListener("click", () => showPage(el.dataset.nav)));
+    return;
+  }
+  listEl.innerHTML = cart.map(cartItemRowHTML).join("");
+  document.getElementById("cartSubtotal").textContent = formatPrice(cartSubtotal());
+  document.getElementById("cartShipping").textContent = formatPrice(shippingCost());
+  document.getElementById("cartTotal").textContent = formatPrice(cartSubtotal() + shippingCost());
+  renderCheckoutSummary();
+}
+
+document.getElementById("cartItemsList")?.addEventListener("click", e => {
+  const rm = e.target.closest("[data-remove]");
+  const minus = e.target.closest("[data-qtyminus]");
+  const plus = e.target.closest("[data-qtyplus]");
+  if(rm) removeFromCart(Number(rm.dataset.remove));
+  if(minus) changeCartQty(Number(minus.dataset.qtyminus), -1);
+  if(plus) changeCartQty(Number(plus.dataset.qtyplus), 1);
+});
+
+/* ---------- Checkout ---------- */
+function setCheckoutStep(n){
+  [1,2,3].forEach(i => {
+    document.getElementById("checkoutStep"+i).classList.toggle("active", i===n);
+    const dot = document.getElementById("stepDot"+i);
+    dot.classList.toggle("active", i===n);
+    dot.classList.toggle("done", i<n);
+  });
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+
+function renderCheckoutSummary(){
+  document.getElementById("checkoutMiniList").innerHTML = cart.map(item =>
+    `<div class="mini-summary-item"><span>${item.qty}× ${item.product.name}</span><b>${formatPrice(item.qty*item.product.price)}</b></div>`
+  ).join("") || `<p style="font-size:13px;">Tu carrito está vacío.</p>`;
+  document.getElementById("checkoutSubtotal").textContent = formatPrice(cartSubtotal());
+  document.getElementById("checkoutShipping").textContent = formatPrice(shippingCost());
+  document.getElementById("checkoutTotal").textContent = formatPrice(cartSubtotal() + shippingCost());
+}
+
+/* ---------- Contacto ---------- */
+document.getElementById("contactForm").addEventListener("submit", e => {
+  e.preventDefault();
+  document.getElementById("contactForm").style.display = "none";
+  document.getElementById("successBox").classList.add("active");
+});
+function resetContactForm(){
+  document.getElementById("contactForm").reset();
+  document.getElementById("contactForm").style.display = "block";
+  document.getElementById("successBox").classList.remove("active");
+}
+
+/* ---------- Init ---------- */
+renderFeatured();
+renderCatalog();
+renderDetalle();
+updateCartBadge();
+renderCart();
+</script>
+
+</body>
+</html>
