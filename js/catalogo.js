@@ -1,23 +1,23 @@
-/* KIHAP - catalogo.js vanilla */
+/* KIHAP - catalogo.js vanilla | BEM español */
 function productMediaHTML(p){
-  return `<div class="product-media ${catClass[p.category]}"><svg class="icon" style="color:${p.category==='cinturones' ? 'var(--ink)' : '#fff'}"><use href="#${catIcon[p.category]}"/></svg></div>`;
+  return `<div class="tarjeta-producto__media ${catClass[p.category]}"><svg class="icono" style="color:${p.category==='cinturones' ? 'var(--ink)' : '#fff'}"><use href="#${catIcon[p.category]}"/></svg></div>`;
 }
 function productCardHTML(p){
-  return `<div class="product-card" data-id="${p.id}">
+  return `<div class="tarjeta-producto" data-id="${p.id}">
     ${productMediaHTML(p)}
-    <div class="product-info">
-      <span class="product-cat">${catLabel[p.category]}</span>
-      <span class="product-name">${p.name}</span>
-      <span class="product-price">${formatPrice(p.price)}</span>
-      <button class="btn-add" data-quickadd="${p.id}"><svg class="icon" style="width:14px;height:14px"><use href="#i-cart"/></svg> Agregar</button>
+    <div class="tarjeta-producto__cuerpo">
+      <span class="tarjeta-producto__categoria">${catLabel[p.category]}</span>
+      <span class="tarjeta-producto__nombre">${p.name}</span>
+      <span class="tarjeta-producto__precio">${formatPrice(p.price)}</span>
+      <button class="tarjeta-producto__accion" data-quickadd="${p.id}"><svg class="icono" style="width:14px;height:14px"><use href="#i-cart"/></svg> Agregar</button>
     </div>
   </div>`;
 }
 function productCardHTMLWithBadge(p){
   let html = productCardHTML(p);
   if(p.badge){
-    if(!html.includes('badge-tag')){
-      html = html.replace('<svg class="icon"', '<span class="badge-tag">'+p.badge+'</span><svg class="icon"');
+    if(!html.includes('tarjeta-producto__etiqueta')){
+      html = html.replace('<svg class="icono"', '<span class="tarjeta-producto__etiqueta">'+p.badge+'</span><svg class="icono"');
     }
   }
   return html;
@@ -60,7 +60,7 @@ document.addEventListener("DOMContentLoaded", () => {
       quickAddToCart(p);
       return;
     }
-    const card = e.target.closest(".product-card");
+    const card = e.target.closest(".tarjeta-producto");
     if(card){
       location.href = "producto.html?id=" + card.dataset.id;
     }

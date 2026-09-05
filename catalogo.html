@@ -20,80 +20,80 @@
   <symbol id="i-cat-pad" viewBox="0 0 48 48"><rect x="9" y="5" width="22" height="30" rx="4"/><line x1="20" y1="35" x2="20" y2="43"/><rect x="13" y="41" width="14" height="4" rx="2"/></symbol>
 </svg>
 
-<div class="rank-stripe"></div>
+<div class="franja__cinturon"></div>
 
-<header class="topbar">
-  <div class="wrap topbar-inner">
-    <a href="index.html" class="logo" style="text-decoration:none;color:inherit"><span>KIH</span><em>A</em><span>P</span></a>
-    <button class="hamburger" id="hamburgerBtn" aria-label="Abrir menú"><svg class="icon"><use href="#i-menu"/></svg></button>
-    <nav class="main-nav" id="mainNav">
-      <a class="nav-link" href="index.html">Inicio</a>
-      <a class="nav-link active" href="catalogo.html">Catálogo</a>
-      <a class="nav-link" href="contacto.html">Contacto</a>
+<header class="cabecera">
+  <div class="contenedor cabecera__interior">
+    <a href="index.html" class="cabecera__marca"><span>KIH</span><em class="cabecera__marca-acento">A</em><span>P</span></a>
+    <button class="cabecera__menu" id="hamburgerBtn" aria-label="Abrir menú"><svg class="icono"><use href="#i-menu"/></svg></button>
+    <nav class="navegacion" id="mainNav">
+      <a class="navegacion__enlace" href="index.html">Inicio</a>
+      <a class="navegacion__enlace navegacion__enlace--activo" href="catalogo.html">Catálogo</a>
+      <a class="navegacion__enlace" href="contacto.html">Contacto</a>
     </nav>
-    <div class="topbar-actions">
-      <a class="cart-btn" href="carrito.html">
-        <svg class="icon"><use href="#i-cart"/></svg>
+    <div class="cabecera__acciones">
+      <a class="boton-carrito" href="carrito.html">
+        <svg class="icono"><use href="#i-cart"/></svg>
         Carrito
-        <span class="cart-badge" id="cartBadge">0</span>
+        <span class="boton-carrito__insignia" id="cartBadge">0</span>
       </a>
     </div>
   </div>
 </header>
 
 <main>
-  <div class="wrap page-header">
-    <div class="breadcrumb"><a href="index.html">Inicio</a> / Catálogo</div>
+  <div class="contenedor encabezado-pagina">
+    <div class="migas"><a class="migas__enlace" href="index.html">Inicio</a> / Catálogo</div>
     <h2 style="font-size:38px;">Catálogo completo</h2>
   </div>
 
-  <div class="wrap catalogo-layout">
+  <div class="contenedor catalogo__distribucion">
     <aside>
-      <div class="filter-block">
-        <h4>Categoría</h4>
-        <label class="check-row"><input type="checkbox" class="cat-filter" value="doboks"> Doboks</label>
-        <label class="check-row"><input type="checkbox" class="cat-filter" value="protecciones"> Protecciones</label>
-        <label class="check-row"><input type="checkbox" class="cat-filter" value="cinturones"> Cinturones</label>
-        <label class="check-row"><input type="checkbox" class="cat-filter" value="accesorios"> Accesorios</label>
+      <div class="filtro">
+        <h4 class="filtro__titulo">Categoría</h4>
+        <label class="filtro__opcion"><input type="checkbox" class="cat-filter" value="doboks"> Doboks</label>
+        <label class="filtro__opcion"><input type="checkbox" class="cat-filter" value="protecciones"> Protecciones</label>
+        <label class="filtro__opcion"><input type="checkbox" class="cat-filter" value="cinturones"> Cinturones</label>
+        <label class="filtro__opcion"><input type="checkbox" class="cat-filter" value="accesorios"> Accesorios</label>
       </div>
-      <div class="filter-block">
-        <h4>Talla</h4>
-        <div class="size-chip-row">
-          <button class="size-chip">XS</button><button class="size-chip">S</button>
-          <button class="size-chip">M</button><button class="size-chip">L</button>
-          <button class="size-chip">XL</button>
+      <div class="filtro">
+        <h4 class="filtro__titulo">Talla</h4>
+        <div class="filtro__chips">
+          <button class="filtro__chip">XS</button><button class="filtro__chip">S</button>
+          <button class="filtro__chip">M</button><button class="filtro__chip">L</button>
+          <button class="filtro__chip">XL</button>
         </div>
       </div>
-      <div class="filter-block">
-        <h4>Precio</h4>
-        <div class="size-chip-row">
-          <button class="size-chip">Hasta $20.000</button>
-          <button class="size-chip">$20.000–$60.000</button>
-          <button class="size-chip">Más de $60.000</button>
+      <div class="filtro">
+        <h4 class="filtro__titulo">Precio</h4>
+        <div class="filtro__chips">
+          <button class="filtro__chip">Hasta $20.000</button>
+          <button class="filtro__chip">$20.000–$60.000</button>
+          <button class="filtro__chip">Más de $60.000</button>
         </div>
       </div>
-      <button class="clear-filters" onclick="clearFilters()">Limpiar filtros</button>
+      <button class="filtro__limpiar" onclick="clearFilters()">Limpiar filtros</button>
     </aside>
 
     <div>
-      <div class="catalog-toolbar">
-        <span class="result-count" id="resultCount">8 productos</span>
-        <select id="sortSelect">
+      <div class="catalogo__barra">
+        <span class="catalogo__contador" id="resultCount">8 productos</span>
+        <select class="formulario__selector" id="sortSelect">
           <option value="relevancia">Ordenar por: Relevancia</option>
           <option value="menor">Precio: menor a mayor</option>
           <option value="mayor">Precio: mayor a menor</option>
           <option value="nuevos">Más nuevos</option>
         </select>
       </div>
-      <div class="product-grid" id="catalogGrid"></div>
+      <div class="grilla-productos" id="catalogGrid"></div>
     </div>
   </div>
 </main>
 
-<footer>
-  <div class="wrap footer-grid">
+<footer class="pie">
+  <div class="contenedor pie__grilla">
     <div>
-      <div class="logo"><span>KIH</span><em>A</em><span>P</span></div>
+      <div class="cabecera__marca"><span>KIH</span><em class="cabecera__marca-acento">A</em><span>P</span></div>
       <p>Equipamiento de taekwondo para cada cinturón: doboks, protecciones y accesorios homologados WT.</p>
     </div>
     <div>
@@ -117,19 +117,19 @@
     <div>
       <h4>Newsletter</h4>
       <p>Enterate de nuevos productos y promociones.</p>
-      <div class="promo-row" style="margin-top:12px;">
+      <div class="resumen__promo" style="margin-top:12px;">
         <input type="email" placeholder="Tu email">
-        <button class="btn btn-primary btn-sm">Sumarme</button>
+        <button class="boton boton--primario boton--pequeno">Sumarme</button>
       </div>
     </div>
   </div>
-  <div class="wrap foot-bottom">
+  <div class="contenedor pie__inferior">
     <span>© 2026 KIHAP. Todos los derechos reservados.</span>
     <span>Mockup de sitio — contenido de ejemplo</span>
   </div>
 </footer>
 
-<div class="toast" id="toast"><svg class="icon"><use href="#i-check"/></svg><span id="toastText">Agregado al carrito</span></div>
+<div class="aviso" id="toast"><svg class="icono"><use href="#i-check"/></svg><span id="toastText">Agregado al carrito</span></div>
 
 <script src="js/products.js"></script>
 <script src="js/cart.js"></script>

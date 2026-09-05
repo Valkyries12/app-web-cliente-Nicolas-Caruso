@@ -13,7 +13,7 @@
 <svg style="display:none" aria-hidden="true">
   <symbol id="i-cart" viewBox="0 0 24 24"><path d="M3 3h2l.4 2M7 13h10l3-8H6.4M7 13L5.4 5M7 13l-1.5 6h11"/><circle cx="9" cy="20" r="1.4"/><circle cx="17" cy="20" r="1.4"/></symbol>
   <symbol id="i-menu" viewBox="0 0 24 24"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></symbol>
-  <symbol id="i-star" viewBox="0 0 24 24" class="filled"><path d="M12 3.2l2.7 5.6 6.1.7-4.5 4.2 1.2 6.1-5.5-3-5.5 3 1.2-6.1L3.2 9.5l6.1-.7z"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24" class="icono--relleno"><path d="M12 3.2l2.7 5.6 6.1.7-4.5 4.2 1.2 6.1-5.5-3-5.5 3 1.2-6.1L3.2 9.5l6.1-.7z"/></symbol>
   <symbol id="i-plus" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></symbol>
   <symbol id="i-minus" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/></symbol>
   <symbol id="i-check" viewBox="0 0 24 24"><path d="M4 12.5l5 5L20 6.5"/></symbol>
@@ -23,106 +23,106 @@
   <symbol id="i-cat-pad" viewBox="0 0 48 48"><rect x="9" y="5" width="22" height="30" rx="4"/><line x1="20" y1="35" x2="20" y2="43"/><rect x="13" y="41" width="14" height="4" rx="2"/></symbol>
 </svg>
 
-<div class="rank-stripe"></div>
+<div class="franja__cinturon"></div>
 
-<header class="topbar">
-  <div class="wrap topbar-inner">
-    <a href="index.html" class="logo" style="text-decoration:none;color:inherit"><span>KIH</span><em>A</em><span>P</span></a>
-    <button class="hamburger" id="hamburgerBtn" aria-label="Abrir menú"><svg class="icon"><use href="#i-menu"/></svg></button>
-    <nav class="main-nav" id="mainNav">
-      <a class="nav-link" href="index.html">Inicio</a>
-      <a class="nav-link" href="catalogo.html">Catálogo</a>
-      <a class="nav-link" href="contacto.html">Contacto</a>
+<header class="cabecera">
+  <div class="contenedor cabecera__interior">
+    <a href="index.html" class="cabecera__marca"><span>KIH</span><em class="cabecera__marca-acento">A</em><span>P</span></a>
+    <button class="cabecera__menu" id="hamburgerBtn" aria-label="Abrir menú"><svg class="icono"><use href="#i-menu"/></svg></button>
+    <nav class="navegacion" id="mainNav">
+      <a class="navegacion__enlace" href="index.html">Inicio</a>
+      <a class="navegacion__enlace" href="catalogo.html">Catálogo</a>
+      <a class="navegacion__enlace" href="contacto.html">Contacto</a>
     </nav>
-    <div class="topbar-actions">
-      <a class="cart-btn" href="carrito.html">
-        <svg class="icon"><use href="#i-cart"/></svg>
+    <div class="cabecera__acciones">
+      <a class="boton-carrito" href="carrito.html">
+        <svg class="icono"><use href="#i-cart"/></svg>
         Carrito
-        <span class="cart-badge" id="cartBadge">0</span>
+        <span class="boton-carrito__insignia" id="cartBadge">0</span>
       </a>
     </div>
   </div>
 </header>
 
 <main>
-  <div class="wrap page-header">
-    <div class="breadcrumb">
-      <a href="index.html">Inicio</a> / <a href="catalogo.html">Catálogo</a> / <span id="breadcrumbName">Producto</span>
+  <div class="contenedor encabezado-pagina">
+    <div class="migas">
+      <a class="migas__enlace" href="index.html">Inicio</a> / <a class="migas__enlace" href="catalogo.html">Catálogo</a> / <span id="breadcrumbName">Producto</span>
     </div>
   </div>
 
-  <div class="wrap detalle-grid">
+  <div class="contenedor detalle__grilla">
     <div>
-      <div class="gallery-main" id="galleryMain"></div>
-      <div class="gallery-thumbs" id="galleryThumbs"></div>
+      <div class="galeria__principal" id="galleryMain"></div>
+      <div class="galeria__miniaturas" id="galleryThumbs"></div>
     </div>
 
     <div>
-      <p class="detalle-cat" id="detalleCat">Categoría</p>
-      <h1 class="detalle-name" id="detalleName">Nombre del producto</h1>
-      <div class="stars">
-        <svg class="icon"><use href="#i-star"/></svg><svg class="icon"><use href="#i-star"/></svg>
-        <svg class="icon"><use href="#i-star"/></svg><svg class="icon"><use href="#i-star"/></svg>
-        <svg class="icon off"><use href="#i-star"/></svg>
-        <span>(38 reseñas)</span>
+      <p class="detalle__categoria" id="detalleCat">Categoría</p>
+      <h1 class="detalle__nombre" id="detalleName">Nombre del producto</h1>
+      <div class="valoracion">
+        <svg class="icono valoracion__estrella"><use href="#i-star"/></svg><svg class="icono valoracion__estrella"><use href="#i-star"/></svg>
+        <svg class="icono valoracion__estrella"><use href="#i-star"/></svg><svg class="icono valoracion__estrella"><use href="#i-star"/></svg>
+        <svg class="icono valoracion__estrella valoracion__estrella--apagada"><use href="#i-star"/></svg>
+        <span class="valoracion__texto">(38 reseñas)</span>
       </div>
-      <p class="detalle-price" id="detallePrice">$0</p>
+      <p class="detalle__precio" id="detallePrice">$0</p>
 
-      <div class="opt-block" id="sizeBlock">
-        <h4>Talle</h4>
-        <div class="opt-row" id="sizeRow"></div>
-      </div>
-
-      <div class="opt-block" id="colorBlock">
-        <h4>Color</h4>
-        <div class="opt-row" id="colorRow"></div>
+      <div class="opciones" id="sizeBlock">
+        <h4 class="opciones__titulo">Talle</h4>
+        <div class="opciones__fila" id="sizeRow"></div>
       </div>
 
-      <div class="opt-block">
-        <h4>Cantidad</h4>
-        <div class="qty-stepper">
-          <button onclick="changeDetailQty(-1)"><svg class="icon"><use href="#i-minus"/></svg></button>
-          <span id="detailQty">1</span>
-          <button onclick="changeDetailQty(1)"><svg class="icon"><use href="#i-plus"/></svg></button>
+      <div class="opciones" id="colorBlock">
+        <h4 class="opciones__titulo">Color</h4>
+        <div class="opciones__fila" id="colorRow"></div>
+      </div>
+
+      <div class="opciones">
+        <h4 class="opciones__titulo">Cantidad</h4>
+        <div class="cantidad">
+          <button class="cantidad__boton" onclick="changeDetailQty(-1)"><svg class="icono"><use href="#i-minus"/></svg></button>
+          <span class="cantidad__valor" id="detailQty">1</span>
+          <button class="cantidad__boton" onclick="changeDetailQty(1)"><svg class="icono"><use href="#i-plus"/></svg></button>
         </div>
       </div>
 
-      <div class="detalle-ctas">
-        <button class="btn btn-primary" onclick="addDetailToCartHandler()">Agregar al carrito</button>
-        <button class="btn btn-dark" onclick="buyNow()">Comprar ahora</button>
+      <div class="detalle__acciones">
+        <button class="boton boton--primario" onclick="addDetailToCartHandler()">Agregar al carrito</button>
+        <button class="boton boton--oscuro" onclick="buyNow()">Comprar ahora</button>
       </div>
 
-      <div class="stock-note"><svg class="icon"><use href="#i-check"/></svg> En stock — envío en 24/48 h hábiles</div>
+      <div class="detalle__stock"><svg class="icono"><use href="#i-check"/></svg> En stock — envío en 24/48 h hábiles</div>
 
-      <div class="tabs">
-        <div class="tab-heads">
-          <button class="tab-head active" data-tab="descripcion">Descripción</button>
-          <button class="tab-head" data-tab="talles">Guía de talles</button>
-          <button class="tab-head" data-tab="envios">Envíos y devoluciones</button>
+      <div class="pestanas">
+        <div class="pestanas__cabeceras">
+          <button class="pestanas__boton pestanas__boton--activo" data-tab="descripcion">Descripción</button>
+          <button class="pestanas__boton" data-tab="talles">Guía de talles</button>
+          <button class="pestanas__boton" data-tab="envios">Envíos y devoluciones</button>
         </div>
-        <div class="tab-panel active" data-tabpanel="descripcion" id="tabDescripcion"></div>
-        <div class="tab-panel" data-tabpanel="talles">
+        <div class="pestanas__panel pestanas__panel--activo" data-tabpanel="descripcion" id="tabDescripcion"></div>
+        <div class="pestanas__panel" data-tabpanel="talles">
           <p>Consultá la tabla de talles en centímetros según altura antes de comprar. Si tenés dudas entre dos talles, te recomendamos elegir el más grande para permitir margen de movimiento durante la práctica.</p>
         </div>
-        <div class="tab-panel" data-tabpanel="envios">
+        <div class="pestanas__panel" data-tabpanel="envios">
           <p>Envíos a todo el país por correo o transporte a sucursal. Retiro sin cargo en nuestro local de Mendoza. Cambios y devoluciones dentro de los 30 días con el producto sin uso y su embalaje original.</p>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="wrap">
-    <div class="related-head section-head">
+  <div class="contenedor">
+    <div class="detalle__relacionados seccion__encabezado">
       <h2 style="font-size:28px;">También te puede interesar</h2>
     </div>
-    <div class="product-grid" id="relatedGrid"></div>
+    <div class="grilla-productos" id="relatedGrid"></div>
   </div>
 </main>
 
-<footer>
-  <div class="wrap footer-grid">
+<footer class="pie">
+  <div class="contenedor pie__grilla">
     <div>
-      <div class="logo"><span>KIH</span><em>A</em><span>P</span></div>
+      <div class="cabecera__marca"><span>KIH</span><em class="cabecera__marca-acento">A</em><span>P</span></div>
       <p>Equipamiento de taekwondo para cada cinturón: doboks, protecciones y accesorios homologados WT.</p>
     </div>
     <div>
@@ -146,19 +146,19 @@
     <div>
       <h4>Newsletter</h4>
       <p>Enterate de nuevos productos y promociones.</p>
-      <div class="promo-row" style="margin-top:12px;">
+      <div class="resumen__promo" style="margin-top:12px;">
         <input type="email" placeholder="Tu email">
-        <button class="btn btn-primary btn-sm">Sumarme</button>
+        <button class="boton boton--primario boton--pequeno">Sumarme</button>
       </div>
     </div>
   </div>
-  <div class="wrap foot-bottom">
+  <div class="contenedor pie__inferior">
     <span>© 2026 KIHAP. Todos los derechos reservados.</span>
     <span>Mockup de sitio — contenido de ejemplo</span>
   </div>
 </footer>
 
-<div class="toast" id="toast"><svg class="icon"><use href="#i-check"/></svg><span id="toastText">Agregado al carrito</span></div>
+<div class="aviso" id="toast"><svg class="icono"><use href="#i-check"/></svg><span id="toastText">Agregado al carrito</span></div>
 
 <script src="js/products.js"></script>
 <script src="js/cart.js"></script>

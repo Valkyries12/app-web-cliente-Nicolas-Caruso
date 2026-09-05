@@ -18,117 +18,117 @@
   <symbol id="i-truck" viewBox="0 0 24 24"><rect x="2" y="7" width="13" height="9" rx="1"/><path d="M15 10h4l3 3v3h-7z"/><circle cx="7" cy="18.5" r="1.6"/><circle cx="18" cy="18.5" r="1.6"/></symbol>
 </svg>
 
-<div class="rank-stripe"></div>
+<div class="franja__cinturon"></div>
 
-<header class="topbar">
-  <div class="wrap topbar-inner">
-    <a href="index.html" class="logo" style="text-decoration:none;color:inherit"><span>KIH</span><em>A</em><span>P</span></a>
-    <button class="hamburger" id="hamburgerBtn" aria-label="Abrir menú"><svg class="icon"><use href="#i-menu"/></svg></button>
-    <nav class="main-nav" id="mainNav">
-      <a class="nav-link" href="index.html">Inicio</a>
-      <a class="nav-link" href="catalogo.html">Catálogo</a>
-      <a class="nav-link" href="contacto.html">Contacto</a>
+<header class="cabecera">
+  <div class="contenedor cabecera__interior">
+    <a href="index.html" class="cabecera__marca"><span>KIH</span><em class="cabecera__marca-acento">A</em><span>P</span></a>
+    <button class="cabecera__menu" id="hamburgerBtn" aria-label="Abrir menú"><svg class="icono"><use href="#i-menu"/></svg></button>
+    <nav class="navegacion" id="mainNav">
+      <a class="navegacion__enlace" href="index.html">Inicio</a>
+      <a class="navegacion__enlace" href="catalogo.html">Catálogo</a>
+      <a class="navegacion__enlace" href="contacto.html">Contacto</a>
     </nav>
-    <div class="topbar-actions">
-      <a class="cart-btn" href="carrito.html">
-        <svg class="icon"><use href="#i-cart"/></svg>
+    <div class="cabecera__acciones">
+      <a class="boton-carrito" href="carrito.html">
+        <svg class="icono"><use href="#i-cart"/></svg>
         Carrito
-        <span class="cart-badge" id="cartBadge">0</span>
+        <span class="boton-carrito__insignia" id="cartBadge">0</span>
       </a>
     </div>
   </div>
 </header>
 
 <main>
-  <div class="wrap page-header">
-    <div class="breadcrumb"><a href="index.html">Inicio</a> / <a href="carrito.html">Carrito</a> / Checkout</div>
+  <div class="contenedor encabezado-pagina">
+    <div class="migas"><a class="migas__enlace" href="index.html">Inicio</a> / <a class="migas__enlace" href="carrito.html">Carrito</a> / Checkout</div>
     <h2 style="font-size:38px;">Finalizar compra</h2>
   </div>
 
-  <div class="wrap">
-    <div class="steps-indicator">
-      <div class="step-dot active" id="stepDot1"><span class="num">1</span> Envío</div>
-      <div class="step-line"></div>
-      <div class="step-dot" id="stepDot2"><span class="num">2</span> Pago</div>
-      <div class="step-line"></div>
-      <div class="step-dot" id="stepDot3"><span class="num">3</span> Confirmación</div>
+  <div class="contenedor">
+    <div class="pasos">
+      <div class="paso paso--activo" id="stepDot1"><span class="paso__numero">1</span> Envío</div>
+      <div class="paso__linea"></div>
+      <div class="paso" id="stepDot2"><span class="paso__numero">2</span> Pago</div>
+      <div class="paso__linea"></div>
+      <div class="paso" id="stepDot3"><span class="paso__numero">3</span> Confirmación</div>
     </div>
   </div>
 
-  <div class="wrap checkout-layout">
+  <div class="contenedor compra__distribucion">
     <div>
       <!-- Paso 1: envío -->
-      <div class="checkout-panel active" id="checkoutStep1">
+      <div class="compra__panel compra__panel--activo" id="checkoutStep1">
         <h3 style="font-size:20px;margin-bottom:18px;">Datos de envío</h3>
-        <div class="form-grid">
-          <div class="field"><label>Nombre</label><input type="text" placeholder="Ej: Nicolás"></div>
-          <div class="field"><label>Apellido</label><input type="text" placeholder="Ej: Caruso"></div>
+        <div class="formulario__grilla">
+          <div class="formulario__campo"><label>Nombre</label><input type="text" placeholder="Ej: Nicolás"></div>
+          <div class="formulario__campo"><label>Apellido</label><input type="text" placeholder="Ej: Caruso"></div>
         </div>
-        <div class="form-grid">
-          <div class="field"><label>DNI</label><input type="text" placeholder="00.000.000"></div>
-          <div class="field"><label>Teléfono</label><input type="tel" placeholder="+54 261 000 0000"></div>
+        <div class="formulario__grilla">
+          <div class="formulario__campo"><label>DNI</label><input type="text" placeholder="00.000.000"></div>
+          <div class="formulario__campo"><label>Teléfono</label><input type="tel" placeholder="+54 261 000 0000"></div>
         </div>
-        <div class="field"><label>Email</label><input type="email" placeholder="tuemail@correo.com"></div>
-        <div class="field"><label>Dirección</label><input type="text" placeholder="Calle y número"></div>
-        <div class="form-grid cols-3">
-          <div class="field"><label>Ciudad</label><input type="text" placeholder="Mendoza"></div>
-          <div class="field"><label>Provincia</label><input type="text" placeholder="Mendoza"></div>
-          <div class="field"><label>Código Postal</label><input type="text" placeholder="5500"></div>
+        <div class="formulario__campo"><label>Email</label><input type="email" placeholder="tuemail@correo.com"></div>
+        <div class="formulario__campo"><label>Dirección</label><input type="text" placeholder="Calle y número"></div>
+        <div class="formulario__grilla formulario__grilla--3">
+          <div class="formulario__campo"><label>Ciudad</label><input type="text" placeholder="Mendoza"></div>
+          <div class="formulario__campo"><label>Provincia</label><input type="text" placeholder="Mendoza"></div>
+          <div class="formulario__campo"><label>Código Postal</label><input type="text" placeholder="5500"></div>
         </div>
-        <div class="step-actions">
+        <div class="formulario__acciones">
           <span></span>
-          <button class="btn btn-dark" onclick="setCheckoutStep(2)">Continuar a pago</button>
+          <button class="boton boton--oscuro" onclick="setCheckoutStep(2)">Continuar a pago</button>
         </div>
       </div>
 
       <!-- Paso 2: pago -->
-      <div class="checkout-panel" id="checkoutStep2">
+      <div class="compra__panel" id="checkoutStep2">
         <h3 style="font-size:20px;margin-bottom:18px;">Método de pago</h3>
-        <div class="pay-options">
-          <label class="pay-option selected"><input type="radio" name="pago" checked><svg class="icon"><use href="#i-cart"/></svg> Tarjeta de crédito / débito</label>
-          <label class="pay-option"><input type="radio" name="pago"><svg class="icon"><use href="#i-shield-check"/></svg> Mercado Pago</label>
-          <label class="pay-option"><input type="radio" name="pago"><svg class="icon"><use href="#i-truck"/></svg> Transferencia bancaria</label>
+        <div class="pago__opciones">
+          <label class="pago__opcion pago__opcion--seleccionada"><input type="radio" name="pago" checked><svg class="icono"><use href="#i-cart"/></svg> Tarjeta de crédito / débito</label>
+          <label class="pago__opcion"><input type="radio" name="pago"><svg class="icono"><use href="#i-shield-check"/></svg> Mercado Pago</label>
+          <label class="pago__opcion"><input type="radio" name="pago"><svg class="icono"><use href="#i-truck"/></svg> Transferencia bancaria</label>
         </div>
-        <div class="field"><label>Número de tarjeta</label><input type="text" placeholder="0000 0000 0000 0000"></div>
-        <div class="form-grid cols-3">
-          <div class="field"><label>Vencimiento</label><input type="text" placeholder="MM/AA"></div>
-          <div class="field"><label>CVV</label><input type="text" placeholder="123"></div>
-          <div class="field"><label>Titular</label><input type="text" placeholder="Nombre en la tarjeta"></div>
+        <div class="formulario__campo"><label>Número de tarjeta</label><input type="text" placeholder="0000 0000 0000 0000"></div>
+        <div class="formulario__grilla formulario__grilla--3">
+          <div class="formulario__campo"><label>Vencimiento</label><input type="text" placeholder="MM/AA"></div>
+          <div class="formulario__campo"><label>CVV</label><input type="text" placeholder="123"></div>
+          <div class="formulario__campo"><label>Titular</label><input type="text" placeholder="Nombre en la tarjeta"></div>
         </div>
-        <div class="step-actions">
-          <button class="btn btn-ghost" onclick="setCheckoutStep(1)">Volver</button>
-          <button class="btn btn-dark" onclick="setCheckoutStep(3)">Confirmar pedido</button>
+        <div class="formulario__acciones">
+          <button class="boton boton--fantasma" onclick="setCheckoutStep(1)">Volver</button>
+          <button class="boton boton--oscuro" onclick="setCheckoutStep(3)">Confirmar pedido</button>
         </div>
       </div>
 
       <!-- Paso 3: confirmación -->
-      <div class="checkout-panel" id="checkoutStep3">
-        <div class="confirm-box">
-          <div class="icon-circle"><svg class="icon"><use href="#i-check"/></svg></div>
+      <div class="compra__panel" id="checkoutStep3">
+        <div class="confirmacion">
+          <div class="confirmacion__circulo"><svg class="icono"><use href="#i-check"/></svg></div>
           <h2>¡Gracias por tu compra!</h2>
           <p>Te enviamos un correo con el detalle de tu pedido. Vas a recibir una notificación cuando salga de nuestro depósito.</p>
-          <div class="order-num">Pedido #KH-24897</div>
+          <div class="confirmacion__numero">Pedido #KH-24897</div>
           <div>
-            <a class="btn btn-primary" href="index.html">Volver al inicio</a>
+            <a class="boton boton--primario" href="index.html">Volver al inicio</a>
           </div>
         </div>
       </div>
     </div>
 
-    <div class="summary-box">
-      <h3>Tu pedido</h3>
-      <div class="mini-summary-list" id="checkoutMiniList"></div>
-      <div class="summary-row"><span>Subtotal</span><span id="checkoutSubtotal">$0</span></div>
-      <div class="summary-row"><span>Envío</span><span id="checkoutShipping">$0</span></div>
-      <div class="summary-row total"><span>Total</span><span id="checkoutTotal">$0</span></div>
+    <div class="resumen">
+      <h3 class="resumen__titulo">Tu pedido</h3>
+      <div class="resumen__lista" id="checkoutMiniList"></div>
+      <div class="resumen__fila"><span>Subtotal</span><span id="checkoutSubtotal">$0</span></div>
+      <div class="resumen__fila"><span>Envío</span><span id="checkoutShipping">$0</span></div>
+      <div class="resumen__fila resumen__fila--total"><span>Total</span><span id="checkoutTotal">$0</span></div>
     </div>
   </div>
 </main>
 
-<footer>
-  <div class="wrap footer-grid">
+<footer class="pie">
+  <div class="contenedor pie__grilla">
     <div>
-      <div class="logo"><span>KIH</span><em>A</em><span>P</span></div>
+      <div class="cabecera__marca"><span>KIH</span><em class="cabecera__marca-acento">A</em><span>P</span></div>
       <p>Equipamiento de taekwondo para cada cinturón: doboks, protecciones y accesorios homologados WT.</p>
     </div>
     <div>
@@ -152,13 +152,13 @@
     <div>
       <h4>Newsletter</h4>
       <p>Enterate de nuevos productos y promociones.</p>
-      <div class="promo-row" style="margin-top:12px;">
+      <div class="resumen__promo" style="margin-top:12px;">
         <input type="email" placeholder="Tu email">
-        <button class="btn btn-primary btn-sm">Sumarme</button>
+        <button class="boton boton--primario boton--pequeno">Sumarme</button>
       </div>
     </div>
   </div>
-  <div class="wrap foot-bottom">
+  <div class="contenedor pie__inferior">
     <span>© 2026 KIHAP. Todos los derechos reservados.</span>
     <span>Mockup de sitio — contenido de ejemplo</span>
   </div>
@@ -170,10 +170,10 @@
 <script>
 function setCheckoutStep(n){
   [1,2,3].forEach(i => {
-    document.getElementById("checkoutStep"+i).classList.toggle("active", i===n);
+    document.getElementById("checkoutStep"+i).classList.toggle("compra__panel--activo", i===n);
     const dot = document.getElementById("stepDot"+i);
-    dot.classList.toggle("active", i===n);
-    dot.classList.toggle("done", i<n);
+    dot.classList.toggle("paso--activo", i===n);
+    dot.classList.toggle("paso--completo", i<n);
   });
   window.scrollTo({top:0, behavior:"smooth"});
 }
@@ -181,18 +181,18 @@ function renderCheckoutSummary(){
   const list = document.getElementById("checkoutMiniList");
   if(!list) return;
   list.innerHTML = cart.map(item =>
-    `<div class="mini-summary-item"><span>${item.qty}× ${item.product.name}</span><b>${formatPrice(item.qty*item.product.price)}</b></div>`
+    `<div class="resumen__item"><span>${item.qty}× ${item.product.name}</span><b>${formatPrice(item.qty*item.product.price)}</b></div>`
   ).join("") || `<p style="font-size:13px;">Tu carrito está vacío.</p>`;
   document.getElementById("checkoutSubtotal").textContent = formatPrice(cartSubtotal());
   document.getElementById("checkoutShipping").textContent = formatPrice(shippingCost());
   document.getElementById("checkoutTotal").textContent = formatPrice(cartSubtotal() + shippingCost());
 }
 document.addEventListener("DOMContentLoaded", renderCheckoutSummary);
-// pay-option visual toggle
-document.querySelectorAll(".pay-option").forEach(el=>{
+// pago__opcion visual toggle
+document.querySelectorAll(".pago__opcion").forEach(el=>{
   el.addEventListener("click", ()=>{
-    document.querySelectorAll(".pay-option").forEach(o=>o.classList.remove("selected"));
-    el.classList.add("selected");
+    document.querySelectorAll(".pago__opcion").forEach(o=>o.classList.remove("pago__opcion--seleccionada"));
+    el.classList.add("pago__opcion--seleccionada");
     el.querySelector("input").checked = true;
   });
 });
