@@ -1,87 +1,175 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dojang Store - Contacto</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KIHAP — Contacto</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <header>
-        <nav aria-label="Navegación principal">
-            <a href="index.html"><img src="" alt="Logo Dojang Store"></a>
-            <ul>
-                <li><a href="index.html">Inicio</a></li>
-                <li><a href="taekwondo.html">Taekwondo</a></li>
-                <li><a href="equipo-gimnasio.html">Equipo de gimnasio</a></li>
-                <li><a href="contacto.html">Contacto</a></li>
-            </ul>
-            <form role="search" aria-label="Buscar productos">
-                <label for="busqueda" class="sr-only">Buscar productos</label>
-                <input type="search" id="busqueda" name="busqueda" placeholder="Buscar productos...">
-                <button type="submit">Buscar</button>
-            </form>
-            <a href="#" aria-label="Carrito de compras">Carrito (0)</a>
-        </nav>
-    </header>
 
-    <main>
-        <section aria-labelledby="contacto-titulo">
-            <h2 id="contacto-titulo">Contacto</h2>
+<svg style="display:none" aria-hidden="true">
+  <symbol id="i-cart" viewBox="0 0 24 24"><path d="M3 3h2l.4 2M7 13h10l3-8H6.4M7 13L5.4 5M7 13l-1.5 6h11"/><circle cx="9" cy="20" r="1.4"/><circle cx="17" cy="20" r="1.4"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M4 12.5l5 5L20 6.5"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 22s7-7.4 7-12.4A7 7 0 105 9.6C5 14.6 12 22 12 22z"/><circle cx="12" cy="9.6" r="2.4"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24"><path d="M5 4h3l1.5 4L8 9.6a12 12 0 006.4 6.4L16 14l4 1.5V19a2 2 0 01-2.2 2C9.8 20.6 3.4 14.2 3 6.2A2 2 0 015 4z"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 6.5l9 6.5 9-6.5"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5.2l3.4 2"/></symbol>
+</svg>
 
-            <form action="#" method="POST">
-                <fieldset>
-                    <legend>Formulario de contacto</legend>
+<div class="rank-stripe"></div>
 
-                    <div>
-                        <label for="nombre">Nombre</label>
-                        <input type="text" id="nombre" name="nombre" required>
-                    </div>
+<header class="topbar">
+  <div class="wrap topbar-inner">
+    <a href="index.html" class="logo" style="text-decoration:none;color:inherit"><span>KIH</span><em>A</em><span>P</span></a>
+    <button class="hamburger" id="hamburgerBtn" aria-label="Abrir menú"><svg class="icon"><use href="#i-menu"/></svg></button>
+    <nav class="main-nav" id="mainNav">
+      <a class="nav-link" href="index.html">Inicio</a>
+      <a class="nav-link" href="catalogo.html">Catálogo</a>
+      <a class="nav-link active" href="contacto.html">Contacto</a>
+    </nav>
+    <div class="topbar-actions">
+      <a class="cart-btn" href="carrito.html">
+        <svg class="icon"><use href="#i-cart"/></svg>
+        Carrito
+        <span class="cart-badge" id="cartBadge">0</span>
+      </a>
+    </div>
+  </div>
+</header>
 
-                    <div>
-                        <label for="email">Email</label>
-                        <input type="email" id="email" name="email" required>
-                    </div>
+<main>
+  <div class="wrap page-header">
+    <div class="breadcrumb"><a href="index.html">Inicio</a> / Contacto</div>
+    <h2 style="font-size:38px;">Contacto</h2>
+    <p style="margin-top:10px;max-width:60ch;">¿Tenés dudas sobre talles, envíos o algún producto? Escribinos y te respondemos a la brevedad.</p>
+  </div>
 
-                    <div>
-                        <label for="asunto">Asunto</label>
-                        <select id="asunto" name="asunto">
-                            <option value="consulta-producto">Consulta sobre un producto</option>
-                            <option value="envio">Consulta de envío y entrega</option>
-                            <option value="otro">Otro</option>
-                        </select>
-                    </div>
+  <div class="wrap contacto-layout">
+    <div class="contact-form-box">
+      <form id="contactForm">
+        <div class="field"><label>Nombre y apellido</label><input type="text" required placeholder="Tu nombre"></div>
+        <div class="field"><label>Email</label><input type="email" required placeholder="tuemail@correo.com"></div>
+        <div class="field">
+          <label>Asunto</label>
+          <select required>
+            <option value="">Elegí un motivo</option>
+            <option>Consulta sobre talles</option>
+            <option>Estado de un pedido</option>
+            <option>Cambios y devoluciones</option>
+            <option>Compras mayoristas / dojang</option>
+            <option>Otro</option>
+          </select>
+        </div>
+        <div class="field"><label>Mensaje</label><textarea required rows="5" placeholder="Contanos en qué te podemos ayudar"></textarea></div>
+        <button type="submit" class="btn btn-primary btn-block">Enviar mensaje</button>
+      </form>
 
-                    <div>
-                        <label for="mensaje">Mensaje</label>
-                        <textarea id="mensaje" name="mensaje" rows="5" required></textarea>
-                    </div>
+      <div class="success-box" id="successBox">
+        <div class="icon-circle"><svg class="icon"><use href="#i-check"/></svg></div>
+        <h3 style="font-size:20px;margin-bottom:8px;">Mensaje enviado</h3>
+        <p>Gracias por escribirnos. Te vamos a contestar dentro de las próximas 24 horas hábiles.</p>
+        <button class="btn btn-ghost btn-sm" style="margin-top:18px;" onclick="resetContactForm()">Enviar otro mensaje</button>
+      </div>
+    </div>
 
-                    <button type="submit">Enviar mensaje</button>
-                </fieldset>
-            </form>
-        </section>
-    </main>
+    <div>
+      <div class="map-card">
+        <div class="map-svg-wrap">
+          <svg viewBox="0 0 400 310" width="100%" height="100%">
+            <rect width="400" height="310" fill="#EAE7DD"/>
+            <g stroke="#D3CFC1" stroke-width="2">
+              <line x1="0" y1="70" x2="400" y2="60"/>
+              <line x1="0" y1="150" x2="400" y2="145"/>
+              <line x1="0" y1="230" x2="400" y2="235"/>
+              <line x1="80" y1="0" x2="70" y2="310"/>
+              <line x1="190" y1="0" x2="195" y2="310"/>
+              <line x1="300" y1="0" x2="310" y2="310"/>
+            </g>
+            <rect x="100" y="85" width="70" height="45" fill="#DEDACD"/>
+            <rect x="220" y="165" width="60" height="50" fill="#DEDACD"/>
+            <rect x="90" y="245" width="80" height="40" fill="#DEDACD"/>
+            <g transform="translate(196,150)">
+              <path d="M0 -30 C-14 -30 -22 -20 -22 -8 C-22 8 0 30 0 30 C0 30 22 8 22 -8 C22 -20 14 -30 0 -30 Z" fill="#C41E3A"/>
+              <circle cx="0" cy="-8" r="7" fill="#fff"/>
+            </g>
+            <g transform="translate(340,35)" stroke="#B7B3A5" stroke-width="1.5" fill="none">
+              <circle cx="0" cy="0" r="18"/>
+              <line x1="0" y1="-18" x2="0" y2="18"/>
+              <line x1="-18" y1="0" x2="18" y2="0"/>
+            </g>
+          </svg>
+        </div>
+        <div class="info-list">
+          <div class="info-row">
+            <div class="icon-wrap"><svg class="icon"><use href="#i-pin"/></svg></div>
+            <div><h5>KIHAP Tienda — Mendoza</h5><p>Av. San Martín 1245, Ciudad de Mendoza</p></div>
+          </div>
+          <div class="info-row">
+            <div class="icon-wrap"><svg class="icon"><use href="#i-phone"/></svg></div>
+            <div><h5>Teléfono</h5><p>+54 261 400 5566</p></div>
+          </div>
+          <div class="info-row">
+            <div class="icon-wrap"><svg class="icon"><use href="#i-mail"/></svg></div>
+            <div><h5>Email</h5><p>hola@kihap.com.ar</p></div>
+          </div>
+          <div class="info-row">
+            <div class="icon-wrap"><svg class="icon"><use href="#i-clock"/></svg></div>
+            <div><h5>Horarios</h5><p>Lunes a viernes 9 a 19 h · Sábados 9 a 13 h</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
 
-    <footer id="contacto">
-        <section aria-labelledby="contacto-titulo">
-            <h2 id="contacto-titulo">Contacto</h2>
-            <address>
-                <p>Email: contacto@dojangstore.com.ar</p>
-                <p>Teléfono: +54 11 2345-6789</p>
-                <p>Dirección: Av. Corrientes 1234, CABA</p>
-            </address>
-        </section>
+<footer>
+  <div class="wrap footer-grid">
+    <div>
+      <div class="logo"><span>KIH</span><em>A</em><span>P</span></div>
+      <p>Equipamiento de taekwondo para cada cinturón: doboks, protecciones y accesorios homologados WT.</p>
+    </div>
+    <div>
+      <h4>Tienda</h4>
+      <ul>
+        <li><a href="catalogo.html?cat=doboks">Doboks</a></li>
+        <li><a href="catalogo.html?cat=protecciones">Protecciones</a></li>
+        <li><a href="catalogo.html?cat=cinturones">Cinturones</a></li>
+        <li><a href="catalogo.html?cat=accesorios">Accesorios</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Ayuda</h4>
+      <ul>
+        <li><a href="contacto.html">Contacto</a></li>
+        <li><a href="#">Guía de talles</a></li>
+        <li><a href="#">Envíos</a></li>
+        <li><a href="#">Cambios y devoluciones</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Newsletter</h4>
+      <p>Enterate de nuevos productos y promociones.</p>
+      <div class="promo-row" style="margin-top:12px;">
+        <input type="email" placeholder="Tu email">
+        <button class="btn btn-primary btn-sm">Sumarme</button>
+      </div>
+    </div>
+  </div>
+  <div class="wrap foot-bottom">
+    <span>© 2026 KIHAP. Todos los derechos reservados.</span>
+    <span>Mockup de sitio — contenido de ejemplo</span>
+  </div>
+</footer>
 
-        <section aria-labelledby="redes-titulo">
-            <h2 id="redes-titulo">Seguinos</h2>
-            <ul>
-                <li><a href="#" rel="noopener">Instagram</a></li>
-                <li><a href="#" rel="noopener">Facebook</a></li>
-                <li><a href="#" rel="noopener">X</a></li>
-            </ul>
-        </section>
+<div class="toast" id="toast"><svg class="icon"><use href="#i-check"/></svg><span id="toastText">Agregado al carrito</span></div>
 
-        <p>&copy; 2026 Dojang Store. Todos los derechos reservados.</p>
-    </footer>
+<script src="js/products.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/main.js"></script>
+<script src="js/contacto.js"></script>
 </body>
 </html>

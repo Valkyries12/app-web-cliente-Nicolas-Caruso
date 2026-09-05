@@ -1,140 +1,220 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dojang Store - Equipamiento de Taekwondo</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KIHAP — Equipamiento de Taekwondo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <header>
-        <nav aria-label="Navegación principal">
-            <a href="index.html"><img src="" alt="Logo Dojang Store"></a>
-            <ul>
-                <li><a href="index.html">Inicio</a></li>
-                <li><a href="taekwondo.html">Taekwondo</a></li>
-                <li><a href="equipo-gimnasio.html">Equipo de gimnasio</a></li>
-                <li><a href="contacto.html">Contacto</a></li>
-            </ul>
-            <form role="search" aria-label="Buscar productos">
-                <label for="busqueda" class="sr-only">Buscar productos</label>
-                <input type="search" id="busqueda" name="busqueda" placeholder="Buscar productos...">
-                <button type="submit">Buscar</button>
-            </form>
-            <a href="#" aria-label="Carrito de compras">Carrito (0)</a>
-        </nav>
-    </header>
 
-    <main>
-        <section id="inicio" aria-labelledby="inicio-titulo">
-            <article>
-                <h1 id="inicio-titulo">Bienvenido a Dojang Store</h1>
-                <p>Tu tienda online de equipamiento y ropa de taekwondo. Encontrá doboks, protectores, cinturones y todo lo necesario para tu práctica.</p>
-                <a href="taekwondo.html" class="btn-primary">Ver productos de taekwondo</a>
-                <a href="equipo-gimnasio.html" class="btn-secondary">Equipo de gimnasio</a>
-            </article>
-        </section>
+<svg style="display:none" aria-hidden="true">
+  <symbol id="i-cart" viewBox="0 0 24 24"><path d="M3 3h2l.4 2M7 13h10l3-8H6.4M7 13L5.4 5M7 13l-1.5 6h11"/><circle cx="9" cy="20" r="1.4"/><circle cx="17" cy="20" r="1.4"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></symbol>
+  <symbol id="i-close" viewBox="0 0 24 24"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24" class="filled"><path d="M12 3.2l2.7 5.6 6.1.7-4.5 4.2 1.2 6.1-5.5-3-5.5 3 1.2-6.1L3.2 9.5l6.1-.7z"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></symbol>
+  <symbol id="i-minus" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M4 12.5l5 5L20 6.5"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 22s7-7.4 7-12.4A7 7 0 105 9.6C5 14.6 12 22 12 22z"/><circle cx="12" cy="9.6" r="2.4"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24"><path d="M5 4h3l1.5 4L8 9.6a12 12 0 006.4 6.4L16 14l4 1.5V19a2 2 0 01-2.2 2C9.8 20.6 3.4 14.2 3 6.2A2 2 0 015 4z"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 6.5l9 6.5 9-6.5"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5.2l3.4 2"/></symbol>
+  <symbol id="i-truck" viewBox="0 0 24 24"><rect x="2" y="7" width="13" height="9" rx="1"/><path d="M15 10h4l3 3v3h-7z"/><circle cx="7" cy="18.5" r="1.6"/><circle cx="18" cy="18.5" r="1.6"/></symbol>
+  <symbol id="i-ruler" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="10" rx="1"/><path d="M7 7v3M11 7v3M15 7v3M19 7v3"/></symbol>
+  <symbol id="i-shield-check" viewBox="0 0 24 24"><path d="M12 3l7 3v6c0 5-3.2 8-7 9-3.8-1-7-4-7-9V6z"/><path d="M9 12l2 2 4-4"/></symbol>
+  <symbol id="i-cat-dobok" viewBox="0 0 48 48"><path d="M15 8 L24 15 L33 8 L33 14 L38 19 L34 41 L14 41 L10 19 L15 14 Z"/><line x1="15" y1="26" x2="33" y2="26"/></symbol>
+  <symbol id="i-cat-shield" viewBox="0 0 48 48"><path d="M24 5 L40 11 V22 C40 32 33 39.5 24 43 C15 39.5 8 32 8 22 V11 Z"/><path d="M17 23.5 L22 28.5 L31 17.5"/></symbol>
+  <symbol id="i-cat-belt" viewBox="0 0 48 48"><line x1="4" y1="24" x2="44" y2="24" stroke-width="6"/><rect x="17" y="15" width="14" height="18" rx="2"/><line x1="21" y1="33" x2="16" y2="43"/><line x1="27" y1="33" x2="32" y2="43"/></symbol>
+  <symbol id="i-cat-pad" viewBox="0 0 48 48"><rect x="9" y="5" width="22" height="30" rx="4"/><line x1="20" y1="35" x2="20" y2="43"/><rect x="13" y="41" width="14" height="4" rx="2"/></symbol>
+</svg>
 
-        <section aria-labelledby="carrusel-titulo" aria-roledescription="carousel">
-            <h2 id="carrusel-titulo">Productos destacados</h2>
+<div class="rank-stripe"></div>
 
-            <input type="radio" name="carrusel" id="slide1" checked>
-            <input type="radio" name="carrusel" id="slide2">
-            <input type="radio" name="carrusel" id="slide3">
-            <input type="radio" name="carrusel" id="slide4">
+<header class="topbar">
+  <div class="wrap topbar-inner">
+    <a href="index.html" class="logo" style="text-decoration:none;color:inherit"><span>KIH</span><em>A</em><span>P</span></a>
+    <button class="hamburger" id="hamburgerBtn" aria-label="Abrir menú"><svg class="icon"><use href="#i-menu"/></svg></button>
+    <nav class="main-nav" id="mainNav">
+      <a class="nav-link active" href="index.html">Inicio</a>
+      <a class="nav-link" href="catalogo.html">Catálogo</a>
+      <a class="nav-link" href="contacto.html">Contacto</a>
+    </nav>
+    <div class="topbar-actions">
+      <a class="cart-btn" href="carrito.html">
+        <svg class="icon"><use href="#i-cart"/></svg>
+        Carrito
+        <span class="cart-badge" id="cartBadge">0</span>
+      </a>
+    </div>
+  </div>
+</header>
 
-            <ul>
-                <li id="s1">
-                    <article>
-                        <img src="" alt="Dobok blanco Adidas">
-                        <h3>Dobok Clásico</h3>
-                        <p>$85.000</p>
-                        <a href="taekwondo.html">Ver más</a>
-                    </article>
-                </li>
-                <li id="s2">
-                    <article>
-                        <img src="" alt="Cinturón negro">
-                        <h3>Cinturón Negro</h3>
-                        <p>$12.000</p>
-                        <a href="taekwondo.html">Ver más</a>
-                    </article>
-                </li>
-                <li id="s3">
-                    <article>
-                        <img src="" alt="Casco protector">
-                        <h3>Casco Protector</h3>
-                        <p>$45.000</p>
-                        <a href="taekwondo.html">Ver más</a>
-                    </article>
-                </li>
-                <li id="s4">
-                    <article>
-                        <img src="" alt="Bolsa de pie">
-                        <h3>Bolsa de Pie</h3>
-                        <p>$32.000</p>
-                        <a href="taekwondo.html">Ver más</a>
-                    </article>
-                </li>
-            </ul>
+<main>
+  <div class="wrap hero">
+    <div class="hero-grid">
+      <div>
+        <p class="eyebrow">Equipamiento oficial de Taekwondo</p>
+        <h1>Cada movimiento<br>cuenta.</h1>
+        <p class="lead">Doboks, protecciones y accesorios homologados WT para entrenar todos los días y competir con confianza, del blanco al negro.</p>
+        <div class="hero-ctas">
+          <a class="btn btn-primary" href="catalogo.html">Ver catálogo</a>
+          <a class="btn btn-outline" href="#categorias">Explorar categorías</a>
+        </div>
+      </div>
+      <div class="hero-figure">
+        <svg viewBox="0 0 300 260">
+          <path class="kick-trail" d="M40 210 Q120 230 180 150 Q210 105 255 95"/>
+          <g class="fighter">
+            <circle cx="150" cy="60" r="14"/>
+            <path d="M150 74 L150 118"/>
+            <path d="M150 84 L118 100"/>
+            <path d="M150 84 L182 70"/>
+            <path d="M150 118 L112 150"/>
+            <path d="M150 118 L215 100"/>
+            <path d="M215 100 L255 95"/>
+            <line x1="128" y1="205" x2="112" y2="150" stroke-width="2.4"/>
+            <line x1="128" y1="205" x2="140" y2="150" stroke-width="2.4"/>
+          </g>
+        </svg>
+      </div>
+    </div>
 
-            <div>
-                <label for="slide1">1</label>
-                <label for="slide2">2</label>
-                <label for="slide3">3</label>
-                <label for="slide4">4</label>
-                <label for="slide1">Anterior</label>
-                <label for="slide2">Siguiente</label>
-            </div>
-        </section>
+    <div class="trust-row">
+      <div class="trust-item"><svg class="icon"><use href="#i-truck"/></svg> Envíos a todo el país</div>
+      <div class="trust-item"><svg class="icon"><use href="#i-ruler"/></svg> Talles para niños y adultos</div>
+      <div class="trust-item"><svg class="icon"><use href="#i-shield-check"/></svg> Productos homologados WT</div>
+    </div>
+  </div>
 
-        <section aria-labelledby="categorias-titulo">
-            <h2 id="categorias-titulo">Secciones principales</h2>
-            <div>
-                <article>
-                    <a href="taekwondo.html">
-                        <img src="" alt="Productos de taekwondo" width="200">
-                        <h3>Taekwondo</h3>
-                        <p>Doboks, cinturones, protectores y accesorios para la práctica del taekwondo.</p>
-                    </a>
-                </article>
-                <article>
-                    <a href="equipo-gimnasio.html">
-                        <img src="" alt="Equipo de gimnasio" width="200">
-                        <h3>Equipo de gimnasio</h3>
-                        <p>Tatamis, pesas, bandas y equipamiento general para entrenamiento.</p>
-                    </a>
-                </article>
-                <article>
-                    <a href="contacto.html">
-                        <img src="" alt="Contacto" width="200">
-                        <h3>Contacto</h3>
-                        <p>Envíanos tus consultas y solicítanos información.</p>
-                    </a>
-                </article>
-            </div>
-        </section>
-    </main>
+  <div class="wrap section-tight" id="categorias">
+    <div class="section-head">
+      <h2>Comprá por categoría</h2>
+    </div>
+    <div class="cat-grid">
+      <a class="cat-card" href="catalogo.html?cat=doboks" style="text-decoration:none;color:inherit">
+        <div class="icon-wrap cat-ink"><svg class="icon"><use href="#i-cat-dobok"/></svg></div>
+        <h3>Doboks</h3>
+        <span>Entrenamiento y competición</span>
+      </a>
+      <a class="cat-card" href="catalogo.html?cat=protecciones" style="text-decoration:none;color:inherit">
+        <div class="icon-wrap cat-red"><svg class="icon"><use href="#i-cat-shield"/></svg></div>
+        <h3>Protecciones</h3>
+        <span>Petos, cascos, guantines</span>
+      </a>
+      <a class="cat-card" href="catalogo.html?cat=cinturones" style="text-decoration:none;color:inherit">
+        <div class="icon-wrap" style="background:var(--belt-stripe);"><svg class="icon" style="color:var(--ink)"><use href="#i-cat-belt"/></svg></div>
+        <h3>Cinturones</h3>
+        <span>Todos los grados</span>
+      </a>
+      <a class="cat-card" href="catalogo.html?cat=accesorios" style="text-decoration:none;color:inherit">
+        <div class="icon-wrap cat-blue"><svg class="icon"><use href="#i-cat-pad"/></svg></div>
+        <h3>Accesorios</h3>
+        <span>Paos, sacos y bolsos</span>
+      </a>
+    </div>
+  </div>
 
-    <footer id="contacto">
-        <section aria-labelledby="contacto-titulo">
-            <h2 id="contacto-titulo">Contacto</h2>
-            <address>
-                <p>Email: contacto@dojangstore.com.ar</p>
-                <p>Teléfono: +54 11 2345-6789</p>
-                <p>Dirección: Av. Corrientes 1234, CABA</p>
-            </address>
-        </section>
+  <div class="wrap section-tight">
+    <div class="section-head">
+      <h2>Más elegidos</h2>
+      <a class="btn btn-ghost btn-sm" href="catalogo.html">Ver todo el catálogo</a>
+    </div>
+    <div class="product-grid" id="featuredGrid"></div>
+  </div>
+</main>
 
-        <section aria-labelledby="redes-titulo">
-            <h2 id="redes-titulo">Seguinos</h2>
-            <ul>
-                <li><a href="#" rel="noopener">Instagram</a></li>
-                <li><a href="#" rel="noopener">Facebook</a></li>
-                <li><a href="#" rel="noopener">X</a></li>
-            </ul>
-        </section>
+<footer>
+  <div class="wrap footer-grid">
+    <div>
+      <div class="logo"><span>KIH</span><em>A</em><span>P</span></div>
+      <p>Equipamiento de taekwondo para cada cinturón: doboks, protecciones y accesorios homologados WT.</p>
+    </div>
+    <div>
+      <h4>Tienda</h4>
+      <ul>
+        <li><a href="catalogo.html?cat=doboks">Doboks</a></li>
+        <li><a href="catalogo.html?cat=protecciones">Protecciones</a></li>
+        <li><a href="catalogo.html?cat=cinturones">Cinturones</a></li>
+        <li><a href="catalogo.html?cat=accesorios">Accesorios</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Ayuda</h4>
+      <ul>
+        <li><a href="contacto.html">Contacto</a></li>
+        <li><a href="#">Guía de talles</a></li>
+        <li><a href="#">Envíos</a></li>
+        <li><a href="#">Cambios y devoluciones</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Newsletter</h4>
+      <p>Enterate de nuevos productos y promociones.</p>
+      <div class="promo-row" style="margin-top:12px;">
+        <input type="email" placeholder="Tu email">
+        <button class="btn btn-primary btn-sm">Sumarme</button>
+      </div>
+    </div>
+  </div>
+  <div class="wrap foot-bottom">
+    <span>© 2026 KIHAP. Todos los derechos reservados.</span>
+    <span>Mockup de sitio — contenido de ejemplo</span>
+  </div>
+</footer>
 
-        <p>&copy; 2026 Dojang Store. Todos los derechos reservados.</p>
-    </footer>
+<div class="toast" id="toast"><svg class="icon"><use href="#i-check"/></svg><span id="toastText">Agregado al carrito</span></div>
+
+<script src="js/products.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/main.js"></script>
+<script>
+// Vanilla: render destacados + delegación click
+function productMediaHTML(p){
+  return `<div class="product-media ${catClass[p.category]}"><svg class="icon" style="color:${p.category==='cinturones' ? 'var(--ink)' : '#fff'}"><use href="#${catIcon[p.category]}"/></svg></div>`;
+}
+function productCardHTML(p){
+  return `<div class="product-card" data-id="${p.id}">
+    ${productMediaHTML(p)}
+    <div class="product-info">
+      <span class="product-cat">${catLabel[p.category]}</span>
+      <span class="product-name">${p.name}</span>
+      <span class="product-price">${formatPrice(p.price)}</span>
+      <button class="btn-add" data-quickadd="${p.id}"><svg class="icon" style="width:14px;height:14px"><use href="#i-cart"/></svg> Agregar</button>
+    </div>
+  </div>`;
+}
+function productCardHTMLWithBadge(p){
+  let html = productCardHTML(p);
+  if(p.badge){
+    html = html.replace('product-media', 'product-media').replace('">\n    <svg', `"><span class="badge-tag">${p.badge}</span>\n    <svg`);
+    // fallback simple
+    if(!html.includes('badge-tag')){
+      html = html.replace('<svg class="icon"', '<span class="badge-tag">'+p.badge+'</span><svg class="icon"');
+    }
+  }
+  return html;
+}
+function renderFeatured(){
+  const featured = products.filter(p => p.featured);
+  document.getElementById("featuredGrid").innerHTML = featured.map(productCardHTMLWithBadge).join("");
+}
+document.body.addEventListener("click", (e) => {
+  const quickBtn = e.target.closest("[data-quickadd]");
+  if(quickBtn){
+    e.preventDefault(); e.stopPropagation();
+    const p = products.find(pr => pr.id === Number(quickBtn.dataset.quickadd));
+    quickAddToCart(p);
+    return;
+  }
+  const card = e.target.closest(".product-card");
+  if(card){
+    location.href = "producto.html?id=" + card.dataset.id;
+  }
+});
+renderFeatured();
+</script>
 </body>
 </html>

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KIHAP — Catálogo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<svg style="display:none" aria-hidden="true">
+  <symbol id="i-cart" viewBox="0 0 24 24"><path d="M3 3h2l.4 2M7 13h10l3-8H6.4M7 13L5.4 5M7 13l-1.5 6h11"/><circle cx="9" cy="20" r="1.4"/><circle cx="17" cy="20" r="1.4"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M4 12.5l5 5L20 6.5"/></symbol>
+  <symbol id="i-cat-dobok" viewBox="0 0 48 48"><path d="M15 8 L24 15 L33 8 L33 14 L38 19 L34 41 L14 41 L10 19 L15 14 Z"/><line x1="15" y1="26" x2="33" y2="26"/></symbol>
+  <symbol id="i-cat-shield" viewBox="0 0 48 48"><path d="M24 5 L40 11 V22 C40 32 33 39.5 24 43 C15 39.5 8 32 8 22 V11 Z"/><path d="M17 23.5 L22 28.5 L31 17.5"/></symbol>
+  <symbol id="i-cat-belt" viewBox="0 0 48 48"><line x1="4" y1="24" x2="44" y2="24" stroke-width="6"/><rect x="17" y="15" width="14" height="18" rx="2"/><line x1="21" y1="33" x2="16" y2="43"/><line x1="27" y1="33" x2="32" y2="43"/></symbol>
+  <symbol id="i-cat-pad" viewBox="0 0 48 48"><rect x="9" y="5" width="22" height="30" rx="4"/><line x1="20" y1="35" x2="20" y2="43"/><rect x="13" y="41" width="14" height="4" rx="2"/></symbol>
+</svg>
+
+<div class="rank-stripe"></div>
+
+<header class="topbar">
+  <div class="wrap topbar-inner">
+    <a href="index.html" class="logo" style="text-decoration:none;color:inherit"><span>KIH</span><em>A</em><span>P</span></a>
+    <button class="hamburger" id="hamburgerBtn" aria-label="Abrir menú"><svg class="icon"><use href="#i-menu"/></svg></button>
+    <nav class="main-nav" id="mainNav">
+      <a class="nav-link" href="index.html">Inicio</a>
+      <a class="nav-link active" href="catalogo.html">Catálogo</a>
+      <a class="nav-link" href="contacto.html">Contacto</a>
+    </nav>
+    <div class="topbar-actions">
+      <a class="cart-btn" href="carrito.html">
+        <svg class="icon"><use href="#i-cart"/></svg>
+        Carrito
+        <span class="cart-badge" id="cartBadge">0</span>
+      </a>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="wrap page-header">
+    <div class="breadcrumb"><a href="index.html">Inicio</a> / Catálogo</div>
+    <h2 style="font-size:38px;">Catálogo completo</h2>
+  </div>
+
+  <div class="wrap catalogo-layout">
+    <aside>
+      <div class="filter-block">
+        <h4>Categoría</h4>
+        <label class="check-row"><input type="checkbox" class="cat-filter" value="doboks"> Doboks</label>
+        <label class="check-row"><input type="checkbox" class="cat-filter" value="protecciones"> Protecciones</label>
+        <label class="check-row"><input type="checkbox" class="cat-filter" value="cinturones"> Cinturones</label>
+        <label class="check-row"><input type="checkbox" class="cat-filter" value="accesorios"> Accesorios</label>
+      </div>
+      <div class="filter-block">
+        <h4>Talla</h4>
+        <div class="size-chip-row">
+          <button class="size-chip">XS</button><button class="size-chip">S</button>
+          <button class="size-chip">M</button><button class="size-chip">L</button>
+          <button class="size-chip">XL</button>
+        </div>
+      </div>
+      <div class="filter-block">
+        <h4>Precio</h4>
+        <div class="size-chip-row">
+          <button class="size-chip">Hasta $20.000</button>
+          <button class="size-chip">$20.000–$60.000</button>
+          <button class="size-chip">Más de $60.000</button>
+        </div>
+      </div>
+      <button class="clear-filters" onclick="clearFilters()">Limpiar filtros</button>
+    </aside>
+
+    <div>
+      <div class="catalog-toolbar">
+        <span class="result-count" id="resultCount">8 productos</span>
+        <select id="sortSelect">
+          <option value="relevancia">Ordenar por: Relevancia</option>
+          <option value="menor">Precio: menor a mayor</option>
+          <option value="mayor">Precio: mayor a menor</option>
+          <option value="nuevos">Más nuevos</option>
+        </select>
+      </div>
+      <div class="product-grid" id="catalogGrid"></div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap footer-grid">
+    <div>
+      <div class="logo"><span>KIH</span><em>A</em><span>P</span></div>
+      <p>Equipamiento de taekwondo para cada cinturón: doboks, protecciones y accesorios homologados WT.</p>
+    </div>
+    <div>
+      <h4>Tienda</h4>
+      <ul>
+        <li><a href="catalogo.html?cat=doboks">Doboks</a></li>
+        <li><a href="catalogo.html?cat=protecciones">Protecciones</a></li>
+        <li><a href="catalogo.html?cat=cinturones">Cinturones</a></li>
+        <li><a href="catalogo.html?cat=accesorios">Accesorios</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Ayuda</h4>
+      <ul>
+        <li><a href="contacto.html">Contacto</a></li>
+        <li><a href="#">Guía de talles</a></li>
+        <li><a href="#">Envíos</a></li>
+        <li><a href="#">Cambios y devoluciones</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Newsletter</h4>
+      <p>Enterate de nuevos productos y promociones.</p>
+      <div class="promo-row" style="margin-top:12px;">
+        <input type="email" placeholder="Tu email">
+        <button class="btn btn-primary btn-sm">Sumarme</button>
+      </div>
+    </div>
+  </div>
+  <div class="wrap foot-bottom">
+    <span>© 2026 KIHAP. Todos los derechos reservados.</span>
+    <span>Mockup de sitio — contenido de ejemplo</span>
+  </div>
+</footer>
+
+<div class="toast" id="toast"><svg class="icon"><use href="#i-check"/></svg><span id="toastText">Agregado al carrito</span></div>
+
+<script src="js/products.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/main.js"></script>
+<script src="js/catalogo.js"></script>
+</body>
+</html>
