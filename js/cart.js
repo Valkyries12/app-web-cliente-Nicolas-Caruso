@@ -273,8 +273,4 @@ function cartItemRowHTML(cartItem, itemIndex) {
   </div>`;
 }
 
-// ─────────────────────────────────────────────
-// Legacy alias for vanilla global compatibility
-// Inline pages reference `cart` directly.
-// ─────────────────────────────────------------
-let cart = shoppingCart;
+

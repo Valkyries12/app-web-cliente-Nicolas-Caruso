@@ -146,12 +146,4 @@ function formatPrice(priceAmount) {
   return '$' + priceAmount.toLocaleString('es-AR');
 }
 
-// ─────────────────────────────────────────────
-// Legacy aliases (vanilla global compatibility)
-// Keep old names available for inline page scripts
-// that still reference products / catLabel / etc.
-// ─────────────────────────────────------------
-const products = PRODUCT_CATALOG;
-const catLabel = CATEGORY_LABELS;
-const catClass = CATEGORY_STYLE_MAP;
-const catIcon = CATEGORY_ICON_MAP;
+
