@@ -171,48 +171,96 @@
 <script src="js/cart.js"></script>
 <script src="js/main.js"></script>
 <script>
-// Vanilla: render destacados + delegación click
-function productMediaHTML(p){
-  return `<div class="tarjeta-producto__media ${catClass[p.category]}"><svg class="icono" style="color:${p.category==='cinturones' ? 'var(--ink)' : '#fff'}"><use href="#${catIcon[p.category]}"/></svg></div>`;
+// Home page - vanilla global (uses PRODUCT_CATALOG global)
+// ─────────────────────────────────────────────
+// Product card markup (home page, self-contained)
+// ─────────────────────────────────────────────
+
+/**
+ * Genera el markup del bloque visual de una tarjeta de producto.
+ * @param {import("./js/products.js").Product} product - Producto a renderizar
+ * @returns {string} HTML del área visual
+ */
+function productMediaHTML(product) {
+  const iconColor = product.category === 'cinturones' ? 'var(--ink)' : '#fff';
+
+  return `<div class="tarjeta-producto__media ${CATEGORY_STYLE_MAP[product.category]}"><svg class="icono" style="color:${iconColor}"><use href="#${CATEGORY_ICON_MAP[product.category]}"/></svg></div>`;
 }
-function productCardHTML(p){
-  return `<div class="tarjeta-producto" data-id="${p.id}">
-    ${productMediaHTML(p)}
+
+/**
+ * Genera el markup completo de la tarjeta de producto.
+ * @param {import("./js/products.js").Product} product - Producto a renderizar
+ * @returns {string} HTML de la tarjeta
+ */
+function productCardHTML(product) {
+  return `<div class="tarjeta-producto" data-id="${product.id}">
+    ${productMediaHTML(product)}
     <div class="tarjeta-producto__cuerpo">
-      <span class="tarjeta-producto__categoria">${catLabel[p.category]}</span>
-      <span class="tarjeta-producto__nombre">${p.name}</span>
-      <span class="tarjeta-producto__precio">${formatPrice(p.price)}</span>
-      <button class="tarjeta-producto__accion" data-quickadd="${p.id}"><svg class="icono" style="width:14px;height:14px"><use href="#i-cart"/></svg> Agregar</button>
+      <span class="tarjeta-producto__categoria">${CATEGORY_LABELS[product.category]}</span>
+      <span class="tarjeta-producto__nombre">${product.name}</span>
+      <span class="tarjeta-producto__precio">${formatPrice(product.price)}</span>
+      <button class="tarjeta-producto__accion" data-quickadd="${product.id}"><svg class="icono" style="width:14px;height:14px"><use href="#i-cart"/></svg> Agregar</button>
     </div>
   </div>`;
 }
-function productCardHTMLWithBadge(p){
-  let html = productCardHTML(p);
-  if(p.badge){
-    html = html.replace('tarjeta-producto__media', 'tarjeta-producto__media').replace('">\n    <svg', `"><span class="tarjeta-producto__etiqueta">${p.badge}</span>\n    <svg`);
-    if(!html.includes('tarjeta-producto__etiqueta')){
-      html = html.replace('<svg class="icono"', '<span class="tarjeta-producto__etiqueta">'+p.badge+'</span><svg class="icono"');
+
+/**
+ * Genera el markup de la tarjeta incluyendo la etiqueta promocional.
+ * @param {import("./js/products.js").Product} product - Producto a renderizar
+ * @returns {string} HTML de la tarjeta con etiqueta
+ */
+function productCardHTMLWithBadge(product) {
+  let cardMarkup = productCardHTML(product);
+
+  if (product.badge) {
+    cardMarkup = cardMarkup
+      .replace('tarjeta-producto__media', 'tarjeta-producto__media')
+      .replace('">\n    <svg', `"><span class="tarjeta-producto__etiqueta">${product.badge}</span>\n    <svg`);
+
+    if (!cardMarkup.includes('tarjeta-producto__etiqueta')) {
+      cardMarkup = cardMarkup.replace(
+        '<svg class="icono"',
+        '<span class="tarjeta-producto__etiqueta">' + product.badge + '</span><svg class="icono"'
+      );
     }
   }
-  return html;
+
+  return cardMarkup;
 }
-function renderFeatured(){
-  const featured = products.filter(p => p.featured);
-  document.getElementById("featuredGrid").innerHTML = featured.map(productCardHTMLWithBadge).join("");
+
+/**
+ * Renderiza la grilla de productos destacados en la página de inicio.
+ */
+function renderFeatured() {
+  const featuredProducts = PRODUCT_CATALOG.filter((product) => product.featured);
+
+  document.getElementById('featuredGrid').innerHTML = featuredProducts
+    .map(productCardHTMLWithBadge)
+    .join('');
 }
-document.body.addEventListener("click", (e) => {
-  const quickBtn = e.target.closest("[data-quickadd]");
-  if(quickBtn){
-    e.preventDefault(); e.stopPropagation();
-    const p = products.find(pr => pr.id === Number(quickBtn.dataset.quickadd));
-    quickAddToCart(p);
+
+document.body.addEventListener('click', (clickEvent) => {
+  const quickAddButton = clickEvent.target.closest('[data-quickadd]');
+
+  if (quickAddButton) {
+    clickEvent.preventDefault();
+    clickEvent.stopPropagation();
+
+    const productToAdd = PRODUCT_CATALOG.find(
+      (catalogProduct) => catalogProduct.id === Number(quickAddButton.dataset.quickadd)
+    );
+
+    quickAddToCart(productToAdd);
     return;
   }
-  const card = e.target.closest(".tarjeta-producto");
-  if(card){
-    location.href = "producto.html?id=" + card.dataset.id;
+
+  const productCardElement = clickEvent.target.closest('.tarjeta-producto');
+
+  if (productCardElement) {
+    location.href = 'producto.html?id=' + productCardElement.dataset.id;
   }
 });
+
 renderFeatured();
 </script>
 </body>
