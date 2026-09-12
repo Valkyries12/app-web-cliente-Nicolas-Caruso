@@ -11,8 +11,11 @@
  */
 function productMediaHTML(product) {
   const iconColor = product.category === 'cinturones' ? 'var(--ink)' : '#fff';
+  const imageMarkup = product.image
+    ? `<img src="${product.image}" alt="${product.name}" loading="lazy" onerror="this.remove()">`
+    : '';
 
-  return `<div class="tarjeta-producto__media ${CATEGORY_STYLE_MAP[product.category]}"><svg class="icono" style="color:${iconColor}"><use href="#${CATEGORY_ICON_MAP[product.category]}"/></svg></div>`;
+  return `<div class="tarjeta-producto__media ${CATEGORY_STYLE_MAP[product.category]}">${imageMarkup}<svg class="icono" style="color:${iconColor}"><use href="#${CATEGORY_ICON_MAP[product.category]}"/></svg></div>`;
 }
 
 /**

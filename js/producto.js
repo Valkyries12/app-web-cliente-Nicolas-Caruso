@@ -33,8 +33,11 @@ let detailQty = selectedQuantity;
  */
 function productMediaHTML(product) {
   const iconColor = product.category === 'cinturones' ? 'var(--ink)' : '#fff';
+  const imageMarkup = product.image
+    ? `<img src="${product.image}" alt="${product.name}" loading="lazy" onerror="this.remove()">`
+    : '';
 
-  return `<div class="tarjeta-producto__media ${CATEGORY_STYLE_MAP[product.category]}"><svg class="icono" style="color:${iconColor}"><use href="#${CATEGORY_ICON_MAP[product.category]}"/></svg></div>`;
+  return `<div class="tarjeta-producto__media ${CATEGORY_STYLE_MAP[product.category]}">${imageMarkup}<svg class="icono" style="color:${iconColor}"><use href="#${CATEGORY_ICON_MAP[product.category]}"/></svg></div>`;
 }
 
 /**
@@ -43,7 +46,10 @@ function productMediaHTML(product) {
  * @returns {string} HTML de la tarjeta
  */
 function productCardHTML(product) {
-  const mediaMarkup = `<div class="tarjeta-producto__media ${CATEGORY_STYLE_MAP[product.category]}"><svg class="icono" style="color:${product.category === 'cinturones' ? 'var(--ink)' : '#fff'}"><use href="#${CATEGORY_ICON_MAP[product.category]}"/></svg></div>`;
+  const imageMarkup = product.image
+    ? `<img src="${product.image}" alt="${product.name}" loading="lazy" onerror="this.remove()">`
+    : '';
+  const mediaMarkup = `<div class="tarjeta-producto__media ${CATEGORY_STYLE_MAP[product.category]}">${imageMarkup}<svg class="icono" style="color:${product.category === 'cinturones' ? 'var(--ink)' : '#fff'}"><use href="#${CATEGORY_ICON_MAP[product.category]}"/></svg></div>`;
 
   return `<div class="tarjeta-producto" data-id="${product.id}">
     ${mediaMarkup}
@@ -93,16 +99,19 @@ function renderProductDetail() {
   const mediaBackgroundClass = CATEGORY_STYLE_MAP[product.category];
   const iconColor = product.category === 'cinturones' ? 'var(--ink)' : '#fff';
 
+  const galleryImageMarkup = product.image
+    ? `<img src="${product.image}" alt="${product.name}" onerror="this.remove()">`
+    : '';
   const galleryMainElement = document.getElementById('galleryMain');
   galleryMainElement.className = 'galeria__principal ' + mediaBackgroundClass;
   galleryMainElement.innerHTML =
-    `<svg class="icono" style="color:${iconColor}"><use href="#${CATEGORY_ICON_MAP[product.category]}"/></svg>`;
+    `${galleryImageMarkup}<svg class="icono" style="color:${iconColor}"><use href="#${CATEGORY_ICON_MAP[product.category]}"/></svg>`;
 
   const thumbnailNumbers = [1, 2, 3];
   document.getElementById('galleryThumbs').innerHTML = thumbnailNumbers
     .map(
       (thumbnailNumber, thumbnailIndex) =>
-        `<div class="galeria__miniatura ${mediaBackgroundClass} ${thumbnailIndex === 0 ? 'galeria__miniatura--activo' : ''}"><svg class="icono" style="color:${iconColor}"><use href="#${CATEGORY_ICON_MAP[product.category]}"/></svg></div>`
+        `<div class="galeria__miniatura ${mediaBackgroundClass} ${thumbnailIndex === 0 ? 'galeria__miniatura--activo' : ''}">${thumbnailIndex === 0 ? galleryImageMarkup : ''}<svg class="icono" style="color:${iconColor}"><use href="#${CATEGORY_ICON_MAP[product.category]}"/></svg></div>`
     )
     .join('');
 
