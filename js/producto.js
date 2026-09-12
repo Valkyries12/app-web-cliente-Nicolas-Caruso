@@ -102,7 +102,7 @@ function renderProductDetail() {
   document.getElementById('galleryThumbs').innerHTML = thumbnailNumbers
     .map(
       (thumbnailNumber, thumbnailIndex) =>
-        `<div class="galeria__miniatura ${mediaBackgroundClass} ${thumbnailIndex === 0 ? 'galeria__miniatura--activa' : ''}"><svg class="icono" style="color:${iconColor}"><use href="#${CATEGORY_ICON_MAP[product.category]}"/></svg></div>`
+        `<div class="galeria__miniatura ${mediaBackgroundClass} ${thumbnailIndex === 0 ? 'galeria__miniatura--activo' : ''}"><svg class="icono" style="color:${iconColor}"><use href="#${CATEGORY_ICON_MAP[product.category]}"/></svg></div>`
     )
     .join('');
 
@@ -127,7 +127,7 @@ function renderProductDetail() {
     document.getElementById('colorRow').innerHTML = product.colors
       .map(
         (colorOption) =>
-          `<button class="opcion__color ${colorOption === selectedColor ? 'opcion__color--seleccionada' : ''}" data-color="${colorOption}" style="${colorOption === '#FFFFFF' ? 'border-color:#DDD9CF' : ''}"><i style="background:${colorOption}"></i></button>`
+          `<button class="muestra-color ${colorOption === selectedColor ? 'muestra-color--seleccionada' : ''}" data-color="${colorOption}" style="${colorOption === '#FFFFFF' ? 'border-color:#DDD9CF' : ''}"><i style="background:${colorOption}"></i></button>`
       )
       .join('');
   } else {

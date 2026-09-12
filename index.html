@@ -14,7 +14,7 @@
   <symbol id="i-cart" viewBox="0 0 24 24"><path d="M3 3h2l.4 2M7 13h10l3-8H6.4M7 13L5.4 5M7 13l-1.5 6h11"/><circle cx="9" cy="20" r="1.4"/><circle cx="17" cy="20" r="1.4"/></symbol>
   <symbol id="i-menu" viewBox="0 0 24 24"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></symbol>
   <symbol id="i-close" viewBox="0 0 24 24"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></symbol>
-  <symbol id="i-star" viewBox="0 0 24 24" class="icono--relleno"><path d="M12 3.2l2.7 5.6 6.1.7-4.5 4.2 1.2 6.1-5.5-3-5.5 3 1.2-6.1L3.2 9.5l6.1-.7z"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 3.2l2.7 5.6 6.1.7-4.5 4.2 1.2 6.1-5.5-3-5.5 3 1.2-6.1L3.2 9.5l6.1-.7z"/></symbol>
   <symbol id="i-plus" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></symbol>
   <symbol id="i-minus" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/></symbol>
   <symbol id="i-check" viewBox="0 0 24 24"><path d="M4 12.5l5 5L20 6.5"/></symbol>
@@ -31,21 +31,21 @@
   <symbol id="i-cat-pad" viewBox="0 0 48 48"><rect x="9" y="5" width="22" height="30" rx="4"/><line x1="20" y1="35" x2="20" y2="43"/><rect x="13" y="41" width="14" height="4" rx="2"/></symbol>
 </svg>
 
-<div class="franja__cinturon"></div>
+<div class="franja franja--cinturon"></div>
 
 <header class="cabecera">
   <div class="contenedor cabecera__interior">
-    <a href="index.html" class="cabecera__marca"><span>KIH</span><em class="cabecera__marca-acento">A</em><span>P</span></a>
-    <button class="cabecera__menu" id="hamburgerBtn" aria-label="Abrir menú"><svg class="icono"><use href="#i-menu"/></svg></button>
+    <a href="index.html" class="marca"><span>KIH</span><em class="marca__acento">A</em><span>P</span></a>
+    <button class="cabecera__menu" id="hamburgerBtn" aria-label="Abrir menú" aria-expanded="false" aria-controls="mainNav"><svg class="icono"><use href="#i-menu"/></svg></button>
     <nav class="navegacion" id="mainNav">
       <a class="navegacion__enlace navegacion__enlace--activo" href="index.html">Inicio</a>
       <a class="navegacion__enlace" href="catalogo.html">Catálogo</a>
       <a class="navegacion__enlace" href="contacto.html">Contacto</a>
     </nav>
     <div class="cabecera__acciones">
-      <a class="boton-carrito" href="carrito.html">
+      <a class="boton-carrito boton-carrito--icono" href="carrito.html">
         <svg class="icono"><use href="#i-cart"/></svg>
-        Carrito
+        <span class="boton-carrito__texto">Carrito</span>
         <span class="boton-carrito__insignia" id="cartBadge">0</span>
       </a>
     </div>
@@ -89,7 +89,7 @@
     </div>
   </div>
 
-  <div class="contenedor seccion--compacta" id="categorias">
+  <div class="contenedor seccion seccion--compacta" id="categorias">
     <div class="seccion__encabezado">
       <h2>Comprá por categoría</h2>
     </div>
@@ -117,7 +117,7 @@
     </div>
   </div>
 
-  <div class="contenedor seccion--compacta">
+  <div class="contenedor seccion seccion--compacta">
     <div class="seccion__encabezado">
       <h2>Más elegidos</h2>
       <a class="boton boton--fantasma boton--pequeno" href="catalogo.html">Ver todo el catálogo</a>
@@ -129,7 +129,7 @@
 <footer class="pie">
   <div class="contenedor pie__grilla">
     <div>
-      <div class="cabecera__marca"><span>KIH</span><em class="cabecera__marca-acento">A</em><span>P</span></div>
+      <div class="marca marca--clara"><span>KIH</span><em class="marca__acento">A</em><span>P</span></div>
       <p>Equipamiento de taekwondo para cada cinturón: doboks, protecciones y accesorios homologados WT.</p>
     </div>
     <div>
@@ -153,7 +153,7 @@
     <div>
       <h4>Newsletter</h4>
       <p>Enterate de nuevos productos y promociones.</p>
-      <div class="resumen__promo" style="margin-top:12px;">
+      <div class="pie__promo">
         <input type="email" placeholder="Tu email">
         <button class="boton boton--primario boton--pequeno">Sumarme</button>
       </div>

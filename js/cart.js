@@ -258,13 +258,13 @@ function cartItemRowHTML(cartItem, itemIndex) {
   }
 
   return `<div class="carrito__item">
-    <div class="carrito__thumb ${CATEGORY_STYLE_MAP[product.category]}"><svg class="icono" style="color:${iconColor}"><use href="#${CATEGORY_ICON_MAP[product.category]}"/></svg></div>
-    <div>
+    <div class="carrito__miniatura ${CATEGORY_STYLE_MAP[product.category]}"><svg class="icono" style="color:${iconColor}"><use href="#${CATEGORY_ICON_MAP[product.category]}"/></svg></div>
+    <div class="carrito__detalle">
       <div class="carrito__nombre">${product.name}</div>
       <div class="carrito__meta">${metadataParts.join(' · ') || '&nbsp;'}</div>
       <button class="carrito__quitar" data-remove="${itemIndex}">Quitar</button>
     </div>
-    <div class="cantidad" style="height:40px;">
+    <div class="carrito__cantidad cantidad" style="height:40px;">
       <button class="cantidad__boton" data-qtyminus="${itemIndex}"><svg class="icono"><use href="#i-minus"/></svg></button>
       <span class="cantidad__valor">${cartItem.qty}</span>
       <button class="cantidad__boton" data-qtyplus="${itemIndex}"><svg class="icono"><use href="#i-plus"/></svg></button>

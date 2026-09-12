@@ -18,21 +18,21 @@
   <symbol id="i-truck" viewBox="0 0 24 24"><rect x="2" y="7" width="13" height="9" rx="1"/><path d="M15 10h4l3 3v3h-7z"/><circle cx="7" cy="18.5" r="1.6"/><circle cx="18" cy="18.5" r="1.6"/></symbol>
 </svg>
 
-<div class="franja__cinturon"></div>
+<div class="franja franja--cinturon"></div>
 
 <header class="cabecera">
   <div class="contenedor cabecera__interior">
-    <a href="index.html" class="cabecera__marca"><span>KIH</span><em class="cabecera__marca-acento">A</em><span>P</span></a>
-    <button class="cabecera__menu" id="hamburgerBtn" aria-label="Abrir menú"><svg class="icono"><use href="#i-menu"/></svg></button>
+    <a href="index.html" class="marca"><span>KIH</span><em class="marca__acento">A</em><span>P</span></a>
+    <button class="cabecera__menu" id="hamburgerBtn" aria-label="Abrir menú" aria-expanded="false" aria-controls="mainNav"><svg class="icono"><use href="#i-menu"/></svg></button>
     <nav class="navegacion" id="mainNav">
       <a class="navegacion__enlace" href="index.html">Inicio</a>
       <a class="navegacion__enlace" href="catalogo.html">Catálogo</a>
       <a class="navegacion__enlace" href="contacto.html">Contacto</a>
     </nav>
     <div class="cabecera__acciones">
-      <a class="boton-carrito" href="carrito.html">
+      <a class="boton-carrito boton-carrito--icono" href="carrito.html">
         <svg class="icono"><use href="#i-cart"/></svg>
-        Carrito
+        <span class="boton-carrito__texto">Carrito</span>
         <span class="boton-carrito__insignia" id="cartBadge">0</span>
       </a>
     </div>
@@ -42,21 +42,21 @@
 <main>
   <div class="contenedor encabezado-pagina">
     <div class="migas"><a class="migas__enlace" href="index.html">Inicio</a> / <a class="migas__enlace" href="carrito.html">Carrito</a> / Checkout</div>
-    <h2 style="font-size:38px;">Finalizar compra</h2>
+    <h2 class="encabezado-pagina__titulo">Finalizar compra</h2>
   </div>
 
   <div class="contenedor">
     <div class="pasos">
-      <div class="paso paso--activo" id="stepDot1"><span class="paso__numero">1</span> Envío</div>
-      <div class="paso__linea"></div>
-      <div class="paso" id="stepDot2"><span class="paso__numero">2</span> Pago</div>
-      <div class="paso__linea"></div>
-      <div class="paso" id="stepDot3"><span class="paso__numero">3</span> Confirmación</div>
+      <div class="paso paso--activo" id="stepDot1"><span class="paso__numero">1</span><span class="paso__etiqueta">Envío</span></div>
+      <div class="pasos__linea"></div>
+      <div class="paso" id="stepDot2"><span class="paso__numero">2</span><span class="paso__etiqueta">Pago</span></div>
+      <div class="pasos__linea"></div>
+      <div class="paso" id="stepDot3"><span class="paso__numero">3</span><span class="paso__etiqueta">Confirmación</span></div>
     </div>
   </div>
 
   <div class="contenedor compra__distribucion">
-    <div>
+    <div class="compra__contenido">
       <!-- Paso 1: envío -->
       <div class="compra__panel compra__panel--activo" id="checkoutStep1">
         <h3 style="font-size:20px;margin-bottom:18px;">Datos de envío</h3>
@@ -76,7 +76,6 @@
           <div class="formulario__campo"><label>Código Postal</label><input type="text" placeholder="5500"></div>
         </div>
         <div class="formulario__acciones">
-          <span></span>
           <button class="boton boton--oscuro" onclick="setCheckoutStep(2)">Continuar a pago</button>
         </div>
       </div>
@@ -122,13 +121,14 @@
       <div class="resumen__fila"><span>Envío</span><span id="checkoutShipping">$0</span></div>
       <div class="resumen__fila resumen__fila--total"><span>Total</span><span id="checkoutTotal">$0</span></div>
     </div>
+    <div class="compra__barra-movil"><div class="resumen__fila resumen__fila--total"><span>Total</span><span id="checkoutTotalMovil">$0</span></div><button class="boton boton--primario" onclick="setCheckoutStep(3)">Confirmar</button></div>
   </div>
 </main>
 
 <footer class="pie">
   <div class="contenedor pie__grilla">
     <div>
-      <div class="cabecera__marca"><span>KIH</span><em class="cabecera__marca-acento">A</em><span>P</span></div>
+      <div class="marca marca--clara"><span>KIH</span><em class="marca__acento">A</em><span>P</span></div>
       <p>Equipamiento de taekwondo para cada cinturón: doboks, protecciones y accesorios homologados WT.</p>
     </div>
     <div>
@@ -152,7 +152,7 @@
     <div>
       <h4>Newsletter</h4>
       <p>Enterate de nuevos productos y promociones.</p>
-      <div class="resumen__promo" style="margin-top:12px;">
+      <div class="pie__promo">
         <input type="email" placeholder="Tu email">
         <button class="boton boton--primario boton--pequeno">Sumarme</button>
       </div>
@@ -212,6 +212,14 @@ function renderCheckoutSummary() {
   document.getElementById('checkoutTotal').textContent = formatPrice(
     calculateCartSubtotal() + calculateShippingCost()
   );
+
+  const checkoutTotalMovil = document.getElementById('checkoutTotalMovil');
+
+  if (checkoutTotalMovil) {
+    checkoutTotalMovil.textContent = formatPrice(
+      calculateCartSubtotal() + calculateShippingCost()
+    );
+  }
 }
 
 document.addEventListener('DOMContentLoaded', renderCheckoutSummary);
