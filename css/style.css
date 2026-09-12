@@ -483,15 +483,7 @@ a {
   background: linear-gradient(200deg, rgba(10, 10, 12, 0) 40%, rgba(10, 10, 12, 0.55) 100%);
 }
 
-.portada__insignias {
-  position: absolute;
-  left: 12px;
-  right: 12px;
-  bottom: 12px;
-  display: flex;
-  gap: 10px;
-  z-index: 2;
-}
+
 
 .portada__insignia {
   flex: 1 1 0;

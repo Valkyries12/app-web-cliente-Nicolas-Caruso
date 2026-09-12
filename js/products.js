@@ -122,7 +122,7 @@ const PRODUCT_CATALOG = [
   },
   {
     id: 9,
-    name: 'Dobok ITF Tradicional Algodón',
+    name: 'Dobok ITF Tradicional para Gup',
     category: 'doboks',
     price: 59800,
     sizes: ['150', '160', '170', '180', '190'],
