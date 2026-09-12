@@ -20,21 +20,21 @@
   <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5.2l3.4 2"/></symbol>
 </svg>
 
-<div class="franja__cinturon"></div>
+<div class="franja franja--cinturon"></div>
 
 <header class="cabecera">
   <div class="contenedor cabecera__interior">
-    <a href="index.html" class="cabecera__marca"><span>KIH</span><em class="cabecera__marca-acento">A</em><span>P</span></a>
-    <button class="cabecera__menu" id="hamburgerBtn" aria-label="Abrir menú"><svg class="icono"><use href="#i-menu"/></svg></button>
+    <a href="index.html" class="marca"><span>KIH</span><em class="marca__acento">A</em><span>P</span></a>
+    <button class="cabecera__menu" id="hamburgerBtn" aria-label="Abrir menú" aria-expanded="false" aria-controls="mainNav"><svg class="icono"><use href="#i-menu"/></svg></button>
     <nav class="navegacion" id="mainNav">
       <a class="navegacion__enlace" href="index.html">Inicio</a>
       <a class="navegacion__enlace" href="catalogo.html">Catálogo</a>
       <a class="navegacion__enlace navegacion__enlace--activo" href="contacto.html">Contacto</a>
     </nav>
     <div class="cabecera__acciones">
-      <a class="boton-carrito" href="carrito.html">
+      <a class="boton-carrito boton-carrito--icono" href="carrito.html">
         <svg class="icono"><use href="#i-cart"/></svg>
-        Carrito
+        <span class="boton-carrito__texto">Carrito</span>
         <span class="boton-carrito__insignia" id="cartBadge">0</span>
       </a>
     </div>
@@ -44,12 +44,12 @@
 <main>
   <div class="contenedor encabezado-pagina">
     <div class="migas"><a class="migas__enlace" href="index.html">Inicio</a> / Contacto</div>
-    <h2 style="font-size:38px;">Contacto</h2>
+    <h2 class="encabezado-pagina__titulo">Contacto</h2>
     <p style="margin-top:10px;max-width:60ch;">¿Tenés dudas sobre talles, envíos o algún producto? Escribinos y te respondemos a la brevedad.</p>
   </div>
 
   <div class="contenedor contacto__distribucion">
-    <div class="contacto__formulario-contenedor">
+    <div class="contacto__panel">
       <form id="contactForm">
         <div class="formulario__campo"><label>Nombre y apellido</label><input type="text" required placeholder="Tu nombre"></div>
         <div class="formulario__campo"><label>Email</label><input type="email" required placeholder="tuemail@correo.com"></div>
@@ -103,22 +103,22 @@
             </g>
           </svg>
         </div>
-        <div class="info">
+        <div class="mapa__info">
           <div class="info__fila">
-            <div class="info__icono-contenedor"><svg class="icono"><use href="#i-pin"/></svg></div>
-            <div><h5>KIHAP Tienda — Mendoza</h5><p>Av. San Martín 1245, Ciudad de Mendoza</p></div>
+            <div class="mapa__icono"><svg class="icono"><use href="#i-pin"/></svg></div>
+            <div><h5 class="mapa__titulo">KIHAP Tienda — Mendoza</h5><p class="mapa__texto">Av. San Martín 1245, Ciudad de Mendoza</p></div>
           </div>
           <div class="info__fila">
-            <div class="info__icono-contenedor"><svg class="icono"><use href="#i-phone"/></svg></div>
-            <div><h5>Teléfono</h5><p>+54 261 400 5566</p></div>
+            <div class="mapa__icono"><svg class="icono"><use href="#i-phone"/></svg></div>
+            <div><h5 class="mapa__titulo">Teléfono</h5><p class="mapa__texto">+54 261 400 5566</p></div>
           </div>
           <div class="info__fila">
-            <div class="info__icono-contenedor"><svg class="icono"><use href="#i-mail"/></svg></div>
-            <div><h5>Email</h5><p>hola@kihap.com.ar</p></div>
+            <div class="mapa__icono"><svg class="icono"><use href="#i-mail"/></svg></div>
+            <div><h5 class="mapa__titulo">Email</h5><p class="mapa__texto">hola@kihap.com.ar</p></div>
           </div>
           <div class="info__fila">
-            <div class="info__icono-contenedor"><svg class="icono"><use href="#i-clock"/></svg></div>
-            <div><h5>Horarios</h5><p>Lunes a viernes 9 a 19 h · Sábados 9 a 13 h</p></div>
+            <div class="mapa__icono"><svg class="icono"><use href="#i-clock"/></svg></div>
+            <div><h5 class="mapa__titulo">Horarios</h5><p class="mapa__texto">Lunes a viernes 9 a 19 h · Sábados 9 a 13 h</p></div>
           </div>
         </div>
       </div>
@@ -129,7 +129,7 @@
 <footer class="pie">
   <div class="contenedor pie__grilla">
     <div>
-      <div class="cabecera__marca"><span>KIH</span><em class="cabecera__marca-acento">A</em><span>P</span></div>
+      <div class="marca marca--clara"><span>KIH</span><em class="marca__acento">A</em><span>P</span></div>
       <p>Equipamiento de taekwondo para cada cinturón: doboks, protecciones y accesorios homologados WT.</p>
     </div>
     <div>
@@ -153,7 +153,7 @@
     <div>
       <h4>Newsletter</h4>
       <p>Enterate de nuevos productos y promociones.</p>
-      <div class="resumen__promo" style="margin-top:12px;">
+      <div class="pie__promo">
         <input type="email" placeholder="Tu email">
         <button class="boton boton--primario boton--pequeno">Sumarme</button>
       </div>

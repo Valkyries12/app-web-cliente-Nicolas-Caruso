@@ -20,21 +20,21 @@
   <symbol id="i-cat-pad" viewBox="0 0 48 48"><rect x="9" y="5" width="22" height="30" rx="4"/><line x1="20" y1="35" x2="20" y2="43"/><rect x="13" y="41" width="14" height="4" rx="2"/></symbol>
 </svg>
 
-<div class="franja__cinturon"></div>
+<div class="franja franja--cinturon"></div>
 
 <header class="cabecera">
   <div class="contenedor cabecera__interior">
-    <a href="index.html" class="cabecera__marca"><span>KIH</span><em class="cabecera__marca-acento">A</em><span>P</span></a>
-    <button class="cabecera__menu" id="hamburgerBtn" aria-label="Abrir menú"><svg class="icono"><use href="#i-menu"/></svg></button>
+    <a href="index.html" class="marca"><span>KIH</span><em class="marca__acento">A</em><span>P</span></a>
+    <button class="cabecera__menu" id="hamburgerBtn" aria-label="Abrir menú" aria-expanded="false" aria-controls="mainNav"><svg class="icono"><use href="#i-menu"/></svg></button>
     <nav class="navegacion" id="mainNav">
       <a class="navegacion__enlace" href="index.html">Inicio</a>
       <a class="navegacion__enlace navegacion__enlace--activo" href="catalogo.html">Catálogo</a>
       <a class="navegacion__enlace" href="contacto.html">Contacto</a>
     </nav>
     <div class="cabecera__acciones">
-      <a class="boton-carrito" href="carrito.html">
+      <a class="boton-carrito boton-carrito--icono" href="carrito.html">
         <svg class="icono"><use href="#i-cart"/></svg>
-        Carrito
+        <span class="boton-carrito__texto">Carrito</span>
         <span class="boton-carrito__insignia" id="cartBadge">0</span>
       </a>
     </div>
@@ -44,11 +44,12 @@
 <main>
   <div class="contenedor encabezado-pagina">
     <div class="migas"><a class="migas__enlace" href="index.html">Inicio</a> / Catálogo</div>
-    <h2 style="font-size:38px;">Catálogo completo</h2>
+    <h2 class="encabezado-pagina__titulo">Catálogo completo</h2>
   </div>
 
   <div class="contenedor catalogo__distribucion">
-    <aside>
+    <button class="boton boton--fantasma boton--bloque catalogo__filtros-boton" id="filtrosBtn" aria-expanded="false" aria-controls="filtrosPanel">Filtros</button>
+    <aside class="catalogo__filtros" id="filtrosPanel">
       <div class="filtro">
         <h4 class="filtro__titulo">Categoría</h4>
         <label class="filtro__opcion"><input type="checkbox" class="cat-filter" value="doboks"> Doboks</label>
@@ -75,10 +76,10 @@
       <button class="filtro__limpiar" onclick="clearFilters()">Limpiar filtros</button>
     </aside>
 
-    <div>
+    <div class="catalogo__contenido">
       <div class="catalogo__barra">
         <span class="catalogo__contador" id="resultCount">8 productos</span>
-        <select class="formulario__selector" id="sortSelect">
+        <select class="catalogo__selector" id="sortSelect">
           <option value="relevancia">Ordenar por: Relevancia</option>
           <option value="menor">Precio: menor a mayor</option>
           <option value="mayor">Precio: mayor a menor</option>
@@ -93,7 +94,7 @@
 <footer class="pie">
   <div class="contenedor pie__grilla">
     <div>
-      <div class="cabecera__marca"><span>KIH</span><em class="cabecera__marca-acento">A</em><span>P</span></div>
+      <div class="marca marca--clara"><span>KIH</span><em class="marca__acento">A</em><span>P</span></div>
       <p>Equipamiento de taekwondo para cada cinturón: doboks, protecciones y accesorios homologados WT.</p>
     </div>
     <div>
@@ -117,7 +118,7 @@
     <div>
       <h4>Newsletter</h4>
       <p>Enterate de nuevos productos y promociones.</p>
-      <div class="resumen__promo" style="margin-top:12px;">
+      <div class="pie__promo">
         <input type="email" placeholder="Tu email">
         <button class="boton boton--primario boton--pequeno">Sumarme</button>
       </div>

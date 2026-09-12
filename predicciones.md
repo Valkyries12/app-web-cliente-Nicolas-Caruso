@@ -5,3 +5,4 @@
 3- Voy a reorganizar la estructura de las páginas, enlaces entre páginas y agregar detalle del producto y carrito con checkout.El mockup fue hecho por Claude y me basaré en ese diseño
 4- Voy a reestructurar el css para que no tenga estilos en lines, unicarlos en un unico archivos y aplicar la metodologia BEM (block, element, modifier) 
 5- Voy a reestructurar los archivos js para que sean mas legibles y se puedan leer a simple vista. Se pondrán mejores nombres de variables y formateará de una forma cómoda
+6- Voy a mejorar el diseño responsivo con un approach de mobile first. Se mantendrá la metodología BEM y se agregará o reestructurará HTML en caso de ser necesario
