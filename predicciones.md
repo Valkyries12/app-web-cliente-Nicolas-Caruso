@@ -6,3 +6,6 @@
 4- Voy a reestructurar el css para que no tenga estilos en lines, unicarlos en un unico archivos y aplicar la metodologia BEM (block, element, modifier) 
 5- Voy a reestructurar los archivos js para que sean mas legibles y se puedan leer a simple vista. Se pondrán mejores nombres de variables y formateará de una forma cómoda
 6- Voy a mejorar el diseño responsivo con un approach de mobile first. Se mantendrá la metodología BEM y se agregará o reestructurará HTML en caso de ser necesario
+7- Voy a implementar equipo de taekwondo ITF. Protecciones e imágenes para todos los artículos. 
+Se harán las adaptaciones correspondiente tanto en el HTML como en el js que contiene la información d cada producto.
+Se cambiará el SVG del hero por una imágen representativa
