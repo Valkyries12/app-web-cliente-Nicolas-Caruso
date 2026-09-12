@@ -58,34 +58,32 @@
       <div>
         <p class="portada__antetitulo">Equipamiento oficial de Taekwondo</p>
         <h1 class="portada__titulo">Cada movimiento<br>cuenta.</h1>
-        <p class="portada__bajada">Doboks, protecciones y accesorios homologados WT para entrenar todos los días y competir con confianza, del blanco al negro.</p>
+        <p class="portada__bajada">Doboks, protecciones y accesorios homologados WT/ITF para entrenar todos los días y competir con confianza, del blanco al negro.</p>
         <div class="portada__acciones">
           <a class="boton boton--primario" href="catalogo.html">Ver catálogo</a>
           <a class="boton boton--borde" href="#categorias">Explorar categorías</a>
         </div>
       </div>
       <div class="portada__figura">
-        <svg viewBox="0 0 300 260">
-          <path class="portada__trazo" d="M40 210 Q120 230 180 150 Q210 105 255 95"/>
-          <g class="portada__luchador">
-            <circle cx="150" cy="60" r="14"/>
-            <path d="M150 74 L150 118"/>
-            <path d="M150 84 L118 100"/>
-            <path d="M150 84 L182 70"/>
-            <path d="M150 118 L112 150"/>
-            <path d="M150 118 L215 100"/>
-            <path d="M215 100 L255 95"/>
-            <line x1="128" y1="205" x2="112" y2="150" stroke-width="2.4"/>
-            <line x1="128" y1="205" x2="140" y2="150" stroke-width="2.4"/>
-          </g>
-        </svg>
+        <img class="portada__foto" src="assets/img/hero-taekwondo.jpg" alt="Combate de taekwondo con dobok y protecciones">
+        <div class="portada__velo"></div>
+        <div class="portada__insignias">
+          <a class="portada__insignia" href="catalogo.html?cat=doboks">
+            <img src="assets/img/doboks/itf-tradicional.webp" alt="Dobok ITF">
+            <span>Doboks ITF</span>
+          </a>
+          <a class="portada__insignia" href="catalogo.html?cat=protecciones">
+            <img src="assets/img/protecciones/guantin-itf.webp" alt="Guantes ITF">
+            <span>Protecciones</span>
+          </a>
+        </div>
       </div>
     </div>
 
     <div class="confianza">
       <div class="confianza__item"><svg class="icono"><use href="#i-truck"/></svg> Envíos a todo el país</div>
       <div class="confianza__item"><svg class="icono"><use href="#i-ruler"/></svg> Talles para niños y adultos</div>
-      <div class="confianza__item"><svg class="icono"><use href="#i-shield-check"/></svg> Productos homologados WT</div>
+      <div class="confianza__item"><svg class="icono"><use href="#i-shield-check"/></svg> Productos homologados WT/ITF</div>
     </div>
   </div>
 
@@ -130,7 +128,7 @@
   <div class="contenedor pie__grilla">
     <div>
       <div class="marca marca--clara"><span>KIH</span><em class="marca__acento">A</em><span>P</span></div>
-      <p>Equipamiento de taekwondo para cada cinturón: doboks, protecciones y accesorios homologados WT.</p>
+      <p>Equipamiento de taekwondo para cada cinturón: doboks, protecciones y accesorios homologados WT/ITF.</p>
     </div>
     <div>
       <h4>Tienda</h4>
@@ -161,7 +159,7 @@
   </div>
   <div class="contenedor pie__inferior">
     <span>© 2026 KIHAP. Todos los derechos reservados.</span>
-    <span>Mockup de sitio — contenido de ejemplo</span>
+      
   </div>
 </footer>
 
@@ -183,8 +181,11 @@
  */
 function productMediaHTML(product) {
   const iconColor = product.category === 'cinturones' ? 'var(--ink)' : '#fff';
+  const imageMarkup = product.image
+    ? `<img src="${product.image}" alt="${product.name}" loading="lazy" onerror="this.remove()">`
+    : '';
 
-  return `<div class="tarjeta-producto__media ${CATEGORY_STYLE_MAP[product.category]}"><svg class="icono" style="color:${iconColor}"><use href="#${CATEGORY_ICON_MAP[product.category]}"/></svg></div>`;
+  return `<div class="tarjeta-producto__media ${CATEGORY_STYLE_MAP[product.category]}">${imageMarkup}<svg class="icono" style="color:${iconColor}"><use href="#${CATEGORY_ICON_MAP[product.category]}"/></svg></div>`;
 }
 
 /**

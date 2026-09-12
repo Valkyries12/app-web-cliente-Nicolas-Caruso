@@ -257,8 +257,12 @@ function cartItemRowHTML(cartItem, itemIndex) {
     );
   }
 
+  const imageMarkup = product.image
+    ? `<img src="${product.image}" alt="${product.name}" loading="lazy" onerror="this.remove()">`
+    : '';
+
   return `<div class="carrito__item">
-    <div class="carrito__miniatura ${CATEGORY_STYLE_MAP[product.category]}"><svg class="icono" style="color:${iconColor}"><use href="#${CATEGORY_ICON_MAP[product.category]}"/></svg></div>
+    <div class="carrito__miniatura ${CATEGORY_STYLE_MAP[product.category]}">${imageMarkup}<svg class="icono" style="color:${iconColor}"><use href="#${CATEGORY_ICON_MAP[product.category]}"/></svg></div>
     <div class="carrito__detalle">
       <div class="carrito__nombre">${product.name}</div>
       <div class="carrito__meta">${metadataParts.join(' · ') || '&nbsp;'}</div>
