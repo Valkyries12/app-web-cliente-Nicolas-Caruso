@@ -12,3 +12,4 @@ Se cambiará el SVG del hero por una imágen representativa
 8- Voy a agregar validaciones para el carrito y formulario en el proceso de checkout
 9- Se corregira el doble boton de compra en las versiones mobile
 10- Se agrega mas espaciado para dar una sensacion de respiro
+11- Se agrega pagina de guia de talles
