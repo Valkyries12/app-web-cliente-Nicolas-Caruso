@@ -9,3 +9,4 @@
 7- Voy a implementar equipo de taekwondo ITF. Protecciones e imágenes para todos los artículos. 
 Se harán las adaptaciones correspondiente tanto en el HTML como en el js que contiene la información d cada producto.
 Se cambiará el SVG del hero por una imágen representativa
+8- Voy a agregar validaciones para el carrito y formulario en el proceso de checkout
