@@ -2356,11 +2356,14 @@ a {
 /* ---------- 20 Aviso (toast) ---------- */
 .aviso {
   position: fixed;
-  bottom: calc(16px + env(safe-area-inset-bottom));
+  top: calc(76px + env(safe-area-inset-top));
+  bottom: auto;
   left: 50%;
-  transform: translateX(-50%) translateY(20px);
-  background: var(--ink);
-  color: #fff;
+  transform: translateX(-50%) translateY(-10px);
+  background: var(--white);
+  color: var(--ink);
+  border: 1px solid var(--line);
+  box-shadow: 0 8px 24px rgba(22, 23, 26, 0.16);
   padding: 13px 22px;
   min-height: 44px;
   border-radius: 4px;
@@ -2369,11 +2372,11 @@ a {
   display: flex;
   align-items: center;
   gap: 10px;
-  max-width: calc(100% - 32px);
+  max-width: min(480px, calc(100% - 32px));
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.25s ease, transform 0.25s ease;
-  z-index: 100;
+  z-index: 200;
 }
 
 .aviso--visible {
@@ -2385,11 +2388,12 @@ a {
   color: var(--green);
   width: 17px;
   height: 17px;
+  flex-shrink: 0;
 }
 
 @media (min-width: 900px) {
   .aviso {
-    bottom: 26px;
+    top: calc(84px + env(safe-area-inset-top));
   }
 }
 
