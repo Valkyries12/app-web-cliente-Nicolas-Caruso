@@ -15,6 +15,9 @@
 const SHIPPING_FLAT_RATE = 4500;
 const TOAST_VISIBLE_DURATION_MS = 2000;
 
+// Tope de unidades por producto, compartido con producto.html y carrito.html
+const MAX_QTY_POR_PRODUCTO = 10;
+
 /** @type {ShoppingCartItem[]} */
 let shoppingCart = [
   { product: PRODUCT_CATALOG[0], size: '160', color: null, qty: 1 },
@@ -117,6 +120,11 @@ function quickAddToCart(product) {
   );
 
   if (existingCartItem) {
+    if (existingCartItem.qty + 1 > MAX_QTY_POR_PRODUCTO) {
+      showToast('Máximo 10 unidades por producto');
+      return;
+    }
+
     existingCartItem.qty += 1;
   } else {
     const defaultSize = product.sizes ? product.sizes[0] : null;
@@ -183,14 +191,27 @@ function addDetailToCart(targetProduct, selectedSize, selectedColor, requestedQu
   );
 
   if (existingCartItem) {
+    if (existingCartItem.qty + effectiveQuantity > MAX_QTY_POR_PRODUCTO) {
+      existingCartItem.qty = MAX_QTY_POR_PRODUCTO;
+      updateCartBadge();
+      showToast('Máximo 10 unidades por producto');
+      return;
+    }
+
     existingCartItem.qty += effectiveQuantity;
   } else {
     shoppingCart.push({
       product: effectiveProduct,
       size: effectiveSize,
       color: effectiveColor,
-      qty: effectiveQuantity,
+      qty: Math.min(effectiveQuantity, MAX_QTY_POR_PRODUCTO),
     });
+
+    if (effectiveQuantity > MAX_QTY_POR_PRODUCTO) {
+      updateCartBadge();
+      showToast('Máximo 10 unidades por producto');
+      return;
+    }
   }
 
   updateCartBadge();
@@ -216,14 +237,14 @@ function removeFromCart(itemIndex) {
 
 /**
  * Cambia la cantidad de un ítem del carrito según un delta.
- * Tope simple: mínimo 1 y máximo 10 por producto.
+ * Tope simple: mínimo 1 y máximo 10 por producto (igual que en producto.html).
  * @param {number} itemIndex - Posición en el arreglo shoppingCart
  * @param {number} quantityDelta - Cantidad a sumar (negativa para restar)
  */
 function changeCartQty(itemIndex, quantityDelta) {
   const nuevaCantidad = shoppingCart[itemIndex].qty + quantityDelta;
 
-  if (nuevaCantidad > 10) {
+  if (nuevaCantidad > MAX_QTY_POR_PRODUCTO) {
     showToast('Máximo 10 unidades por producto');
     return;
   }
