@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KIHAP — Guía de talles</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<svg style="display:none" aria-hidden="true">
+  <symbol id="i-cart" viewBox="0 0 24 24"><path d="M3 3h2l.4 2M7 13h10l3-8H6.4M7 13L5.4 5M7 13l-1.5 6h11"/><circle cx="9" cy="20" r="1.4"/><circle cx="17" cy="20" r="1.4"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M4 12.5l5 5L20 6.5"/></symbol>
+  <symbol id="i-ruler" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="10" rx="1"/><path d="M7 7v3M11 7v3M15 7v3M19 7v3"/></symbol>
+</svg>
+
+<div class="franja franja--cinturon"></div>
+
+<header class="cabecera">
+  <div class="contenedor cabecera__interior">
+    <a href="index.html" class="marca"><span>KIH</span><em class="marca__acento">A</em><span>P</span></a>
+    <button class="cabecera__menu" id="hamburgerBtn" aria-label="Abrir menú" aria-expanded="false" aria-controls="mainNav"><svg class="icono"><use href="#i-menu"/></svg></button>
+    <nav class="navegacion" id="mainNav">
+      <a class="navegacion__enlace" href="index.html">Inicio</a>
+      <a class="navegacion__enlace" href="catalogo.html">Catálogo</a>
+      <a class="navegacion__enlace" href="contacto.html">Contacto</a>
+    </nav>
+    <div class="cabecera__acciones">
+      <a class="boton-carrito boton-carrito--icono" href="carrito.html">
+        <svg class="icono"><use href="#i-cart"/></svg>
+        <span class="boton-carrito__texto">Carrito</span>
+        <span class="boton-carrito__insignia" id="cartBadge">0</span>
+      </a>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="contenedor encabezado-pagina">
+    <div class="migas"><a class="migas__enlace" href="index.html">Inicio</a> / Guía de talles</div>
+    <h2 class="encabezado-pagina__titulo">Guía de talles</h2>
+    <p style="margin-top:10px;max-width:60ch;">Referencia visual para elegir tu talle antes de comprar. Si estás entre dos talles, te recomendamos el más grande para tener margen de movimiento.</p>
+  </div>
+
+  <div class="contenedor guia__contenido">
+    <section class="guia__seccion">
+      <h3 class="guia__titulo"><svg class="icono"><use href="#i-ruler"/></svg> Cómo medirte</h3>
+      <div class="guia__pasos">
+        <div class="guia__paso"><b>1. Altura</b><span>Medí del piso a la coronilla, descalzo y derecho.</span></div>
+        <div class="guia__paso"><b>2. Pecho / cintura</b><span>Pasá el centímetro sin ajustar, sobre la ropa liviana.</span></div>
+        <div class="guia__paso"><b>3. Compará</b><span>Buscá tu medida en la tabla de abajo.</span></div>
+      </div>
+    </section>
+
+    <section class="guia__seccion">
+      <h3 class="guia__titulo">Doboks (talle por altura)</h3>
+      <p class="guia__bajada">Los doboks se venden por altura: 130 a 190.</p>
+      <div class="guia__tabla-wrap">
+        <table class="guia__tabla">
+          <thead><tr><th>Talle</th><th>Altura</th><th>Pecho aprox.</th></tr></thead>
+          <tbody>
+            <tr><td><b>130</b></td><td>130 a 140 cm</td><td>68 a 76 cm</td></tr>
+            <tr><td><b>140</b></td><td>140 a 150 cm</td><td>76 a 84 cm</td></tr>
+            <tr><td><b>150</b></td><td>150 a 160 cm</td><td>84 a 92 cm</td></tr>
+            <tr><td><b>160</b></td><td>160 a 170 cm</td><td>92 a 100 cm</td></tr>
+            <tr><td><b>170</b></td><td>170 a 180 cm</td><td>100 a 108 cm</td></tr>
+            <tr><td><b>180</b></td><td>180 a 188 cm</td><td>108 a 116 cm</td></tr>
+            <tr><td><b>190</b></td><td>188 a 195 cm</td><td>116 a 124 cm</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="guia__seccion">
+      <h3 class="guia__titulo">Protecciones (S a XL)</h3>
+      <p class="guia__bajada">Petos, cabezales, guantines y botines.</p>
+      <div class="guia__tabla-wrap">
+        <table class="guia__tabla">
+          <thead><tr><th>Talle</th><th>Altura orientativa</th><th>Uso habitual</th></tr></thead>
+          <tbody>
+            <tr><td><b>S</b></td><td>130 a 150 cm</td><td>Niños</td></tr>
+            <tr><td><b>M</b></td><td>150 a 165 cm</td><td>Juvenil</td></tr>
+            <tr><td><b>L</b></td><td>165 a 180 cm</td><td>Adulto</td></tr>
+            <tr><td><b>XL</b></td><td>Más de 180 cm</td><td>Adulto grande</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="guia__seccion">
+      <h3 class="guia__titulo">Cinturones (largo total)</h3>
+      <p class="guia__bajada">Se venden por largo: 220 a 300 cm.</p>
+      <div class="guia__tabla-wrap">
+        <table class="guia__tabla">
+          <thead><tr><th>Largo</th><th>Cintura orientativa</th><th>Uso habitual</th></tr></thead>
+          <tbody>
+            <tr><td><b>220 cm</b></td><td>Menos de 70 cm</td><td>Niños</td></tr>
+            <tr><td><b>240 cm</b></td><td>70 a 80 cm</td><td>Juvenil</td></tr>
+            <tr><td><b>260 cm</b></td><td>80 a 90 cm</td><td>Adulto</td></tr>
+            <tr><td><b>280 cm</b></td><td>90 a 100 cm</td><td>Adulto</td></tr>
+            <tr><td><b>300 cm</b></td><td>Más de 100 cm</td><td>Adulto grande</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="guia__nota">El cinturón debe dar dos vueltas con 20 a 30 cm libres en cada punta para el nudo.</p>
+    </section>
+
+    <section class="guia__seccion guia__cierre">
+      <h3 class="guia__titulo guia__cierre-titulo">¿Ya sabés tu talle?</h3>
+      <p class="guia__bajada guia__cierre-texto">Volvé al catálogo para elegir tu equipo o escribinos si necesitás ayuda.</p>
+      <div class="guia__acciones">
+        <a class="boton boton--primario" href="catalogo.html">Ver catálogo</a>
+        <a class="boton boton--borde" href="contacto.html">Consultar por un talle</a>
+      </div>
+    </section>
+  </div>
+</main>
+
+<footer class="pie">
+  <div class="contenedor pie__grilla">
+    <div>
+      <div class="marca marca--clara"><span>KIH</span><em class="marca__acento">A</em><span>P</span></div>
+      <p>Equipamiento de taekwondo para cada cinturón: doboks, protecciones y accesorios homologados WT/ITF.</p>
+    </div>
+    <div>
+      <h4>Tienda</h4>
+      <ul>
+        <li><a href="catalogo.html?cat=doboks">Doboks</a></li>
+        <li><a href="catalogo.html?cat=protecciones">Protecciones</a></li>
+        <li><a href="catalogo.html?cat=cinturones">Cinturones</a></li>
+        <li><a href="catalogo.html?cat=accesorios">Accesorios</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Ayuda</h4>
+      <ul>
+        <li><a href="contacto.html">Contacto</a></li>
+        <li><a href="guia-talles.html">Guía de talles</a></li>
+        <li><a href="#">Envíos</a></li>
+        <li><a href="#">Cambios y devoluciones</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Novedades</h4>
+      <p>Enterate de nuevos productos y promociones.</p>
+      <div class="pie__promo">
+        <input type="email" placeholder="Tu email">
+        <button class="boton boton--primario boton--pequeno">Sumarme</button>
+      </div>
+    </div>
+  </div>
+  <div class="contenedor pie__inferior">
+    <span>© 2026 KIHAP. Todos los derechos reservados.</span>
+  </div>
+</footer>
+
+<div class="aviso" id="toast"><svg class="icono"><use href="#i-check"/></svg><span id="toastText">Agregado al carrito</span></div>
+
+<script src="js/products.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
