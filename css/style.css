@@ -128,7 +128,7 @@ a {
 .contenedor {
   max-width: 1180px;
   margin: 0 auto;
-  padding: 0 18px;
+  padding: 0 20px;
   width: 100%;
 }
 
@@ -632,13 +632,13 @@ a {
 }
 
 .seccion--compacta {
-  padding: 28px 0;
+  padding: 32px 0;
 }
 
 /* Alias legacy: contenedor con modificador */
 .contenedor.seccion--compacta {
-  padding-top: 28px;
-  padding-bottom: 28px;
+  padding-top: 32px;
+  padding-bottom: 32px;
 }
 
 .seccion__encabezado {
@@ -680,14 +680,14 @@ a {
 .grilla-categorias {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 12px;
+  gap: 16px;
 }
 
 .tarjeta-categoria {
   background: var(--white);
   border: 1px solid var(--line);
   border-radius: 4px;
-  padding: 22px 18px;
+  padding: 22px 20px;
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -1066,7 +1066,7 @@ a {
 .resumen__promo {
   display: flex;
   gap: 8px;
-  margin: 16px 0;
+  margin: 18px 0;
 }
 
 .pie__promo {
@@ -1136,7 +1136,7 @@ a {
 
 /* ---------- 12 Encabezado de página y migas ---------- */
 .encabezado-pagina {
-  padding: 28px 0 22px;
+  padding: 32px 0 24px;
   border-bottom: 1px solid var(--line);
 }
 
@@ -1188,9 +1188,9 @@ a {
 .catalogo__distribucion {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 24px;
+  gap: 28px;
   align-items: flex-start;
-  padding: 24px 0 56px;
+  padding: 28px 0 72px;
 }
 
 .catalogo__filtros-boton {
@@ -1349,7 +1349,7 @@ a {
   display: grid;
   grid-template-columns: 1fr;
   gap: 28px;
-  padding: 24px 0 48px;
+  padding: 28px 0 64px;
   align-items: flex-start;
 }
 
@@ -1691,8 +1691,8 @@ a {
 .carrito__distribucion {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 24px;
-  padding: 24px 0 56px;
+  gap: 28px;
+  padding: 28px 0 72px;
   align-items: flex-start;
 }
 
@@ -1707,9 +1707,9 @@ a {
   grid-template-areas:
     "miniatura detalle"
     "cantidad precio";
-  gap: 12px 16px;
+  gap: 16px;
   align-items: center;
-  padding: 18px 0;
+  padding: 20px 2px;
   border-bottom: 1px solid var(--line);
 }
 
@@ -1841,8 +1841,8 @@ a {
   gap: 12px;
   background: var(--white);
   border-top: 1px solid var(--line);
-  padding: 12px 18px calc(12px + env(safe-area-inset-bottom));
-  margin: 0 -18px;
+  padding: 12px 20px calc(12px + env(safe-area-inset-bottom));
+  margin: 0 -20px;
 }
 
 .carrito__barra-movil .resumen__fila--total,
