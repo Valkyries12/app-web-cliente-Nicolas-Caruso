@@ -1,8 +1,20 @@
-/* KIHAP - checkout.js vanilla global - validaciones simples de envío y pago */
+/* KIHAP - checkout.js vanilla global - validaciones de envío y pago */
 
-// Solo números de un texto (acepta puntos, espacios, guiones)
+// Solo números de un texto (ignora puntos, espacios, guiones y +)
 function soloNumeros(texto) {
   return String(texto || '').replace(/\D/g, '');
+}
+
+// Solo letras permitidas: letras con tilde, ñ, espacio, apóstrofe y guion
+function soloLetras(texto) {
+  return String(texto || '').replace(/[^A-Za-zÁÉÍÓÚáéíóúÑñÜü\s'-]/g, '');
+}
+
+// Quita espacios del inicio/fin y colapsa espacios dobles intermedios
+function normalizarEspacios(texto) {
+  return String(texto || '')
+    .replace(/\s+/g, ' ')
+    .trim();
 }
 
 // Muestra un error debajo del campo
@@ -12,6 +24,7 @@ function mostrarError(inputId, mensaje) {
 
   if (input) {
     input.classList.add('input--error');
+    input.setAttribute('aria-invalid', 'true');
   }
 
   if (error) {
@@ -26,6 +39,7 @@ function limpiarError(inputId) {
 
   if (input) {
     input.classList.remove('input--error');
+    input.removeAttribute('aria-invalid');
   }
 
   if (error) {
@@ -33,17 +47,25 @@ function limpiarError(inputId) {
   }
 }
 
-// Valida un texto simple: obligatorio + mínimo de letras
-function validarTexto(inputId, minLetras, mensajeVacio, mensajeCorto) {
-  const valor = document.getElementById(inputId).value.trim();
+// Valida un campo de solo letras: obligatorio + rango + sin números
+function validarSoloLetras(inputId, nombreCampo, min, max) {
+  const valor = normalizarEspacios(document.getElementById(inputId).value);
 
   if (!valor) {
-    mostrarError(inputId, mensajeVacio);
+    mostrarError(inputId, 'El ' + nombreCampo + ' es obligatorio.');
     return false;
   }
 
-  if (valor.length < minLetras) {
-    mostrarError(inputId, mensajeCorto);
+  if (/[0-9]/.test(valor)) {
+    mostrarError(inputId, 'El ' + nombreCampo + ' no es válido. Use solo letras, sin números.');
+    return false;
+  }
+
+  if (valor.length < min || valor.length > max) {
+    mostrarError(
+      inputId,
+      'El ' + nombreCampo + ' no es válido. Debe tener entre ' + min + ' y ' + max + ' caracteres.'
+    );
     return false;
   }
 
@@ -64,73 +86,99 @@ function validarEnvio() {
     }
   };
 
-  if (!validarTexto('envNombre', 2, 'Contanos tu nombre', 'Mínimo 2 letras')) {
+  if (!validarSoloLetras('envNombre', 'nombre', 2, 40)) {
     marcaError('envNombre');
   }
 
-  if (!validarTexto('envApellido', 2, 'Contanos tu apellido', 'Mínimo 2 letras')) {
+  if (!validarSoloLetras('envApellido', 'apellido', 2, 40)) {
     marcaError('envApellido');
   }
 
-  // DNI: 7 u 8 dígitos
+  // DNI Argentina: 7 u 8 dígitos, sin puntos
   const dni = soloNumeros(document.getElementById('envDni').value);
 
   if (!dni) {
-    mostrarError('envDni', 'Contanos tu DNI');
+    mostrarError('envDni', 'El DNI es obligatorio.');
     marcaError('envDni');
   } else if (dni.length < 7 || dni.length > 8) {
-    mostrarError('envDni', 'Revisá tu DNI, lleva 7 u 8 números');
+    mostrarError('envDni', 'El DNI no es válido. Ingrese 7 u 8 números, sin puntos. Ej: 30123456.');
     marcaError('envDni');
   } else {
     limpiarError('envDni');
   }
 
-  // Teléfono: mínimo 8 dígitos
-  const telefono = soloNumeros(document.getElementById('envTelefono').value);
+  // Teléfono Argentina: 10 dígitos (se ignora +54, espacios y guiones)
+  let telefono = soloNumeros(document.getElementById('envTelefono').value);
+
+  if (telefono.startsWith('54')) {
+    telefono = telefono.slice(2);
+  }
 
   if (!telefono) {
-    mostrarError('envTelefono', 'Contanos tu teléfono');
+    mostrarError('envTelefono', 'El teléfono es obligatorio.');
     marcaError('envTelefono');
-  } else if (telefono.length < 8) {
-    mostrarError('envTelefono', 'Revisá tu teléfono, mínimo 8 números');
+  } else if (telefono.length !== 10) {
+    mostrarError(
+      'envTelefono',
+      'El teléfono no es válido. Ingrese 10 números, sin +54 ni espacios. Ej: 2614005566.'
+    );
     marcaError('envTelefono');
   } else {
     limpiarError('envTelefono');
   }
 
-  // Email: chequeo simple con @ y punto
-  const email = document.getElementById('envEmail').value.trim();
+  // Email: formato básico con ejemplo de corrección
+  const email = normalizarEspacios(document.getElementById('envEmail').value);
 
   if (!email) {
-    mostrarError('envEmail', 'Contanos tu email');
+    mostrarError('envEmail', 'El email es obligatorio.');
     marcaError('envEmail');
-  } else if (!email.includes('@') || !email.includes('.')) {
-    mostrarError('envEmail', 'Revisá tu email, le falta el @ o el punto');
+  } else if (email.includes(' ') || !email.includes('@') || !email.includes('.')) {
+    mostrarError('envEmail', 'El email no es válido. Ej: nombre@correo.com.');
     marcaError('envEmail');
   } else {
-    limpiarError('envEmail');
+    const partesEmail = email.split('@');
+
+    if (partesEmail.length !== 2 || !partesEmail[0] || !partesEmail[1].includes('.')) {
+      mostrarError('envEmail', 'El email no es válido. Ej: nombre@correo.com.');
+      marcaError('envEmail');
+    } else {
+      limpiarError('envEmail');
+    }
   }
 
-  if (!validarTexto('envDireccion', 5, 'Contanos tu dirección', 'Escribí calle y número')) {
+  // Dirección: calle y número, 5 a 80 caracteres
+  const direccion = normalizarEspacios(document.getElementById('envDireccion').value);
+
+  if (!direccion) {
+    mostrarError('envDireccion', 'La dirección es obligatoria.');
     marcaError('envDireccion');
+  } else if (direccion.length < 5 || direccion.length > 80) {
+    mostrarError(
+      'envDireccion',
+      'La dirección no es válida. Incluya calle y número, entre 5 y 80 caracteres.'
+    );
+    marcaError('envDireccion');
+  } else {
+    limpiarError('envDireccion');
   }
 
-  if (!validarTexto('envCiudad', 2, 'Contanos tu ciudad', 'Mínimo 2 letras')) {
+  if (!validarSoloLetras('envCiudad', 'ciudad', 2, 40)) {
     marcaError('envCiudad');
   }
 
-  if (!validarTexto('envProvincia', 2, 'Contanos tu provincia', 'Mínimo 2 letras')) {
+  if (!validarSoloLetras('envProvincia', 'provincia', 2, 40)) {
     marcaError('envProvincia');
   }
 
-  // Código postal: 4 dígitos
+  // Código postal Argentina: 4 dígitos
   const cp = soloNumeros(document.getElementById('envCp').value);
 
   if (!cp) {
-    mostrarError('envCp', 'Contanos tu código postal');
+    mostrarError('envCp', 'El código postal es obligatorio.');
     marcaError('envCp');
   } else if (cp.length !== 4) {
-    mostrarError('envCp', 'Revisá tu código postal, lleva 4 números');
+    mostrarError('envCp', 'El código postal no es válido. Ingrese 4 números. Ej: 5500.');
     marcaError('envCp');
   } else {
     limpiarError('envCp');
@@ -192,23 +240,23 @@ function validarPago() {
   const numero = soloNumeros(document.getElementById('payNum').value);
 
   if (!numero) {
-    mostrarError('payNum', 'Contanos el número de tu tarjeta');
+    mostrarError('payNum', 'El número de tarjeta es obligatorio.');
     marcaError('payNum');
   } else if (numero.length !== 16) {
-    mostrarError('payNum', 'Revisá el número, lleva 16 dígitos');
+    mostrarError('payNum', 'El número de tarjeta no es válido. Debe tener 16 dígitos.');
     marcaError('payNum');
   } else {
     limpiarError('payNum');
   }
 
   // Vencimiento MM/AA
-  const venc = document.getElementById('payVenc').value.trim();
+  const venc = normalizarEspacios(document.getElementById('payVenc').value);
 
   if (!venc) {
-    mostrarError('payVenc', 'Contanos el vencimiento');
+    mostrarError('payVenc', 'El vencimiento es obligatorio.');
     marcaError('payVenc');
   } else if (!vencimientoValido(venc)) {
-    mostrarError('payVenc', 'Revisá el vencimiento (MM/AA vigente)');
+    mostrarError('payVenc', 'El vencimiento no es válido. Use MM/AA vigente. Ej: 12/27.');
     marcaError('payVenc');
   } else {
     limpiarError('payVenc');
@@ -218,16 +266,16 @@ function validarPago() {
   const cvv = soloNumeros(document.getElementById('payCvv').value);
 
   if (!cvv) {
-    mostrarError('payCvv', 'Contanos el CVV');
+    mostrarError('payCvv', 'El CVV es obligatorio.');
     marcaError('payCvv');
   } else if (cvv.length < 3 || cvv.length > 4) {
-    mostrarError('payCvv', 'Revisá el CVV, lleva 3 o 4 números');
+    mostrarError('payCvv', 'El CVV no es válido. Debe tener 3 o 4 números. Ej: 123.');
     marcaError('payCvv');
   } else {
     limpiarError('payCvv');
   }
 
-  if (!validarTexto('payTitular', 2, 'Contanos el titular', 'Mínimo 2 letras')) {
+  if (!validarSoloLetras('payTitular', 'titular', 2, 40)) {
     marcaError('payTitular');
   }
 
@@ -236,6 +284,22 @@ function validarPago() {
   }
 
   return valido;
+}
+
+// Selecciona un método de pago: sincroniza radio, estilo visual y campos visibles.
+// Única fuente de verdad: evita que el estado visual y los campos se desincronicen.
+function seleccionarMetodoPago(opcionLabel) {
+  const radio = opcionLabel.querySelector('input[name="pago"]');
+
+  if (radio) {
+    radio.checked = true;
+  }
+
+  document.querySelectorAll('.pago__opcion').forEach((opcion) => {
+    opcion.classList.toggle('pago__opcion--seleccionada', opcion === opcionLabel);
+  });
+
+  actualizarCamposTarjeta();
 }
 
 // Muestra u oculta los campos de tarjeta según el método elegido
@@ -308,8 +372,56 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Limpia el error ni bien el usuario vuelve a escribir
-  ['envNombre', 'envApellido', 'envDni', 'envTelefono', 'envEmail', 'envDireccion', 'envCiudad', 'envProvincia', 'envCp', 'payNum', 'payVenc', 'payCvv', 'payTitular'].forEach((inputId) => {
+  // Filtro en vivo: campos de solo letras (bloquea números al tipear o pegar)
+  ['envNombre', 'envApellido', 'envCiudad', 'envProvincia', 'payTitular'].forEach((inputId) => {
+    const input = document.getElementById(inputId);
+
+    if (input) {
+      input.addEventListener('input', () => {
+        input.value = soloLetras(input.value).slice(0, 40);
+        limpiarError(inputId);
+      });
+    }
+  });
+
+  // Filtro en vivo: campos de solo números (DNI, teléfono, CP, tarjeta, CVV)
+  const limitesNumericos = {
+    envDni: 10,
+    envTelefono: 15,
+    envCp: 4,
+    payNum: 19,
+    payCvv: 4,
+  };
+
+  Object.keys(limitesNumericos).forEach((inputId) => {
+    const input = document.getElementById(inputId);
+
+    if (input) {
+      input.addEventListener('input', () => {
+        input.value = soloNumeros(input.value).slice(0, limitesNumericos[inputId]);
+        limpiarError(inputId);
+      });
+    }
+  });
+
+  // Vencimiento: solo dígitos y barra automática MM/AA
+  const payVenc = document.getElementById('payVenc');
+
+  if (payVenc) {
+    payVenc.addEventListener('input', () => {
+      let digitos = soloNumeros(payVenc.value).slice(0, 4);
+
+      if (digitos.length > 2) {
+        digitos = digitos.slice(0, 2) + '/' + digitos.slice(2);
+      }
+
+      payVenc.value = digitos;
+      limpiarError('payVenc');
+    });
+  }
+
+  // Email y dirección: solo recortan y limpian el error al escribir
+  ['envEmail', 'envDireccion'].forEach((inputId) => {
     const input = document.getElementById(inputId);
 
     if (input) {
@@ -317,9 +429,35 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // Cambia campos visibles al elegir método de pago
+  // Al salir del campo: quita espacios del inicio/fin y colapsa dobles
+  ['envNombre', 'envApellido', 'envEmail', 'envDireccion', 'envCiudad', 'envProvincia', 'payTitular', 'payVenc'].forEach(
+    (inputId) => {
+      const input = document.getElementById(inputId);
+
+      if (input) {
+        input.addEventListener('blur', () => {
+          input.value = normalizarEspacios(input.value);
+        });
+      }
+    }
+  );
+
+  // Método de pago: click en la tarjeta/label (mouse y táctil) + change (teclado).
+  // Ambos pasan por seleccionarMetodoPago para no desincronizar.
+  document.querySelectorAll('.pago__opcion').forEach((opcionLabel) => {
+    opcionLabel.addEventListener('click', () => seleccionarMetodoPago(opcionLabel));
+  });
+
   document.querySelectorAll('input[name="pago"]').forEach((radio) => {
-    radio.addEventListener('change', actualizarCamposTarjeta);
+    radio.addEventListener('change', () => {
+      const label = radio.closest('.pago__opcion');
+
+      if (label) {
+        seleccionarMetodoPago(label);
+      } else {
+        actualizarCamposTarjeta();
+      }
+    });
   });
 
   actualizarCamposTarjeta();
