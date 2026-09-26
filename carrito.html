@@ -60,7 +60,7 @@
       <div class="resumen__fila"><span>Subtotal</span><span id="cartSubtotal">$0</span></div>
       <div class="resumen__fila"><span>Envío estimado</span><span id="cartShipping">$0</span></div>
       <div class="resumen__promo">
-        <input type="text" id="promoInput" placeholder="Código de descuento" maxlength="20">
+        <input type="text" id="promoInput" placeholder="Código descuento" maxlength="12" autocomplete="off" spellcheck="false" style="text-transform:uppercase;">
         <button class="boton boton--fantasma boton--pequeno" id="promoBtn" type="button">Aplicar</button>
       </div>
       <div class="resumen__fila resumen__fila--total"><span>Total</span><span id="cartTotal">$0</span></div>
@@ -192,6 +192,11 @@ document.addEventListener('DOMContentLoaded', () => {
   const promoInput = document.getElementById('promoInput');
 
   if (promoBtn && promoInput) {
+    // Solo letras y números, en mayúsculas, máximo 12 caracteres
+    promoInput.addEventListener('input', () => {
+      promoInput.value = promoInput.value.toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 12);
+    });
+
     promoBtn.addEventListener('click', () => {
       const codigo = promoInput.value.trim();
 
