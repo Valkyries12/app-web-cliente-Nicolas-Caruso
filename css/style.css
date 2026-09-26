@@ -1858,6 +1858,14 @@ a {
   flex: 1;
 }
 
+/* Un solo CTA primario por viewport: en mobile el resumen queda
+   informativo (subtotal + promo + total) y la compra va por la barra sticky */
+@media (max-width: 899px) {
+  .resumen #btnCheckout {
+    display: none;
+  }
+}
+
 @media (min-width: 480px) {
   .carrito__item {
     grid-template-columns: 76px 1fr;
