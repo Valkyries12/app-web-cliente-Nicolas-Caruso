@@ -216,11 +216,19 @@ function removeFromCart(itemIndex) {
 
 /**
  * Cambia la cantidad de un ítem del carrito según un delta.
+ * Tope simple: mínimo 1 y máximo 10 por producto.
  * @param {number} itemIndex - Posición en el arreglo shoppingCart
  * @param {number} quantityDelta - Cantidad a sumar (negativa para restar)
  */
 function changeCartQty(itemIndex, quantityDelta) {
-  shoppingCart[itemIndex].qty = Math.max(1, shoppingCart[itemIndex].qty + quantityDelta);
+  const nuevaCantidad = shoppingCart[itemIndex].qty + quantityDelta;
+
+  if (nuevaCantidad > 10) {
+    showToast('Máximo 10 unidades por producto');
+    return;
+  }
+
+  shoppingCart[itemIndex].qty = Math.max(1, nuevaCantidad);
   updateCartBadge();
 
   if (typeof renderCart === 'function') {

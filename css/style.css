@@ -2059,6 +2059,27 @@ a {
   outline-offset: 1px;
 }
 
+/* Mensaje de error de validación: siempre debajo del campo, mismo color y tamaño */
+.formulario__error {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--red);
+  min-height: 14px;
+}
+
+.formulario__campo input.input--error,
+.formulario__campo textarea.input--error,
+.formulario__campo select.input--error {
+  border-color: var(--red);
+}
+
+.formulario__campo input.input--error:focus,
+.formulario__campo textarea.input--error:focus,
+.formulario__campo select.input--error:focus {
+  outline: 2px solid var(--red);
+  outline-offset: 1px;
+}
+
 .pago__opciones {
   display: flex;
   flex-direction: column;
