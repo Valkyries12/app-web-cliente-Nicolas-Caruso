@@ -2416,3 +2416,157 @@ a {
     transition: none;
   }
 }
+
+/* ---------- 21 Guía de talles ---------- */
+.guia__contenido {
+  padding: 28px 0 72px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.guia__seccion {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 20px;
+  background: var(--white);
+}
+
+.guia__titulo {
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+
+.guia__titulo .icono {
+  color: var(--red);
+}
+
+.guia__bajada {
+  font-size: 14px;
+  color: var(--stone);
+  margin-bottom: 14px;
+}
+
+.guia__pasos {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.guia__paso {
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 14px;
+  background: var(--bg);
+}
+
+.guia__paso span {
+  color: var(--ink-soft);
+  font-size: 13.5px;
+}
+
+.guia__tabla-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+}
+
+.guia__tabla {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  min-width: 480px;
+  background: var(--white);
+}
+
+.guia__tabla th,
+.guia__tabla td {
+  padding: 11px 14px;
+  text-align: left;
+  border-bottom: 1px solid var(--line);
+  white-space: nowrap;
+}
+
+.guia__tabla thead th {
+  background: var(--ink);
+  color: var(--white);
+  font-weight: 600;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.guia__tabla tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.guia__tabla tbody tr:nth-child(even) td {
+  background: var(--bg);
+}
+
+.guia__nota {
+  font-size: 13px;
+  color: var(--stone);
+  margin-top: 12px;
+}
+
+.guia__acciones {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.guia__acciones .boton {
+  flex: 1 1 100%;
+}
+
+.guia__cierre {
+  text-align: center;
+}
+
+.guia__cierre-titulo {
+  justify-content: center;
+}
+
+.guia__cierre-texto {
+  margin-bottom: 0;
+  max-width: 52ch;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media (min-width: 640px) {
+  .guia__acciones {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .guia__acciones .boton {
+    flex: 0 1 auto;
+  }
+}
+
+@media (min-width: 900px) {
+  .guia__contenido {
+    padding: 44px 0 80px;
+  }
+
+  .guia__seccion {
+    padding: 28px;
+  }
+
+  .guia__pasos {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
