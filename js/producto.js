@@ -175,10 +175,19 @@ function renderDetalle() {
 // ─────────────────────────────────------------
 
 /**
- * Cambia la cantidad seleccionada según un delta, mínimo 1.
+ * Cambia la cantidad seleccionada según un delta, mínimo 1 y máximo 10.
+ * Mismo tope que en el carrito (MAX_QTY_POR_PRODUCTO de cart.js).
  * @param {number} quantityDelta - Cantidad a sumar (negativa para restar)
  */
 function changeDetailQty(quantityDelta) {
+  const topeCantidad =
+    typeof MAX_QTY_POR_PRODUCTO !== 'undefined' ? MAX_QTY_POR_PRODUCTO : 10;
+
+  if (selectedQuantity + quantityDelta > topeCantidad) {
+    showToast('Máximo 10 unidades por producto');
+    return;
+  }
+
   selectedQuantity = Math.max(1, selectedQuantity + quantityDelta);
   document.getElementById('detailQty').textContent = selectedQuantity;
 

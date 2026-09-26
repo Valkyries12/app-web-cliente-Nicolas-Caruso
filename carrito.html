@@ -60,13 +60,13 @@
       <div class="resumen__fila"><span>Subtotal</span><span id="cartSubtotal">$0</span></div>
       <div class="resumen__fila"><span>Envío estimado</span><span id="cartShipping">$0</span></div>
       <div class="resumen__promo">
-        <input type="text" placeholder="Código de descuento">
-        <button class="boton boton--fantasma boton--pequeno">Aplicar</button>
+        <input type="text" id="promoInput" placeholder="Código descuento" maxlength="12" autocomplete="off" spellcheck="false" style="text-transform:uppercase;">
+        <button class="boton boton--fantasma boton--pequeno" id="promoBtn" type="button">Aplicar</button>
       </div>
       <div class="resumen__fila resumen__fila--total"><span>Total</span><span id="cartTotal">$0</span></div>
-      <a class="boton boton--primario boton--bloque" style="margin-top:18px;" href="checkout.html">Iniciar compra</a>
+      <a class="boton boton--primario boton--bloque" style="margin-top:18px;" href="checkout.html" id="btnCheckout">Iniciar compra</a>
     </div>
-    <div class="carrito__barra-movil"><div class="resumen__fila resumen__fila--total"><span>Total</span><span id="cartTotalMovil">$0</span></div><a class="boton boton--primario" href="checkout.html">Comprar</a></div>
+    <div class="carrito__barra-movil"><div class="resumen__fila resumen__fila--total"><span>Total</span><span id="cartTotalMovil">$0</span></div><a class="boton boton--primario" href="checkout.html" id="btnCheckoutMovil">Comprar</a></div>
   </div>
 </main>
 
@@ -187,6 +187,48 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   renderCart();
+
+  const promoBtn = document.getElementById('promoBtn');
+  const promoInput = document.getElementById('promoInput');
+
+  if (promoBtn && promoInput) {
+    // Solo letras y números, en mayúsculas, máximo 12 caracteres
+    promoInput.addEventListener('input', () => {
+      promoInput.value = promoInput.value.toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 12);
+    });
+
+    promoBtn.addEventListener('click', () => {
+      const codigo = promoInput.value.trim();
+
+      if (!codigo) {
+        showToast('Escribí un código primero');
+        promoInput.focus();
+        return;
+      }
+
+      if (codigo.length < 4) {
+        showToast('Revisá tu código, mínimo 4 caracteres');
+        promoInput.focus();
+        return;
+      }
+
+      showToast('Código aplicado');
+    });
+  }
+
+  // No deja ir al checkout con el carrito vacío
+  ['btnCheckout', 'btnCheckoutMovil'].forEach((btnId) => {
+    const btn = document.getElementById(btnId);
+
+    if (btn) {
+      btn.addEventListener('click', (clickEvent) => {
+        if (shoppingCart.length === 0) {
+          clickEvent.preventDefault();
+          showToast('Tu carrito está vacío');
+        }
+      });
+    }
+  });
 });
 </script>
 </body>

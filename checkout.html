@@ -61,22 +61,22 @@
       <div class="compra__panel compra__panel--activo" id="checkoutStep1">
         <h3 style="font-size:20px;margin-bottom:18px;">Datos de envío</h3>
         <div class="formulario__grilla">
-          <div class="formulario__campo"><label>Nombre</label><input type="text" placeholder="Ej: Nicolás"></div>
-          <div class="formulario__campo"><label>Apellido</label><input type="text" placeholder="Ej: Caruso"></div>
+          <div class="formulario__campo"><label for="envNombre">Nombre</label><input id="envNombre" type="text" placeholder="Ej: Nicolás" autocomplete="given-name" maxlength="40" aria-describedby="err-envNombre"><small class="formulario__error" id="err-envNombre"></small></div>
+          <div class="formulario__campo"><label for="envApellido">Apellido</label><input id="envApellido" type="text" placeholder="Ej: Caruso" autocomplete="family-name" maxlength="40" aria-describedby="err-envApellido"><small class="formulario__error" id="err-envApellido"></small></div>
         </div>
         <div class="formulario__grilla">
-          <div class="formulario__campo"><label>DNI</label><input type="text" placeholder="00.000.000"></div>
-          <div class="formulario__campo"><label>Teléfono</label><input type="tel" placeholder="+54 261 000 0000"></div>
+          <div class="formulario__campo"><label for="envDni">DNI</label><input id="envDni" type="text" placeholder="30123456" inputmode="numeric" maxlength="10" aria-describedby="err-envDni"><small class="formulario__error" id="err-envDni"></small></div>
+          <div class="formulario__campo"><label for="envTelefono">Teléfono</label><input id="envTelefono" type="tel" placeholder="2614005566" autocomplete="tel" inputmode="numeric" maxlength="15" aria-describedby="err-envTelefono"><small class="formulario__error" id="err-envTelefono"></small></div>
         </div>
-        <div class="formulario__campo"><label>Email</label><input type="email" placeholder="tuemail@correo.com"></div>
-        <div class="formulario__campo"><label>Dirección</label><input type="text" placeholder="Calle y número"></div>
+        <div class="formulario__campo"><label for="envEmail">Email</label><input id="envEmail" type="email" placeholder="nombre@correo.com" autocomplete="email" maxlength="254" aria-describedby="err-envEmail"><small class="formulario__error" id="err-envEmail"></small></div>
+        <div class="formulario__campo"><label for="envDireccion">Dirección</label><input id="envDireccion" type="text" placeholder="Calle y número" autocomplete="street-address" maxlength="80" aria-describedby="err-envDireccion"><small class="formulario__error" id="err-envDireccion"></small></div>
         <div class="formulario__grilla formulario__grilla--3">
-          <div class="formulario__campo"><label>Ciudad</label><input type="text" placeholder="Mendoza"></div>
-          <div class="formulario__campo"><label>Provincia</label><input type="text" placeholder="Mendoza"></div>
-          <div class="formulario__campo"><label>Código Postal</label><input type="text" placeholder="5500"></div>
+          <div class="formulario__campo"><label for="envCiudad">Ciudad</label><input id="envCiudad" type="text" placeholder="Mendoza" maxlength="40" aria-describedby="err-envCiudad"><small class="formulario__error" id="err-envCiudad"></small></div>
+          <div class="formulario__campo"><label for="envProvincia">Provincia</label><input id="envProvincia" type="text" placeholder="Mendoza" maxlength="40" aria-describedby="err-envProvincia"><small class="formulario__error" id="err-envProvincia"></small></div>
+          <div class="formulario__campo"><label for="envCp">Código Postal</label><input id="envCp" type="text" placeholder="5500" inputmode="numeric" maxlength="4" aria-describedby="err-envCp"><small class="formulario__error" id="err-envCp"></small></div>
         </div>
         <div class="formulario__acciones">
-          <button class="boton boton--oscuro" onclick="setCheckoutStep(2)">Continuar a pago</button>
+          <button class="boton boton--oscuro" id="btnToPago" type="button">Continuar a pago</button>
         </div>
       </div>
 
@@ -84,19 +84,22 @@
       <div class="compra__panel" id="checkoutStep2">
         <h3 style="font-size:20px;margin-bottom:18px;">Método de pago</h3>
         <div class="pago__opciones">
-          <label class="pago__opcion pago__opcion--seleccionada"><input type="radio" name="pago" checked><svg class="icono"><use href="#i-cart"/></svg> Tarjeta de crédito / débito</label>
-          <label class="pago__opcion"><input type="radio" name="pago"><svg class="icono"><use href="#i-shield-check"/></svg> Mercado Pago</label>
-          <label class="pago__opcion"><input type="radio" name="pago"><svg class="icono"><use href="#i-truck"/></svg> Transferencia bancaria</label>
+          <label class="pago__opcion pago__opcion--seleccionada"><input type="radio" name="pago" value="tarjeta" checked><svg class="icono"><use href="#i-cart"/></svg> Tarjeta de crédito / débito</label>
+          <label class="pago__opcion"><input type="radio" name="pago" value="mp"><svg class="icono"><use href="#i-shield-check"/></svg> Mercado Pago</label>
+          <label class="pago__opcion"><input type="radio" name="pago" value="transferencia"><svg class="icono"><use href="#i-truck"/></svg> Transferencia bancaria</label>
         </div>
-        <div class="formulario__campo"><label>Número de tarjeta</label><input type="text" placeholder="0000 0000 0000 0000"></div>
-        <div class="formulario__grilla formulario__grilla--3">
-          <div class="formulario__campo"><label>Vencimiento</label><input type="text" placeholder="MM/AA"></div>
-          <div class="formulario__campo"><label>CVV</label><input type="text" placeholder="123"></div>
-          <div class="formulario__campo"><label>Titular</label><input type="text" placeholder="Nombre en la tarjeta"></div>
+        <div id="payCardFields">
+          <div class="formulario__campo"><label for="payNum">Número de tarjeta</label><input id="payNum" type="text" placeholder="0000 0000 0000 0000" inputmode="numeric" maxlength="19" aria-describedby="err-payNum"><small class="formulario__error" id="err-payNum"></small></div>
+          <div class="formulario__grilla formulario__grilla--3">
+            <div class="formulario__campo"><label for="payVenc">Vencimiento</label><input id="payVenc" type="text" placeholder="MM/AA" inputmode="numeric" maxlength="5" aria-describedby="err-payVenc"><small class="formulario__error" id="err-payVenc"></small></div>
+            <div class="formulario__campo"><label for="payCvv">CVV</label><input id="payCvv" type="text" placeholder="123" inputmode="numeric" maxlength="4" aria-describedby="err-payCvv"><small class="formulario__error" id="err-payCvv"></small></div>
+            <div class="formulario__campo"><label for="payTitular">Titular</label><input id="payTitular" type="text" placeholder="Nombre en la tarjeta" autocomplete="cc-name" maxlength="40" aria-describedby="err-payTitular"><small class="formulario__error" id="err-payTitular"></small></div>
+          </div>
         </div>
+        <p id="payAltMessage" style="font-size:13px;display:none;">Vas a completar el pago después de confirmar el pedido.</p>
         <div class="formulario__acciones">
-          <button class="boton boton--fantasma" onclick="setCheckoutStep(1)">Volver</button>
-          <button class="boton boton--oscuro" onclick="setCheckoutStep(3)">Confirmar pedido</button>
+          <button class="boton boton--fantasma" id="btnBackToEnvio" type="button">Volver</button>
+          <button class="boton boton--oscuro" id="btnConfirmar" type="button">Confirmar pedido</button>
         </div>
       </div>
 
@@ -121,7 +124,7 @@
       <div class="resumen__fila"><span>Envío</span><span id="checkoutShipping">$0</span></div>
       <div class="resumen__fila resumen__fila--total"><span>Total</span><span id="checkoutTotal">$0</span></div>
     </div>
-    <div class="compra__barra-movil"><div class="resumen__fila resumen__fila--total"><span>Total</span><span id="checkoutTotalMovil">$0</span></div><button class="boton boton--primario" onclick="setCheckoutStep(3)">Confirmar</button></div>
+    <div class="compra__barra-movil"><div class="resumen__fila resumen__fila--total"><span>Total</span><span id="checkoutTotalMovil">$0</span></div><button class="boton boton--primario" id="btnMovil" type="button">Confirmar</button></div>
   </div>
 </main>
 
@@ -164,9 +167,12 @@
   </div>
 </footer>
 
+<div class="aviso" id="toast"><svg class="icono"><use href="#i-check"/></svg><span id="toastText">Agregado al carrito</span></div>
+
 <script src="js/products.js"></script>
 <script src="js/cart.js"></script>
 <script src="js/main.js"></script>
+<script src="js/checkout.js"></script>
 <script>
 // Checkout page - vanilla global (uses shoppingCart global)
 
@@ -223,18 +229,6 @@ function renderCheckoutSummary() {
 }
 
 document.addEventListener('DOMContentLoaded', renderCheckoutSummary);
-
-// Payment option visual toggle
-document.querySelectorAll('.pago__opcion').forEach((paymentOptionElement) => {
-  paymentOptionElement.addEventListener('click', () => {
-    document
-      .querySelectorAll('.pago__opcion')
-      .forEach((paymentOption) => paymentOption.classList.remove('pago__opcion--seleccionada'));
-
-    paymentOptionElement.classList.add('pago__opcion--seleccionada');
-    paymentOptionElement.querySelector('input').checked = true;
-  });
-});
 </script>
 </body>
 </html>
