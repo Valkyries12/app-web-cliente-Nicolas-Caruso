@@ -1,77 +1,5 @@
 /* KIHAP - checkout.js vanilla global - validaciones de envío y pago | ES6+ */
-
-// Solo números de un texto (ignora puntos, espacios, guiones y +)
-const soloNumeros = (texto) => {
-  return String(texto || '').replace(/\D/g, '');
-}
-
-// Solo letras permitidas: letras con tilde, ñ, espacio, apóstrofe y guion
-const soloLetras = (texto) => {
-  return String(texto || '').replace(/[^A-Za-zÁÉÍÓÚáéíóúÑñÜü\s'-]/g, '');
-}
-
-// Quita espacios del inicio/fin y colapsa espacios dobles intermedios
-const normalizarEspacios = (texto) => {
-  return String(texto || '')
-    .replace(/\s+/g, ' ')
-    .trim();
-}
-
-// Muestra un error debajo del campo
-const mostrarError = (inputId, mensaje) => {
-  const input = document.getElementById(inputId);
-  const error = document.getElementById('err-' + inputId);
-
-  if (input) {
-    input.classList.add('input--error');
-    input.setAttribute('aria-invalid', 'true');
-  }
-
-  if (error) {
-    error.textContent = mensaje;
-  }
-}
-
-// Limpia el error de un campo
-const limpiarError = (inputId) => {
-  const input = document.getElementById(inputId);
-  const error = document.getElementById('err-' + inputId);
-
-  if (input) {
-    input.classList.remove('input--error');
-    input.removeAttribute('aria-invalid');
-  }
-
-  if (error) {
-    error.textContent = '';
-  }
-}
-
-// Valida un campo de solo letras: obligatorio + rango + sin números
-const validarSoloLetras = (inputId, nombreCampo, min, max) => {
-  const valor = normalizarEspacios(document.getElementById(inputId).value);
-
-  if (!valor) {
-    mostrarError(inputId, 'El ' + nombreCampo + ' es obligatorio.');
-    return false;
-  }
-
-  if (/[0-9]/.test(valor)) {
-    mostrarError(inputId, 'El ' + nombreCampo + ' no es válido. Use solo letras, sin números.');
-    return false;
-  }
-
-  if (valor.length < min || valor.length > max) {
-    mostrarError(
-      inputId,
-      'El ' + nombreCampo + ' no es válido. Debe tener entre ' + min + ' y ' + max + ' caracteres.'
-    );
-    return false;
-  }
-
-  limpiarError(inputId);
-  return true;
-}
+/* Usa los helpers compartidos de js/validaciones.js (cargar antes que este archivo) */
 
 // Valida los datos de envío. Devuelve true si todo está bien.
 const validarEnvio = () => {
@@ -127,24 +55,9 @@ const validarEnvio = () => {
     limpiarError('envTelefono');
   }
 
-  // Email: formato básico con ejemplo de corrección
-  const email = normalizarEspacios(document.getElementById('envEmail').value);
-
-  if (!email) {
-    mostrarError('envEmail', 'El email es obligatorio.');
+  // Email: formato básico con ejemplo de corrección (helper compartido)
+  if (!validarEmail('envEmail')) {
     marcaError('envEmail');
-  } else if (email.includes(' ') || !email.includes('@') || !email.includes('.')) {
-    mostrarError('envEmail', 'El email no es válido. Ej: nombre@correo.com.');
-    marcaError('envEmail');
-  } else {
-    const partesEmail = email.split('@');
-
-    if (partesEmail.length !== 2 || !partesEmail[0] || !partesEmail[1].includes('.')) {
-      mostrarError('envEmail', 'El email no es válido. Ej: nombre@correo.com.');
-      marcaError('envEmail');
-    } else {
-      limpiarError('envEmail');
-    }
   }
 
   // Dirección: calle y número, 5 a 80 caracteres
