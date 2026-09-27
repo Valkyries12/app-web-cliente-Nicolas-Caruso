@@ -15,3 +15,4 @@ Se cambiará el SVG del hero por una imágen representativa
 11- Se agrega pagina de guia de talles
 12- Se refactoriza acia Es6+
 13- Se agrega valor semantico al sitio
+14 - Se va a agregar validaciones al formulario del contacto
