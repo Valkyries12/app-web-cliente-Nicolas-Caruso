@@ -1,171 +1,250 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>KIHAP — Producto</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css">
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Producto de Taekwondo | Detalle, Talles y Precio — KIHAP</title>
+    <meta name="description" content="Detalle del producto KIHAP: características, guía de talles, precio, stock y envío. Doboks y protecciones de taekwondo WT/ITF." />
+    <meta name="theme-color" content="#16171a" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="es_AR" />
+    <meta property="og:title" content="Producto de Taekwondo — KIHAP" />
+    <meta property="og:description" content="Características, talles, precio y envío de equipamiento WT/ITF." />
+    <meta name="twitter:card" content="summary" />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='4' fill='%2316171a'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-family='sans-serif' font-weight='bold' font-size='16' fill='white'%3EK%3C/text%3E%3C/svg%3E" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <a class="enlace-salto" href="#contenido">Saltar al contenido principal</a>
+    <svg style="display: none" aria-hidden="true">
+      <symbol id="i-cart" viewBox="0 0 24 24">
+        <path d="M3 3h2l.4 2M7 13h10l3-8H6.4M7 13L5.4 5M7 13l-1.5 6h11" />
+        <circle cx="9" cy="20" r="1.4" />
+        <circle cx="17" cy="20" r="1.4" />
+      </symbol>
+      <symbol id="i-menu" viewBox="0 0 24 24">
+        <line x1="4" y1="7" x2="20" y2="7" />
+        <line x1="4" y1="12" x2="20" y2="12" />
+        <line x1="4" y1="17" x2="20" y2="17" />
+      </symbol>
+      <symbol id="i-star" viewBox="0 0 24 24">
+        <path d="M12 3.2l2.7 5.6 6.1.7-4.5 4.2 1.2 6.1-5.5-3-5.5 3 1.2-6.1L3.2 9.5l6.1-.7z" />
+      </symbol>
+      <symbol id="i-plus" viewBox="0 0 24 24">
+        <line x1="12" y1="5" x2="12" y2="19" />
+        <line x1="5" y1="12" x2="19" y2="12" />
+      </symbol>
+      <symbol id="i-minus" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12" /></symbol>
+      <symbol id="i-check" viewBox="0 0 24 24"><path d="M4 12.5l5 5L20 6.5" /></symbol>
+      <symbol id="i-cat-dobok" viewBox="0 0 48 48">
+        <path d="M15 8 L24 15 L33 8 L33 14 L38 19 L34 41 L14 41 L10 19 L15 14 Z" />
+        <line x1="15" y1="26" x2="33" y2="26" />
+      </symbol>
+      <symbol id="i-cat-shield" viewBox="0 0 48 48">
+        <path d="M24 5 L40 11 V22 C40 32 33 39.5 24 43 C15 39.5 8 32 8 22 V11 Z" />
+        <path d="M17 23.5 L22 28.5 L31 17.5" />
+      </symbol>
+      <symbol id="i-cat-belt" viewBox="0 0 48 48">
+        <line x1="4" y1="24" x2="44" y2="24" stroke-width="6" />
+        <rect x="17" y="15" width="14" height="18" rx="2" />
+        <line x1="21" y1="33" x2="16" y2="43" />
+        <line x1="27" y1="33" x2="32" y2="43" />
+      </symbol>
+      <symbol id="i-cat-pad" viewBox="0 0 48 48">
+        <rect x="9" y="5" width="22" height="30" rx="4" />
+        <line x1="20" y1="35" x2="20" y2="43" />
+        <rect x="13" y="41" width="14" height="4" rx="2" />
+      </symbol>
+    </svg>
 
-<svg style="display:none" aria-hidden="true">
-  <symbol id="i-cart" viewBox="0 0 24 24"><path d="M3 3h2l.4 2M7 13h10l3-8H6.4M7 13L5.4 5M7 13l-1.5 6h11"/><circle cx="9" cy="20" r="1.4"/><circle cx="17" cy="20" r="1.4"/></symbol>
-  <symbol id="i-menu" viewBox="0 0 24 24"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></symbol>
-  <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 3.2l2.7 5.6 6.1.7-4.5 4.2 1.2 6.1-5.5-3-5.5 3 1.2-6.1L3.2 9.5l6.1-.7z"/></symbol>
-  <symbol id="i-plus" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></symbol>
-  <symbol id="i-minus" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/></symbol>
-  <symbol id="i-check" viewBox="0 0 24 24"><path d="M4 12.5l5 5L20 6.5"/></symbol>
-  <symbol id="i-cat-dobok" viewBox="0 0 48 48"><path d="M15 8 L24 15 L33 8 L33 14 L38 19 L34 41 L14 41 L10 19 L15 14 Z"/><line x1="15" y1="26" x2="33" y2="26"/></symbol>
-  <symbol id="i-cat-shield" viewBox="0 0 48 48"><path d="M24 5 L40 11 V22 C40 32 33 39.5 24 43 C15 39.5 8 32 8 22 V11 Z"/><path d="M17 23.5 L22 28.5 L31 17.5"/></symbol>
-  <symbol id="i-cat-belt" viewBox="0 0 48 48"><line x1="4" y1="24" x2="44" y2="24" stroke-width="6"/><rect x="17" y="15" width="14" height="18" rx="2"/><line x1="21" y1="33" x2="16" y2="43"/><line x1="27" y1="33" x2="32" y2="43"/></symbol>
-  <symbol id="i-cat-pad" viewBox="0 0 48 48"><rect x="9" y="5" width="22" height="30" rx="4"/><line x1="20" y1="35" x2="20" y2="43"/><rect x="13" y="41" width="14" height="4" rx="2"/></symbol>
-</svg>
+    <div class="franja franja--cinturon"></div>
 
-<div class="franja franja--cinturon"></div>
-
-<header class="cabecera">
-  <div class="contenedor cabecera__interior">
-    <a href="index.html" class="marca"><span>KIH</span><em class="marca__acento">A</em><span>P</span></a>
-    <button class="cabecera__menu" id="hamburgerBtn" aria-label="Abrir menú" aria-expanded="false" aria-controls="mainNav"><svg class="icono"><use href="#i-menu"/></svg></button>
-    <nav class="navegacion" id="mainNav">
-      <a class="navegacion__enlace" href="index.html">Inicio</a>
-      <a class="navegacion__enlace" href="catalogo.html">Catálogo</a>
-      <a class="navegacion__enlace" href="contacto.html">Contacto</a>
-    </nav>
-    <div class="cabecera__acciones">
-      <a class="boton-carrito boton-carrito--icono" href="carrito.html">
-        <svg class="icono"><use href="#i-cart"/></svg>
-        <span class="boton-carrito__texto">Carrito</span>
-        <span class="boton-carrito__insignia" id="cartBadge">0</span>
-      </a>
-    </div>
-  </div>
-</header>
-
-<main>
-  <div class="contenedor encabezado-pagina">
-    <div class="migas">
-      <a class="migas__enlace" href="index.html">Inicio</a> / <a class="migas__enlace" href="catalogo.html">Catálogo</a> / <span id="breadcrumbName">Producto</span>
-    </div>
-  </div>
-
-  <div class="contenedor detalle__grilla">
-    <div class="detalle__galeria">
-      <div class="galeria__principal" id="galleryMain"></div>
-      <div class="galeria__lista" id="galleryThumbs"></div>
-    </div>
-
-    <div class="detalle__info">
-      <p class="detalle__categoria" id="detalleCat">Categoría</p>
-      <h1 class="detalle__nombre" id="detalleName">Nombre del producto</h1>
-      <div class="valoracion">
-        <svg class="icono icono--relleno valoracion__estrella"><use href="#i-star"/></svg><svg class="icono icono--relleno valoracion__estrella"><use href="#i-star"/></svg>
-        <svg class="icono icono--relleno valoracion__estrella"><use href="#i-star"/></svg><svg class="icono icono--relleno valoracion__estrella"><use href="#i-star"/></svg>
-        <svg class="icono icono--relleno valoracion__estrella valoracion__estrella--apagada"><use href="#i-star"/></svg>
-        <span class="valoracion__texto">(38 reseñas)</span>
-      </div>
-      <p class="detalle__precio" id="detallePrice">$0</p>
-
-      <div class="opciones" id="sizeBlock">
-        <h4 class="opciones__titulo">Talle</h4>
-        <div class="opciones__fila" id="sizeRow"></div>
-      </div>
-
-      <div class="opciones" id="colorBlock">
-        <h4 class="opciones__titulo">Color</h4>
-        <div class="opciones__fila" id="colorRow"></div>
-      </div>
-
-      <div class="opciones">
-        <h4 class="opciones__titulo">Cantidad</h4>
-        <div class="cantidad">
-          <button class="cantidad__boton" data-action="qty-minus" type="button"><svg class="icono"><use href="#i-minus"/></svg></button>
-          <span class="cantidad__valor" id="detailQty">1</span>
-          <button class="cantidad__boton" data-action="qty-plus" type="button"><svg class="icono"><use href="#i-plus"/></svg></button>
+    <header class="cabecera">
+      <div class="contenedor cabecera__interior">
+        <a href="index.html" class="marca"><span>KIH</span><em class="marca__acento">A</em><span>P</span></a>
+        <button
+          class="cabecera__menu"
+          id="hamburgerBtn"
+          aria-label="Abrir menú"
+          aria-expanded="false"
+          aria-controls="mainNav"
+        >
+          <svg class="icono"><use href="#i-menu" /></svg>
+        </button>
+        <nav class="navegacion" id="mainNav" aria-label="Navegación principal">
+          <a class="navegacion__enlace" href="index.html">Inicio</a>
+          <a class="navegacion__enlace" href="catalogo.html">Catálogo</a>
+          <a class="navegacion__enlace" href="contacto.html">Contacto</a>
+        </nav>
+        <div class="cabecera__acciones">
+          <a class="boton-carrito boton-carrito--icono" href="carrito.html">
+            <svg class="icono"><use href="#i-cart" /></svg>
+            <span class="boton-carrito__texto">Carrito</span>
+            <span class="boton-carrito__insignia" id="cartBadge">0</span>
+          </a>
         </div>
       </div>
+    </header>
 
-      <div class="detalle__acciones">
-        <button class="boton boton--primario" data-action="add-cart" type="button">Agregar al carrito</button>
-        <button class="boton boton--oscuro" data-action="buy-now" type="button">Comprar ahora</button>
+    <main id="contenido">
+      <div class="contenedor encabezado-pagina">
+        <nav class="migas" aria-label="Migas de pan">
+          <ol class="migas__lista">
+            <li><a class="migas__enlace" href="index.html">Inicio</a></li>
+            <li aria-hidden="true">/</li>
+            <li><a class="migas__enlace" href="catalogo.html">Catálogo</a></li>
+            <li aria-hidden="true">/</li>
+            <li><span id="breadcrumbName" aria-current="page">Producto</span></li>
+          </ol>
+        </nav>
       </div>
 
-      <div class="detalle__stock"><svg class="icono"><use href="#i-check"/></svg> En stock — envío en 24/48 h hábiles</div>
+      <article class="contenedor detalle__grilla" aria-labelledby="detalleName">
+        <figure class="detalle__galeria" style="margin:0;" aria-label="Galería del producto">
+          <div class="galeria__principal" id="galleryMain"></div>
+          <div class="galeria__lista" id="galleryThumbs"></div>
+        </figure>
 
-      <div class="pestanas">
-        <div class="pestanas__cabeceras">
-          <button class="pestanas__boton pestanas__boton--activo" data-tab="descripcion">Descripción</button>
-          <button class="pestanas__boton" data-tab="talles">Guía de talles</button>
-          <button class="pestanas__boton" data-tab="envios">Envíos y devoluciones</button>
+        <section class="detalle__info" aria-label="Información del producto">
+          <p class="detalle__categoria" id="detalleCat">Categoría</p>
+          <h1 class="detalle__nombre" id="detalleName">Nombre del producto</h1>
+          <p class="valoracion">
+            <span role="img" aria-label="Valoración: 4 de 5 estrellas">
+              <svg class="icono icono--relleno valoracion__estrella" aria-hidden="true"><use href="#i-star" /></svg
+              ><svg class="icono icono--relleno valoracion__estrella" aria-hidden="true"><use href="#i-star" /></svg>
+              <svg class="icono icono--relleno valoracion__estrella" aria-hidden="true"><use href="#i-star" /></svg
+              ><svg class="icono icono--relleno valoracion__estrella" aria-hidden="true"><use href="#i-star" /></svg>
+              <svg class="icono icono--relleno valoracion__estrella valoracion__estrella--apagada" aria-hidden="true">
+                <use href="#i-star" />
+              </svg>
+            </span>
+            <span class="valoracion__texto">(38 reseñas)</span>
+          </p>
+          <p class="detalle__precio" id="detallePrice">$0</p>
+
+          <section class="opciones" id="sizeBlock" aria-labelledby="titulo-talle">
+            <h2 class="opciones__titulo" id="titulo-talle">Talle</h2>
+            <div class="opciones__fila" id="sizeRow" role="group" aria-label="Elegir talle"></div>
+          </section>
+
+          <section class="opciones" id="colorBlock" aria-labelledby="titulo-color">
+            <h2 class="opciones__titulo" id="titulo-color">Color</h2>
+            <div class="opciones__fila" id="colorRow" role="group" aria-label="Elegir color"></div>
+          </section>
+
+          <section class="opciones" aria-labelledby="titulo-cantidad">
+            <h2 class="opciones__titulo" id="titulo-cantidad">Cantidad</h2>
+            <div class="cantidad">
+              <button class="cantidad__boton" data-action="qty-minus" type="button" aria-label="Quitar una unidad">
+                <svg class="icono" aria-hidden="true"><use href="#i-minus" /></svg>
+              </button>
+              <span class="cantidad__valor" id="detailQty" aria-live="polite">1</span>
+              <button class="cantidad__boton" data-action="qty-plus" type="button" aria-label="Agregar una unidad">
+                <svg class="icono" aria-hidden="true"><use href="#i-plus" /></svg>
+              </button>
+            </div>
+          </section>
+
+          <div class="detalle__acciones">
+            <button class="boton boton--primario" data-action="add-cart" type="button">Agregar al carrito</button>
+            <button class="boton boton--oscuro" data-action="buy-now" type="button">Comprar ahora</button>
+          </div>
+
+          <p class="detalle__stock">
+            <svg class="icono" aria-hidden="true"><use href="#i-check" /></svg> En stock — envío en 24/48 h hábiles
+          </p>
+
+          <section class="pestanas" aria-label="Información adicional del producto">
+            <div class="pestanas__cabeceras" role="tablist" aria-label="Pestañas del producto">
+              <button class="pestanas__boton pestanas__boton--activo" data-tab="descripcion" role="tab" aria-selected="true" type="button">Descripción</button>
+              <button class="pestanas__boton" data-tab="talles" role="tab" aria-selected="false" type="button">Guía de talles</button>
+              <button class="pestanas__boton" data-tab="envios" role="tab" aria-selected="false" type="button">Envíos y devoluciones</button>
+            </div>
+            <div class="pestanas__panel pestanas__panel--activo" data-tabpanel="descripcion" id="tabDescripcion" role="tabpanel"></div>
+            <div class="pestanas__panel" data-tabpanel="talles" role="tabpanel">
+              <p>
+                Consultá la tabla de talles en centímetros según altura antes de comprar. Si tenés dudas entre dos
+                talles, te recomendamos elegir el más grande para permitir margen de movimiento durante la práctica.
+              </p>
+              <p style="margin-top: 12px">
+                <a class="migas__enlace" style="font-weight: 600; text-decoration: underline" href="guia-talles.html"
+                  >Ver guía de talles completa</a
+                >
+              </p>
+            </div>
+            <div class="pestanas__panel" data-tabpanel="envios" role="tabpanel">
+              <p>
+                Envíos a todo el país por correo o transporte a sucursal. Retiro sin cargo en nuestro local de Mendoza.
+                Cambios y devoluciones dentro de los 30 días con el producto sin uso y su embalaje original.
+              </p>
+            </div>
+          </section>
+        </section>
+      </article>
+
+      <section class="contenedor" aria-labelledby="titulo-relacionados">
+        <div class="detalle__relacionados">
+          <div class="seccion__encabezado">
+            <h2 id="titulo-relacionados" style="font-size: 28px">También te puede interesar</h2>
+          </div>
         </div>
-        <div class="pestanas__panel pestanas__panel--activo" data-tabpanel="descripcion" id="tabDescripcion"></div>
-        <div class="pestanas__panel" data-tabpanel="talles">
-          <p>Consultá la tabla de talles en centímetros según altura antes de comprar. Si tenés dudas entre dos talles, te recomendamos elegir el más grande para permitir margen de movimiento durante la práctica.</p>
-          <p style="margin-top:12px;"><a class="migas__enlace" style="font-weight:600;text-decoration:underline;" href="guia-talles.html">Ver guía de talles completa</a></p>
-        </div>
-        <div class="pestanas__panel" data-tabpanel="envios">
-          <p>Envíos a todo el país por correo o transporte a sucursal. Retiro sin cargo en nuestro local de Mendoza. Cambios y devoluciones dentro de los 30 días con el producto sin uso y su embalaje original.</p>
-        </div>
+        <ul class="grilla-productos grilla-productos--carrusel" id="relatedGrid" aria-label="Productos relacionados"></ul>
+      </section>
+    </main>
+
+    <footer class="pie">
+      <div class="contenedor pie__grilla">
+        <section aria-label="Acerca de KIHAP">
+          <div class="marca marca--clara"><span>KIH</span><em class="marca__acento">A</em><span>P</span></div>
+          <p>Equipamiento de taekwondo para cada cinturón: doboks, protecciones y accesorios homologados WT/ITF.</p>
+        </section>
+        <nav aria-label="Tienda">
+          <h2>Tienda</h2>
+          <ul>
+            <li><a href="catalogo.html?cat=doboks">Doboks</a></li>
+            <li><a href="catalogo.html?cat=protecciones">Protecciones</a></li>
+            <li><a href="catalogo.html?cat=cinturones">Cinturones</a></li>
+            <li><a href="catalogo.html?cat=accesorios">Accesorios</a></li>
+          </ul>
+        </nav>
+        <nav aria-label="Ayuda">
+          <h2>Ayuda</h2>
+          <ul>
+            <li><a href="contacto.html">Contacto</a></li>
+            <li><a href="guia-talles.html">Guía de talles</a></li>
+            <li><a href="#">Envíos</a></li>
+            <li><a href="#">Cambios y devoluciones</a></li>
+          </ul>
+        </nav>
+        <section aria-labelledby="titulo-novedades">
+          <h2 id="titulo-novedades">Novedades</h2>
+          <p>Enterate de nuevos productos y promociones.</p>
+          <form class="pie__promo" action="#" method="post">
+            <label class="visualmente-oculto" for="newsletter-email">Tu email</label>
+            <input type="email" id="newsletter-email" name="email" placeholder="Tu email" required autocomplete="email" />
+            <button class="boton boton--primario boton--pequeno" type="submit">Sumarme</button>
+          </form>
+        </section>
       </div>
-    </div>
-  </div>
-
-  <div class="contenedor">
-    <div class="detalle__relacionados"><div class="seccion__encabezado">
-      <h2 style="font-size:28px;">También te puede interesar</h2>
-    </div></div>
-    <div class="grilla-productos grilla-productos--carrusel" id="relatedGrid"></div>
-  </div>
-</main>
-
-<footer class="pie">
-  <div class="contenedor pie__grilla">
-    <div>
-      <div class="marca marca--clara"><span>KIH</span><em class="marca__acento">A</em><span>P</span></div>
-      <p>Equipamiento de taekwondo para cada cinturón: doboks, protecciones y accesorios homologados WT/ITF.</p>
-    </div>
-    <div>
-      <h4>Tienda</h4>
-      <ul>
-        <li><a href="catalogo.html?cat=doboks">Doboks</a></li>
-        <li><a href="catalogo.html?cat=protecciones">Protecciones</a></li>
-        <li><a href="catalogo.html?cat=cinturones">Cinturones</a></li>
-        <li><a href="catalogo.html?cat=accesorios">Accesorios</a></li>
-      </ul>
-    </div>
-    <div>
-      <h4>Ayuda</h4>
-      <ul>
-        <li><a href="contacto.html">Contacto</a></li>
-        <li><a href="guia-talles.html">Guía de talles</a></li>
-        <li><a href="#">Envíos</a></li>
-        <li><a href="#">Cambios y devoluciones</a></li>
-      </ul>
-    </div>
-    <div>
-      <h4>Novedades</h4>
-      <p>Enterate de nuevos productos y promociones.</p>
-      <div class="pie__promo">
-        <input type="email" placeholder="Tu email">
-        <button class="boton boton--primario boton--pequeno">Sumarme</button>
+      <div class="contenedor pie__inferior">
+        <span>© 2026 KIHAP. Todos los derechos reservados.</span>
       </div>
+    </footer>
+
+    <div class="aviso" id="toast" role="status" aria-live="polite">
+      <svg class="icono" aria-hidden="true"><use href="#i-check" /></svg><span id="toastText">Agregado al carrito</span>
     </div>
-  </div>
-  <div class="contenedor pie__inferior">
-    <span>© 2026 KIHAP. Todos los derechos reservados.</span>
-      
-  </div>
-</footer>
 
-<div class="aviso" id="toast"><svg class="icono"><use href="#i-check"/></svg><span id="toastText">Agregado al carrito</span></div>
-
-<script src="js/products.js"></script>
-<script src="js/config.js"></script>
-<script src="js/cart.js"></script>
-<script src="js/ui.js"></script>
-<script src="js/main.js"></script>
-<script src="js/producto.js"></script>
-</body>
+    <script src="js/products.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/producto.js"></script>
+  </body>
 </html>

@@ -2316,17 +2316,20 @@ a {
   font-size: 14px;
   font-weight: 600;
   margin-bottom: 3px;
+  font-family: var(--font-body);
 }
 
 .mapa__texto {
   font-size: 13.5px;
 }
 
+.info__fila h3,
 .info__fila h5 {
   font-size: 14px;
   font-weight: 600;
   margin-bottom: 3px;
   margin-top: 0;
+  font-family: var(--font-body);
 }
 
 .info__fila p {
@@ -2569,4 +2572,140 @@ a {
   .guia__pasos {
     grid-template-columns: repeat(3, 1fr);
   }
+}
+
+/* ---------- 21 Semántica SEO (sin impacto visual) ---------- */
+.enlace-salto {
+  position: absolute;
+  left: 12px;
+  top: -60px;
+  z-index: 100;
+  background: var(--ink);
+  color: #fff;
+  padding: 12px 18px;
+  border-radius: 3px;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: top 0.15s ease;
+}
+
+.enlace-salto:focus {
+  top: 12px;
+  color: #fff;
+}
+
+.pie h2,
+.pie h3,
+.pie h4 {
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 14px;
+  font-family: var(--font-body);
+  letter-spacing: 0.2px;
+}
+
+.migas ol,
+ol.migas__lista {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+}
+
+.migas li {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+ul.grilla-productos,
+ul.grilla-categorias,
+ul.confianza {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+ul.grilla-productos li,
+ul.grilla-categorias li {
+  min-width: 0;
+  display: flex;
+}
+
+ul.grilla-productos li > .tarjeta-producto,
+ul.grilla-categorias li > .tarjeta-categoria {
+  flex: 1;
+  width: 100%;
+}
+
+ol.pasos {
+  list-style: none;
+  margin: 0;
+  padding-left: 0;
+}
+
+fieldset.filtro {
+  border: 0;
+  padding: 0;
+  margin: 0 0 20px;
+  min-width: 0;
+}
+
+fieldset.filtro legend.filtro__titulo {
+  padding: 0;
+  margin-bottom: 12px;
+}
+
+.visualmente-oculto {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.tarjeta-producto__nombre {
+  font-family: var(--font-body);
+}
+
+.tarjeta-producto__enlace {
+  color: inherit;
+  text-decoration: none;
+}
+
+.tarjeta-producto__enlace:hover {
+  text-decoration: underline;
+}
+
+p.tarjeta-producto__categoria,
+p.tarjeta-producto__precio {
+  margin: 0;
+}
+
+p.tarjeta-producto__precio {
+  color: var(--ink);
+}
+
+.carrito__nombre {
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.opciones__titulo {
+  font-family: var(--font-body);
+}
+
+p.carrito__meta {
+  margin: 0;
 }

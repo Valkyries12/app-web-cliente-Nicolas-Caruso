@@ -81,7 +81,11 @@ const initCarritoPage = () => {
       promoInput.value = promoInput.value.toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 12);
     });
 
-    promoBtn.addEventListener('click', () => {
+    const applyPromo = (promoEvent) => {
+      if (promoEvent) {
+        promoEvent.preventDefault();
+      }
+
       const codigo = promoInput.value.trim();
 
       if (!codigo) {
@@ -97,7 +101,15 @@ const initCarritoPage = () => {
       }
 
       showToast('Código aplicado');
-    });
+    };
+
+    promoBtn.addEventListener('click', applyPromo);
+
+    const promoForm = promoBtn.closest('form');
+
+    if (promoForm) {
+      promoForm.addEventListener('submit', applyPromo);
+    }
   }
 
   // No deja ir al checkout con el carrito vacío

@@ -49,7 +49,7 @@ const renderCatalog = () => {
   }
 
   document.getElementById('catalogGrid').innerHTML = filteredProductList
-    .map(productCardHTMLWithBadge)
+    .map((product) => `<li>${productCardHTMLWithBadge(product)}</li>`)
     .join('');
 
   const resultCountElement = document.getElementById('resultCount');

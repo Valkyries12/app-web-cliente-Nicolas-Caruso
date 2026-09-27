@@ -59,15 +59,15 @@ const productMediaHTML = (product) => {
  * @param {import("./products.js").Product} product
  * @returns {string}
  */
-const productCardHTML = (product) => `<div class="tarjeta-producto" data-id="${product.id}">
+const productCardHTML = (product) => `<article class="tarjeta-producto" data-id="${product.id}">
     ${productMediaHTML(product)}
     <div class="tarjeta-producto__cuerpo">
-      <span class="tarjeta-producto__categoria">${CATEGORY_LABELS[product.category]}</span>
-      <span class="tarjeta-producto__nombre">${product.name}</span>
-      <span class="tarjeta-producto__precio">${formatPrice(product.price)}</span>
-      <button class="tarjeta-producto__accion" data-quickadd="${product.id}"><svg class="icono" style="width:14px;height:14px"><use href="#i-cart"/></svg> Agregar</button>
+      <p class="tarjeta-producto__categoria">${CATEGORY_LABELS[product.category]}</p>
+      <h3 class="tarjeta-producto__nombre"><a class="tarjeta-producto__enlace" href="producto.html?id=${product.id}">${product.name}</a></h3>
+      <p class="tarjeta-producto__precio">${formatPrice(product.price)}</p>
+      <button class="tarjeta-producto__accion" data-quickadd="${product.id}" type="button" aria-label="Agregar ${product.name} al carrito"><svg class="icono" style="width:14px;height:14px" aria-hidden="true"><use href="#i-cart"/></svg> Agregar</button>
     </div>
-  </div>`;
+  </article>`;
 
 /**
  * @param {import("./products.js").Product} product
@@ -110,12 +110,12 @@ const cartItemRowHTML = (cartItem, itemIndex) => {
     ? `<img src="${product.image}" alt="${product.name}" loading="lazy" onerror="this.remove()">`
     : '';
 
-  return `<div class="carrito__item">
+  return `<article class="carrito__item">
     <div class="carrito__miniatura ${CATEGORY_STYLE_MAP[product.category]}">${imageMarkup}<svg class="icono" style="color:${iconColor}"><use href="#${CATEGORY_ICON_MAP[product.category]}"/></svg></div>
     <div class="carrito__detalle">
-      <div class="carrito__nombre">${product.name}</div>
-      <div class="carrito__meta">${metadataParts.join(' · ') || '&nbsp;'}</div>
-      <button class="carrito__quitar" data-remove="${itemIndex}">Quitar</button>
+      <h3 class="carrito__nombre">${product.name}</h3>
+      <p class="carrito__meta">${metadataParts.join(' · ') || '&nbsp;'}</p>
+      <button class="carrito__quitar" data-remove="${itemIndex}" type="button">Quitar</button>
     </div>
     <div class="carrito__cantidad cantidad" style="height:40px;">
       <button class="cantidad__boton" data-qtyminus="${itemIndex}"><svg class="icono"><use href="#i-minus"/></svg></button>
@@ -123,5 +123,5 @@ const cartItemRowHTML = (cartItem, itemIndex) => {
       <button class="cantidad__boton" data-qtyplus="${itemIndex}"><svg class="icono"><use href="#i-plus"/></svg></button>
     </div>
     <div class="carrito__precio">${formatPrice(cartItem.qty * product.price)}</div>
-  </div>`;
+  </article>`;
 };

@@ -86,7 +86,7 @@ const renderProductDetail = () => {
       : PRODUCT_CATALOG.filter((catalogProduct) => catalogProduct.id !== product.id).slice(0, 4);
 
   document.getElementById('relatedGrid').innerHTML = fallbackProducts
-    .map(productCardHTMLWithBadge)
+    .map((product) => `<li>${productCardHTMLWithBadge(product)}</li>`)
     .join('');
 };
 
@@ -160,6 +160,7 @@ const initProductoPage = () => {
     tabButton.addEventListener('click', () => {
       document.querySelectorAll('.pestanas__boton').forEach((tabButtonItem) => {
         tabButtonItem.classList.remove('pestanas__boton--activo');
+        tabButtonItem.setAttribute('aria-selected', 'false');
       });
 
       document.querySelectorAll('.pestanas__panel').forEach((panelElement) => {
@@ -167,6 +168,7 @@ const initProductoPage = () => {
       });
 
       tabButton.classList.add('pestanas__boton--activo');
+      tabButton.setAttribute('aria-selected', 'true');
       document
         .querySelector(`[data-tabpanel="${tabButton.dataset.tab}"]`)
         .classList.add('pestanas__panel--activo');

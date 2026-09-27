@@ -3,12 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>KIHAP — Carrito</title>
+<title>Carrito de Compras — KIHAP</title>
+<meta name="description" content="Revisá tu carrito KIHAP: productos, talles, cantidades y total antes de finalizar tu compra de taekwondo.">
+<meta name="theme-color" content="#16171a">
+<meta name="robots" content="noindex, follow">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='4' fill='%2316171a'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-family='sans-serif' font-weight='bold' font-size='16' fill='white'%3EK%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+<a class="enlace-salto" href="#contenido">Saltar al contenido principal</a>
 
 <svg style="display:none" aria-hidden="true">
   <symbol id="i-cart" viewBox="0 0 24 24"><path d="M3 3h2l.4 2M7 13h10l3-8H6.4M7 13L5.4 5M7 13l-1.5 6h11"/><circle cx="9" cy="20" r="1.4"/><circle cx="17" cy="20" r="1.4"/></symbol>
@@ -28,7 +33,7 @@
   <div class="contenedor cabecera__interior">
     <a href="index.html" class="marca"><span>KIH</span><em class="marca__acento">A</em><span>P</span></a>
     <button class="cabecera__menu" id="hamburgerBtn" aria-label="Abrir menú" aria-expanded="false" aria-controls="mainNav"><svg class="icono"><use href="#i-menu"/></svg></button>
-    <nav class="navegacion" id="mainNav">
+    <nav class="navegacion" id="mainNav" aria-label="Navegación principal">
       <a class="navegacion__enlace" href="index.html">Inicio</a>
       <a class="navegacion__enlace" href="catalogo.html">Catálogo</a>
       <a class="navegacion__enlace" href="contacto.html">Contacto</a>
@@ -43,73 +48,81 @@
   </div>
 </header>
 
-<main>
+<main id="contenido">
   <div class="contenedor encabezado-pagina">
-    <div class="migas"><a class="migas__enlace" href="index.html">Inicio</a> / Carrito</div>
-    <h2 class="encabezado-pagina__titulo">Tu carrito</h2>
+    <nav class="migas" aria-label="Migas de pan">
+      <ol class="migas__lista">
+        <li><a class="migas__enlace" href="index.html">Inicio</a></li>
+        <li aria-hidden="true">/</li>
+        <li><span aria-current="page">Carrito</span></li>
+      </ol>
+    </nav>
+    <h1 class="encabezado-pagina__titulo">Tu carrito</h1>
   </div>
 
   <div class="contenedor carrito__distribucion" id="cartLayout">
-    <div class="carrito__lista">
-      <div id="cartItemsList"></div>
+    <section class="carrito__lista" aria-labelledby="titulo-carrito">
+      <h2 class="visualmente-oculto" id="titulo-carrito">Productos en tu carrito</h2>
+      <div id="cartItemsList" aria-live="polite" aria-label="Ítems del carrito"></div>
       <a class="boton boton--fantasma boton--pequeno" style="margin-top:20px;" href="catalogo.html">Seguir comprando</a>
-    </div>
+    </section>
 
-    <div class="resumen">
-      <h3 class="resumen__titulo">Resumen del pedido</h3>
+    <aside class="resumen" aria-labelledby="titulo-resumen">
+      <h2 class="resumen__titulo" id="titulo-resumen">Resumen del pedido</h2>
       <div class="resumen__fila"><span>Subtotal</span><span id="cartSubtotal">$0</span></div>
       <div class="resumen__fila"><span>Envío estimado</span><span id="cartShipping">$0</span></div>
-      <div class="resumen__promo">
-        <input type="text" id="promoInput" placeholder="Código descuento" maxlength="12" autocomplete="off" spellcheck="false" style="text-transform:uppercase;">
-        <button class="boton boton--fantasma boton--pequeno" id="promoBtn" type="button">Aplicar</button>
-      </div>
+      <form class="resumen__promo" action="#" method="post">
+        <label class="visualmente-oculto" for="promoInput">Código descuento</label>
+        <input type="text" id="promoInput" name="promo" placeholder="Código descuento" maxlength="12" autocomplete="off" spellcheck="false" style="text-transform:uppercase;">
+        <button class="boton boton--fantasma boton--pequeno" id="promoBtn" type="submit">Aplicar</button>
+      </form>
       <div class="resumen__fila resumen__fila--total"><span>Total</span><span id="cartTotal">$0</span></div>
       <a class="boton boton--primario boton--bloque" style="margin-top:18px;" href="checkout.html" id="btnCheckout">Iniciar compra</a>
-    </div>
+    </aside>
     <div class="carrito__barra-movil"><div class="resumen__fila resumen__fila--total"><span>Total</span><span id="cartTotalMovil">$0</span></div><a class="boton boton--primario" href="checkout.html" id="btnCheckoutMovil">Iniciar compra</a></div>
   </div>
 </main>
 
 <footer class="pie">
   <div class="contenedor pie__grilla">
-    <div>
+    <section aria-label="Acerca de KIHAP">
       <div class="marca marca--clara"><span>KIH</span><em class="marca__acento">A</em><span>P</span></div>
       <p>Equipamiento de taekwondo para cada cinturón: doboks, protecciones y accesorios homologados WT/ITF.</p>
-    </div>
-    <div>
-      <h4>Tienda</h4>
+    </section>
+    <nav aria-label="Tienda">
+      <h2>Tienda</h2>
       <ul>
         <li><a href="catalogo.html?cat=doboks">Doboks</a></li>
         <li><a href="catalogo.html?cat=protecciones">Protecciones</a></li>
         <li><a href="catalogo.html?cat=cinturones">Cinturones</a></li>
         <li><a href="catalogo.html?cat=accesorios">Accesorios</a></li>
       </ul>
-    </div>
-    <div>
-      <h4>Ayuda</h4>
+    </nav>
+    <nav aria-label="Ayuda">
+      <h2>Ayuda</h2>
       <ul>
         <li><a href="contacto.html">Contacto</a></li>
         <li><a href="guia-talles.html">Guía de talles</a></li>
         <li><a href="#">Envíos</a></li>
         <li><a href="#">Cambios y devoluciones</a></li>
       </ul>
-    </div>
-    <div>
-      <h4>Novedades</h4>
+    </nav>
+    <section aria-labelledby="titulo-novedades">
+      <h2 id="titulo-novedades">Novedades</h2>
       <p>Enterate de nuevos productos y promociones.</p>
-      <div class="pie__promo">
-        <input type="email" placeholder="Tu email">
-        <button class="boton boton--primario boton--pequeno">Sumarme</button>
-      </div>
-    </div>
+      <form class="pie__promo" action="#" method="post">
+        <label class="visualmente-oculto" for="newsletter-email">Tu email</label>
+        <input type="email" id="newsletter-email" name="email" placeholder="Tu email" required autocomplete="email">
+        <button class="boton boton--primario boton--pequeno" type="submit">Sumarme</button>
+      </form>
+    </section>
   </div>
   <div class="contenedor pie__inferior">
     <span>© 2026 KIHAP. Todos los derechos reservados.</span>
-      
   </div>
 </footer>
 
-<div class="aviso" id="toast"><svg class="icono"><use href="#i-check"/></svg><span id="toastText">Agregado al carrito</span></div>
+<div class="aviso" id="toast" role="status" aria-live="polite"><svg class="icono" aria-hidden="true"><use href="#i-check"/></svg><span id="toastText">Agregado al carrito</span></div>
 
 <script src="js/products.js"></script>
 <script src="js/config.js"></script>

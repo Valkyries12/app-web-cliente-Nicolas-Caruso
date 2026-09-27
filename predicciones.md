@@ -14,3 +14,4 @@ Se cambiará el SVG del hero por una imágen representativa
 10- Se agrega mas espaciado para dar una sensacion de respiro
 11- Se agrega pagina de guia de talles
 12- Se refactoriza acia Es6+
+13- Se agrega valor semantico al sitio
