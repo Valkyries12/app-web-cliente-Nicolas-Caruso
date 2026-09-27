@@ -3,12 +3,21 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>KIHAP — Contacto</title>
+<title>Contacto | Tienda de Taekwondo en Mendoza — KIHAP</title>
+<meta name="description" content="Contactá a KIHAP en Mendoza: consultas sobre talles, pedidos, cambios y compras mayoristas para dojangs. Respondemos en 24 h hábiles.">
+<meta name="theme-color" content="#16171a">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="es_AR">
+<meta property="og:title" content="Contacto — KIHAP">
+<meta property="og:description" content="Consultas sobre talles, envíos y productos de taekwondo. Av. San Martín 1245, Mendoza.">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='4' fill='%2316171a'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-family='sans-serif' font-weight='bold' font-size='16' fill='white'%3EK%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+<a class="enlace-salto" href="#contenido">Saltar al contenido principal</a>
 
 <svg style="display:none" aria-hidden="true">
   <symbol id="i-cart" viewBox="0 0 24 24"><path d="M3 3h2l.4 2M7 13h10l3-8H6.4M7 13L5.4 5M7 13l-1.5 6h11"/><circle cx="9" cy="20" r="1.4"/><circle cx="17" cy="20" r="1.4"/></symbol>
@@ -26,10 +35,10 @@
   <div class="contenedor cabecera__interior">
     <a href="index.html" class="marca"><span>KIH</span><em class="marca__acento">A</em><span>P</span></a>
     <button class="cabecera__menu" id="hamburgerBtn" aria-label="Abrir menú" aria-expanded="false" aria-controls="mainNav"><svg class="icono"><use href="#i-menu"/></svg></button>
-    <nav class="navegacion" id="mainNav">
+    <nav class="navegacion" id="mainNav" aria-label="Navegación principal">
       <a class="navegacion__enlace" href="index.html">Inicio</a>
       <a class="navegacion__enlace" href="catalogo.html">Catálogo</a>
-      <a class="navegacion__enlace navegacion__enlace--activo" href="contacto.html">Contacto</a>
+      <a class="navegacion__enlace navegacion__enlace--activo" href="contacto.html" aria-current="page">Contacto</a>
     </nav>
     <div class="cabecera__acciones">
       <a class="boton-carrito boton-carrito--icono" href="carrito.html">
@@ -41,21 +50,28 @@
   </div>
 </header>
 
-<main>
+<main id="contenido">
   <div class="contenedor encabezado-pagina">
-    <div class="migas"><a class="migas__enlace" href="index.html">Inicio</a> / Contacto</div>
-    <h2 class="encabezado-pagina__titulo">Contacto</h2>
+    <nav class="migas" aria-label="Migas de pan">
+      <ol class="migas__lista">
+        <li><a class="migas__enlace" href="index.html">Inicio</a></li>
+        <li aria-hidden="true">/</li>
+        <li><span aria-current="page">Contacto</span></li>
+      </ol>
+    </nav>
+    <h1 class="encabezado-pagina__titulo">Contacto</h1>
     <p style="margin-top:10px;max-width:60ch;">¿Tenés dudas sobre talles, envíos o algún producto? Escribinos y te respondemos a la brevedad.</p>
   </div>
 
   <div class="contenedor contacto__distribucion">
-    <div class="contacto__panel">
-      <form id="contactForm">
-        <div class="formulario__campo"><label>Nombre y apellido</label><input type="text" required placeholder="Tu nombre"></div>
-        <div class="formulario__campo"><label>Email</label><input type="email" required placeholder="tuemail@correo.com"></div>
+    <section class="contacto__panel" aria-labelledby="titulo-formulario">
+      <h2 class="visualmente-oculto" id="titulo-formulario">Formulario de contacto</h2>
+      <form id="contactForm" action="#" method="post">
+        <div class="formulario__campo"><label for="contacto-nombre">Nombre y apellido</label><input id="contacto-nombre" name="nombre" type="text" required placeholder="Tu nombre" autocomplete="name" maxlength="80"></div>
+        <div class="formulario__campo"><label for="contacto-email">Email</label><input id="contacto-email" name="email" type="email" required placeholder="tuemail@correo.com" autocomplete="email" maxlength="254"></div>
         <div class="formulario__campo">
-          <label>Asunto</label>
-          <select required>
+          <label for="contacto-asunto">Asunto</label>
+          <select id="contacto-asunto" name="asunto" required>
             <option value="">Elegí un motivo</option>
             <option>Consulta sobre talles</option>
             <option>Estado de un pedido</option>
@@ -64,22 +80,23 @@
             <option>Otro</option>
           </select>
         </div>
-        <div class="formulario__campo"><label>Mensaje</label><textarea required rows="5" placeholder="Contanos en qué te podemos ayudar"></textarea></div>
+        <div class="formulario__campo"><label for="contacto-mensaje">Mensaje</label><textarea id="contacto-mensaje" name="mensaje" required rows="5" placeholder="Contanos en qué te podemos ayudar" maxlength="1000"></textarea></div>
         <button type="submit" class="boton boton--primario boton--bloque">Enviar mensaje</button>
       </form>
 
-      <div class="contacto__exito" id="successBox">
-        <div class="confirmacion__circulo"><svg class="icono"><use href="#i-check"/></svg></div>
-        <h3 style="font-size:20px;margin-bottom:8px;">Mensaje enviado</h3>
+      <div class="contacto__exito" id="successBox" role="status">
+        <div class="confirmacion__circulo"><svg class="icono" aria-hidden="true"><use href="#i-check"/></svg></div>
+        <h2 style="font-size:20px;margin-bottom:8px;">Mensaje enviado</h2>
         <p>Gracias por escribirnos. Te vamos a contestar dentro de las próximas 24 horas hábiles.</p>
         <button class="boton boton--fantasma boton--pequeno" style="margin-top:18px;" data-action="reset-contact" type="button">Enviar otro mensaje</button>
       </div>
-    </div>
+    </section>
 
-    <div>
+    <section aria-labelledby="titulo-ubicacion">
+      <h2 class="visualmente-oculto" id="titulo-ubicacion">Ubicación y datos de contacto</h2>
       <div class="mapa">
-        <div class="mapa__lienzo">
-          <svg viewBox="0 0 400 310" width="100%" height="100%">
+        <div class="mapa__lienzo" role="img" aria-label="Mapa ilustrativo de la ubicación de KIHAP en Av. San Martín 1245, Mendoza">
+          <svg viewBox="0 0 400 310" width="100%" height="100%" aria-hidden="true">
             <rect width="400" height="310" fill="#EAE7DD"/>
             <g stroke="#D3CFC1" stroke-width="2">
               <line x1="0" y1="70" x2="400" y2="60"/>
@@ -103,69 +120,71 @@
             </g>
           </svg>
         </div>
-        <div class="mapa__info">
-          <div class="info__fila">
-            <div class="mapa__icono"><svg class="icono"><use href="#i-pin"/></svg></div>
-            <div><h5 class="mapa__titulo">KIHAP Tienda — Mendoza</h5><p class="mapa__texto">Av. San Martín 1245, Ciudad de Mendoza</p></div>
-          </div>
-          <div class="info__fila">
-            <div class="mapa__icono"><svg class="icono"><use href="#i-phone"/></svg></div>
-            <div><h5 class="mapa__titulo">Teléfono</h5><p class="mapa__texto">+54 261 400 5566</p></div>
-          </div>
-          <div class="info__fila">
-            <div class="mapa__icono"><svg class="icono"><use href="#i-mail"/></svg></div>
-            <div><h5 class="mapa__titulo">Email</h5><p class="mapa__texto">hola@kihap.com.ar</p></div>
-          </div>
-          <div class="info__fila">
-            <div class="mapa__icono"><svg class="icono"><use href="#i-clock"/></svg></div>
-            <div><h5 class="mapa__titulo">Horarios</h5><p class="mapa__texto">Lunes a viernes 9 a 19 h · Sábados 9 a 13 h</p></div>
-          </div>
-        </div>
+        <address class="mapa__info" style="font-style:normal;">
+          <ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:16px;">
+            <li class="info__fila">
+              <div class="mapa__icono"><svg class="icono" aria-hidden="true"><use href="#i-pin"/></svg></div>
+              <div><h3 class="mapa__titulo">KIHAP Tienda — Mendoza</h3><p class="mapa__texto">Av. San Martín 1245, Ciudad de Mendoza</p></div>
+            </li>
+            <li class="info__fila">
+              <div class="mapa__icono"><svg class="icono" aria-hidden="true"><use href="#i-phone"/></svg></div>
+              <div><h3 class="mapa__titulo">Teléfono</h3><p class="mapa__texto"><a href="tel:+542614005566">+54 261 400 5566</a></p></div>
+            </li>
+            <li class="info__fila">
+              <div class="mapa__icono"><svg class="icono" aria-hidden="true"><use href="#i-mail"/></svg></div>
+              <div><h3 class="mapa__titulo">Email</h3><p class="mapa__texto"><a href="mailto:hola@kihap.com.ar">hola@kihap.com.ar</a></p></div>
+            </li>
+            <li class="info__fila">
+              <div class="mapa__icono"><svg class="icono" aria-hidden="true"><use href="#i-clock"/></svg></div>
+              <div><h3 class="mapa__titulo">Horarios</h3><p class="mapa__texto">Lunes a viernes 9 a 19 h · Sábados 9 a 13 h</p></div>
+            </li>
+          </ul>
+        </address>
       </div>
-    </div>
+    </section>
   </div>
 </main>
 
 <footer class="pie">
   <div class="contenedor pie__grilla">
-    <div>
+    <section aria-label="Acerca de KIHAP">
       <div class="marca marca--clara"><span>KIH</span><em class="marca__acento">A</em><span>P</span></div>
       <p>Equipamiento de taekwondo para cada cinturón: doboks, protecciones y accesorios homologados WT/ITF.</p>
-    </div>
-    <div>
-      <h4>Tienda</h4>
+    </section>
+    <nav aria-label="Tienda">
+      <h2>Tienda</h2>
       <ul>
         <li><a href="catalogo.html?cat=doboks">Doboks</a></li>
         <li><a href="catalogo.html?cat=protecciones">Protecciones</a></li>
         <li><a href="catalogo.html?cat=cinturones">Cinturones</a></li>
         <li><a href="catalogo.html?cat=accesorios">Accesorios</a></li>
       </ul>
-    </div>
-    <div>
-      <h4>Ayuda</h4>
+    </nav>
+    <nav aria-label="Ayuda">
+      <h2>Ayuda</h2>
       <ul>
         <li><a href="contacto.html">Contacto</a></li>
         <li><a href="guia-talles.html">Guía de talles</a></li>
         <li><a href="#">Envíos</a></li>
         <li><a href="#">Cambios y devoluciones</a></li>
       </ul>
-    </div>
-    <div>
-      <h4>Novedades</h4>
+    </nav>
+    <section aria-labelledby="titulo-novedades">
+      <h2 id="titulo-novedades">Novedades</h2>
       <p>Enterate de nuevos productos y promociones.</p>
-      <div class="pie__promo">
-        <input type="email" placeholder="Tu email">
-        <button class="boton boton--primario boton--pequeno">Sumarme</button>
-      </div>
-    </div>
+      <form class="pie__promo" action="#" method="post">
+        <label class="visualmente-oculto" for="newsletter-email">Tu email</label>
+        <input type="email" id="newsletter-email" name="email" placeholder="Tu email" required autocomplete="email">
+        <button class="boton boton--primario boton--pequeno" type="submit">Sumarme</button>
+      </form>
+    </section>
   </div>
   <div class="contenedor pie__inferior">
     <span>© 2026 KIHAP. Todos los derechos reservados.</span>
-      
   </div>
 </footer>
 
-<div class="aviso" id="toast"><svg class="icono"><use href="#i-check"/></svg><span id="toastText">Agregado al carrito</span></div>
+<div class="aviso" id="toast" role="status" aria-live="polite"><svg class="icono" aria-hidden="true"><use href="#i-check"/></svg><span id="toastText">Agregado al carrito</span></div>
 
 <script src="js/products.js"></script>
 <script src="js/config.js"></script>

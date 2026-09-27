@@ -3,12 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>KIHAP — Checkout</title>
+<title>Finalizar Compra — KIHAP</title>
+<meta name="description" content="Finalizá tu compra KIHAP: datos de envío, método de pago y confirmación del pedido.">
+<meta name="theme-color" content="#16171a">
+<meta name="robots" content="noindex, follow">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='4' fill='%2316171a'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-family='sans-serif' font-weight='bold' font-size='16' fill='white'%3EK%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+<a class="enlace-salto" href="#contenido">Saltar al contenido principal</a>
 
 <svg style="display:none" aria-hidden="true">
   <symbol id="i-cart" viewBox="0 0 24 24"><path d="M3 3h2l.4 2M7 13h10l3-8H6.4M7 13L5.4 5M7 13l-1.5 6h11"/><circle cx="9" cy="20" r="1.4"/><circle cx="17" cy="20" r="1.4"/></symbol>
@@ -24,7 +29,7 @@
   <div class="contenedor cabecera__interior">
     <a href="index.html" class="marca"><span>KIH</span><em class="marca__acento">A</em><span>P</span></a>
     <button class="cabecera__menu" id="hamburgerBtn" aria-label="Abrir menú" aria-expanded="false" aria-controls="mainNav"><svg class="icono"><use href="#i-menu"/></svg></button>
-    <nav class="navegacion" id="mainNav">
+    <nav class="navegacion" id="mainNav" aria-label="Navegación principal">
       <a class="navegacion__enlace" href="index.html">Inicio</a>
       <a class="navegacion__enlace" href="catalogo.html">Catálogo</a>
       <a class="navegacion__enlace" href="contacto.html">Contacto</a>
@@ -39,27 +44,35 @@
   </div>
 </header>
 
-<main>
+<main id="contenido">
   <div class="contenedor encabezado-pagina">
-    <div class="migas"><a class="migas__enlace" href="index.html">Inicio</a> / <a class="migas__enlace" href="carrito.html">Carrito</a> / Checkout</div>
-    <h2 class="encabezado-pagina__titulo">Finalizar compra</h2>
+    <nav class="migas" aria-label="Migas de pan">
+      <ol class="migas__lista">
+        <li><a class="migas__enlace" href="index.html">Inicio</a></li>
+        <li aria-hidden="true">/</li>
+        <li><a class="migas__enlace" href="carrito.html">Carrito</a></li>
+        <li aria-hidden="true">/</li>
+        <li><span aria-current="page">Checkout</span></li>
+      </ol>
+    </nav>
+    <h1 class="encabezado-pagina__titulo">Finalizar compra</h1>
   </div>
 
   <div class="contenedor">
-    <div class="pasos">
-      <div class="paso paso--activo" id="stepDot1"><span class="paso__numero">1</span><span class="paso__etiqueta">Envío</span></div>
-      <div class="pasos__linea"></div>
-      <div class="paso" id="stepDot2"><span class="paso__numero">2</span><span class="paso__etiqueta">Pago</span></div>
-      <div class="pasos__linea"></div>
-      <div class="paso" id="stepDot3"><span class="paso__numero">3</span><span class="paso__etiqueta">Confirmación</span></div>
-    </div>
+    <ol class="pasos" aria-label="Pasos de la compra">
+      <li class="paso paso--activo" id="stepDot1" aria-current="step"><span class="paso__numero" aria-hidden="true">1</span><span class="paso__etiqueta">Envío</span></li>
+      <li class="pasos__linea" aria-hidden="true"></li>
+      <li class="paso" id="stepDot2"><span class="paso__numero" aria-hidden="true">2</span><span class="paso__etiqueta">Pago</span></li>
+      <li class="pasos__linea" aria-hidden="true"></li>
+      <li class="paso" id="stepDot3"><span class="paso__numero" aria-hidden="true">3</span><span class="paso__etiqueta">Confirmación</span></li>
+    </ol>
   </div>
 
   <div class="contenedor compra__distribucion">
     <div class="compra__contenido">
       <!-- Paso 1: envío -->
-      <div class="compra__panel compra__panel--activo" id="checkoutStep1">
-        <h3 style="font-size:20px;margin-bottom:18px;">Datos de envío</h3>
+      <section class="compra__panel compra__panel--activo" id="checkoutStep1" aria-labelledby="titulo-envio">
+        <h2 id="titulo-envio" style="font-size:20px;margin-bottom:18px;">Datos de envío</h2>
         <div class="formulario__grilla">
           <div class="formulario__campo"><label for="envNombre">Nombre</label><input id="envNombre" type="text" placeholder="Ej: Nicolás" autocomplete="given-name" maxlength="40" aria-describedby="err-envNombre"><small class="formulario__error" id="err-envNombre"></small></div>
           <div class="formulario__campo"><label for="envApellido">Apellido</label><input id="envApellido" type="text" placeholder="Ej: Caruso" autocomplete="family-name" maxlength="40" aria-describedby="err-envApellido"><small class="formulario__error" id="err-envApellido"></small></div>
@@ -78,16 +91,17 @@
         <div class="formulario__acciones">
           <button class="boton boton--oscuro" id="btnToPago" type="button">Continuar a pago</button>
         </div>
-      </div>
+      </section>
 
       <!-- Paso 2: pago -->
-      <div class="compra__panel" id="checkoutStep2">
-        <h3 style="font-size:20px;margin-bottom:18px;">Método de pago</h3>
-        <div class="pago__opciones">
-          <label class="pago__opcion pago__opcion--seleccionada"><input type="radio" name="pago" value="tarjeta" checked><svg class="icono"><use href="#i-cart"/></svg> Tarjeta de crédito / débito</label>
-          <label class="pago__opcion"><input type="radio" name="pago" value="mp"><svg class="icono"><use href="#i-shield-check"/></svg> Mercado Pago</label>
-          <label class="pago__opcion"><input type="radio" name="pago" value="transferencia"><svg class="icono"><use href="#i-truck"/></svg> Transferencia bancaria</label>
-        </div>
+      <section class="compra__panel" id="checkoutStep2" aria-labelledby="titulo-pago">
+        <h2 id="titulo-pago" style="font-size:20px;margin-bottom:18px;">Método de pago</h2>
+        <fieldset class="pago__opciones" style="border:0;padding:0;margin:0;">
+          <legend class="visualmente-oculto">Elegí un método de pago</legend>
+          <label class="pago__opcion pago__opcion--seleccionada"><input type="radio" name="pago" value="tarjeta" checked><svg class="icono" aria-hidden="true"><use href="#i-cart"/></svg> Tarjeta de crédito / débito</label>
+          <label class="pago__opcion"><input type="radio" name="pago" value="mp"><svg class="icono" aria-hidden="true"><use href="#i-shield-check"/></svg> Mercado Pago</label>
+          <label class="pago__opcion"><input type="radio" name="pago" value="transferencia"><svg class="icono" aria-hidden="true"><use href="#i-truck"/></svg> Transferencia bancaria</label>
+        </fieldset>
         <div id="payCardFields">
           <div class="formulario__campo"><label for="payNum">Número de tarjeta</label><input id="payNum" type="text" placeholder="0000 0000 0000 0000" inputmode="numeric" maxlength="19" aria-describedby="err-payNum"><small class="formulario__error" id="err-payNum"></small></div>
           <div class="formulario__grilla formulario__grilla--3">
@@ -101,73 +115,73 @@
           <button class="boton boton--fantasma" id="btnBackToEnvio" type="button">Volver</button>
           <button class="boton boton--oscuro" id="btnConfirmar" type="button">Confirmar pedido</button>
         </div>
-      </div>
+      </section>
 
       <!-- Paso 3: confirmación -->
-      <div class="compra__panel" id="checkoutStep3">
+      <section class="compra__panel" id="checkoutStep3" aria-labelledby="titulo-confirmacion">
         <div class="confirmacion">
-          <div class="confirmacion__circulo"><svg class="icono"><use href="#i-check"/></svg></div>
-          <h2>¡Gracias por tu compra!</h2>
+          <div class="confirmacion__circulo"><svg class="icono" aria-hidden="true"><use href="#i-check"/></svg></div>
+          <h2 id="titulo-confirmacion">¡Gracias por tu compra!</h2>
           <p>Te enviamos un correo con el detalle de tu pedido. Vas a recibir una notificación cuando salga de nuestro depósito.</p>
           <div class="confirmacion__numero">Pedido #KH-24897</div>
           <div>
             <a class="boton boton--primario" href="index.html">Volver al inicio</a>
           </div>
         </div>
-      </div>
+      </section>
     </div>
 
-    <div class="resumen">
-      <h3 class="resumen__titulo">Tu pedido</h3>
-      <div class="resumen__lista" id="checkoutMiniList"></div>
+    <aside class="resumen" aria-labelledby="titulo-pedido">
+      <h2 class="resumen__titulo" id="titulo-pedido">Tu pedido</h2>
+      <div class="resumen__lista" id="checkoutMiniList" aria-live="polite"></div>
       <div class="resumen__fila"><span>Subtotal</span><span id="checkoutSubtotal">$0</span></div>
       <div class="resumen__fila"><span>Envío</span><span id="checkoutShipping">$0</span></div>
       <div class="resumen__fila resumen__fila--total"><span>Total</span><span id="checkoutTotal">$0</span></div>
-    </div>
+    </aside>
     <div class="compra__barra-movil"><div class="resumen__fila resumen__fila--total"><span>Total</span><span id="checkoutTotalMovil">$0</span></div><button class="boton boton--primario" id="btnMovil" type="button">Confirmar</button></div>
   </div>
 </main>
 
 <footer class="pie">
   <div class="contenedor pie__grilla">
-    <div>
+    <section aria-label="Acerca de KIHAP">
       <div class="marca marca--clara"><span>KIH</span><em class="marca__acento">A</em><span>P</span></div>
       <p>Equipamiento de taekwondo para cada cinturón: doboks, protecciones y accesorios homologados WT/ITF.</p>
-    </div>
-    <div>
-      <h4>Tienda</h4>
+    </section>
+    <nav aria-label="Tienda">
+      <h2>Tienda</h2>
       <ul>
         <li><a href="catalogo.html?cat=doboks">Doboks</a></li>
         <li><a href="catalogo.html?cat=protecciones">Protecciones</a></li>
         <li><a href="catalogo.html?cat=cinturones">Cinturones</a></li>
         <li><a href="catalogo.html?cat=accesorios">Accesorios</a></li>
       </ul>
-    </div>
-    <div>
-      <h4>Ayuda</h4>
+    </nav>
+    <nav aria-label="Ayuda">
+      <h2>Ayuda</h2>
       <ul>
         <li><a href="contacto.html">Contacto</a></li>
         <li><a href="guia-talles.html">Guía de talles</a></li>
         <li><a href="#">Envíos</a></li>
         <li><a href="#">Cambios y devoluciones</a></li>
       </ul>
-    </div>
-    <div>
-      <h4>Novedades</h4>
+    </nav>
+    <section aria-labelledby="titulo-novedades">
+      <h2 id="titulo-novedades">Novedades</h2>
       <p>Enterate de nuevos productos y promociones.</p>
-      <div class="pie__promo">
-        <input type="email" placeholder="Tu email">
-        <button class="boton boton--primario boton--pequeno">Sumarme</button>
-      </div>
-    </div>
+      <form class="pie__promo" action="#" method="post">
+        <label class="visualmente-oculto" for="newsletter-email">Tu email</label>
+        <input type="email" id="newsletter-email" name="email" placeholder="Tu email" required autocomplete="email">
+        <button class="boton boton--primario boton--pequeno" type="submit">Sumarme</button>
+      </form>
+    </section>
   </div>
   <div class="contenedor pie__inferior">
     <span>© 2026 KIHAP. Todos los derechos reservados.</span>
-      
   </div>
 </footer>
 
-<div class="aviso" id="toast"><svg class="icono"><use href="#i-check"/></svg><span id="toastText">Agregado al carrito</span></div>
+<div class="aviso" id="toast" role="status" aria-live="polite"><svg class="icono" aria-hidden="true"><use href="#i-check"/></svg><span id="toastText">Agregado al carrito</span></div>
 
 <script src="js/products.js"></script>
 <script src="js/config.js"></script>

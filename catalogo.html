@@ -3,12 +3,21 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>KIHAP — Catálogo</title>
+<title>Catálogo de Taekwondo | Doboks, Protecciones y Cinturones — KIHAP</title>
+<meta name="description" content="Catálogo completo KIHAP: doboks, protecciones, cinturones y accesorios de taekwondo WT/ITF. Filtrá por categoría, talle y precio.">
+<meta name="theme-color" content="#16171a">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="es_AR">
+<meta property="og:title" content="Catálogo de Taekwondo — KIHAP">
+<meta property="og:description" content="Doboks, protecciones, cinturones y accesorios homologados WT/ITF.">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='4' fill='%2316171a'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-family='sans-serif' font-weight='bold' font-size='16' fill='white'%3EK%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+<a class="enlace-salto" href="#contenido">Saltar al contenido principal</a>
 
 <svg style="display:none" aria-hidden="true">
   <symbol id="i-cart" viewBox="0 0 24 24"><path d="M3 3h2l.4 2M7 13h10l3-8H6.4M7 13L5.4 5M7 13l-1.5 6h11"/><circle cx="9" cy="20" r="1.4"/><circle cx="17" cy="20" r="1.4"/></symbol>
@@ -26,9 +35,9 @@
   <div class="contenedor cabecera__interior">
     <a href="index.html" class="marca"><span>KIH</span><em class="marca__acento">A</em><span>P</span></a>
     <button class="cabecera__menu" id="hamburgerBtn" aria-label="Abrir menú" aria-expanded="false" aria-controls="mainNav"><svg class="icono"><use href="#i-menu"/></svg></button>
-    <nav class="navegacion" id="mainNav">
+    <nav class="navegacion" id="mainNav" aria-label="Navegación principal">
       <a class="navegacion__enlace" href="index.html">Inicio</a>
-      <a class="navegacion__enlace navegacion__enlace--activo" href="catalogo.html">Catálogo</a>
+      <a class="navegacion__enlace navegacion__enlace--activo" href="catalogo.html" aria-current="page">Catálogo</a>
       <a class="navegacion__enlace" href="contacto.html">Contacto</a>
     </nav>
     <div class="cabecera__acciones">
@@ -41,44 +50,54 @@
   </div>
 </header>
 
-<main>
+<main id="contenido">
   <div class="contenedor encabezado-pagina">
-    <div class="migas"><a class="migas__enlace" href="index.html">Inicio</a> / Catálogo</div>
-    <h2 class="encabezado-pagina__titulo">Catálogo completo</h2>
+    <nav class="migas" aria-label="Migas de pan">
+      <ol class="migas__lista">
+        <li><a class="migas__enlace" href="index.html">Inicio</a></li>
+        <li aria-hidden="true">/</li>
+        <li><span aria-current="page">Catálogo</span></li>
+      </ol>
+    </nav>
+    <h1 class="encabezado-pagina__titulo">Catálogo completo</h1>
   </div>
 
   <div class="contenedor catalogo__distribucion">
     <button class="boton boton--fantasma boton--bloque catalogo__filtros-boton" id="filtrosBtn" aria-expanded="false" aria-controls="filtrosPanel">Filtros</button>
-    <aside class="catalogo__filtros" id="filtrosPanel">
-      <div class="filtro">
-        <h4 class="filtro__titulo">Categoría</h4>
-        <label class="filtro__opcion"><input type="checkbox" class="cat-filter" value="doboks"> Doboks</label>
-        <label class="filtro__opcion"><input type="checkbox" class="cat-filter" value="protecciones"> Protecciones</label>
-        <label class="filtro__opcion"><input type="checkbox" class="cat-filter" value="cinturones"> Cinturones</label>
-        <label class="filtro__opcion"><input type="checkbox" class="cat-filter" value="accesorios"> Accesorios</label>
-      </div>
-      <div class="filtro">
-        <h4 class="filtro__titulo">Talla</h4>
-        <div class="filtro__chips">
-          <button class="filtro__chip">XS</button><button class="filtro__chip">S</button>
-          <button class="filtro__chip">M</button><button class="filtro__chip">L</button>
-          <button class="filtro__chip">XL</button>
-        </div>
-      </div>
-      <div class="filtro">
-        <h4 class="filtro__titulo">Precio</h4>
-        <div class="filtro__chips">
-          <button class="filtro__chip">Hasta $20.000</button>
-          <button class="filtro__chip">$20.000–$60.000</button>
-          <button class="filtro__chip">Más de $60.000</button>
-        </div>
-      </div>
-      <button class="filtro__limpiar" id="clearFiltersBtn" data-action="clear-filters" type="button">Limpiar filtros</button>
+    <aside class="catalogo__filtros" id="filtrosPanel" aria-label="Filtros del catálogo">
+      <form action="catalogo.html" method="get" id="filtrosForm">
+        <fieldset class="filtro">
+          <legend class="filtro__titulo">Categoría</legend>
+          <label class="filtro__opcion"><input type="checkbox" class="cat-filter" value="doboks"> Doboks</label>
+          <label class="filtro__opcion"><input type="checkbox" class="cat-filter" value="protecciones"> Protecciones</label>
+          <label class="filtro__opcion"><input type="checkbox" class="cat-filter" value="cinturones"> Cinturones</label>
+          <label class="filtro__opcion"><input type="checkbox" class="cat-filter" value="accesorios"> Accesorios</label>
+        </fieldset>
+        <fieldset class="filtro">
+          <legend class="filtro__titulo">Talla</legend>
+          <div class="filtro__chips">
+            <button class="filtro__chip" type="button">XS</button><button class="filtro__chip" type="button">S</button>
+            <button class="filtro__chip" type="button">M</button><button class="filtro__chip" type="button">L</button>
+            <button class="filtro__chip" type="button">XL</button>
+          </div>
+        </fieldset>
+        <fieldset class="filtro">
+          <legend class="filtro__titulo">Precio</legend>
+          <div class="filtro__chips">
+            <button class="filtro__chip" type="button">Hasta $20.000</button>
+            <button class="filtro__chip" type="button">$20.000–$60.000</button>
+            <button class="filtro__chip" type="button">Más de $60.000</button>
+          </div>
+        </fieldset>
+        <button class="filtro__limpiar" id="clearFiltersBtn" data-action="clear-filters" type="button">Limpiar filtros</button>
+      </form>
     </aside>
 
-    <div class="catalogo__contenido">
+    <section class="catalogo__contenido" aria-labelledby="titulo-catalogo">
+      <h2 class="visualmente-oculto" id="titulo-catalogo">Productos del catálogo</h2>
       <div class="catalogo__barra">
-        <span class="catalogo__contador" id="resultCount">18 productos</span>
+        <span class="catalogo__contador" id="resultCount" role="status" aria-live="polite">18 productos</span>
+        <label class="visualmente-oculto" for="sortSelect">Ordenar productos</label>
         <select class="catalogo__selector" id="sortSelect">
           <option value="relevancia">Ordenar por: Relevancia</option>
           <option value="menor">Precio: menor a mayor</option>
@@ -86,51 +105,51 @@
           <option value="nuevos">Más nuevos</option>
         </select>
       </div>
-      <div class="grilla-productos grilla-productos--lista" id="catalogGrid"></div>
-    </div>
+      <ul class="grilla-productos grilla-productos--lista" id="catalogGrid" aria-label="Listado de productos"></ul>
+    </section>
   </div>
 </main>
 
 <footer class="pie">
   <div class="contenedor pie__grilla">
-    <div>
+    <section aria-label="Acerca de KIHAP">
       <div class="marca marca--clara"><span>KIH</span><em class="marca__acento">A</em><span>P</span></div>
       <p>Equipamiento de taekwondo para cada cinturón: doboks, protecciones y accesorios homologados WT/ITF.</p>
-    </div>
-    <div>
-      <h4>Tienda</h4>
+    </section>
+    <nav aria-label="Tienda">
+      <h2>Tienda</h2>
       <ul>
         <li><a href="catalogo.html?cat=doboks">Doboks</a></li>
         <li><a href="catalogo.html?cat=protecciones">Protecciones</a></li>
         <li><a href="catalogo.html?cat=cinturones">Cinturones</a></li>
         <li><a href="catalogo.html?cat=accesorios">Accesorios</a></li>
       </ul>
-    </div>
-    <div>
-      <h4>Ayuda</h4>
+    </nav>
+    <nav aria-label="Ayuda">
+      <h2>Ayuda</h2>
       <ul>
         <li><a href="contacto.html">Contacto</a></li>
         <li><a href="guia-talles.html">Guía de talles</a></li>
         <li><a href="#">Envíos</a></li>
         <li><a href="#">Cambios y devoluciones</a></li>
       </ul>
-    </div>
-    <div>
-      <h4>Novedades</h4>
+    </nav>
+    <section aria-labelledby="titulo-novedades">
+      <h2 id="titulo-novedades">Novedades</h2>
       <p>Enterate de nuevos productos y promociones.</p>
-      <div class="pie__promo">
-        <input type="email" placeholder="Tu email">
-        <button class="boton boton--primario boton--pequeno">Sumarme</button>
-      </div>
-    </div>
+      <form class="pie__promo" action="#" method="post">
+        <label class="visualmente-oculto" for="newsletter-email">Tu email</label>
+        <input type="email" id="newsletter-email" name="email" placeholder="Tu email" required autocomplete="email">
+        <button class="boton boton--primario boton--pequeno" type="submit">Sumarme</button>
+      </form>
+    </section>
   </div>
   <div class="contenedor pie__inferior">
     <span>© 2026 KIHAP. Todos los derechos reservados.</span>
-      
   </div>
 </footer>
 
-<div class="aviso" id="toast"><svg class="icono"><use href="#i-check"/></svg><span id="toastText">Agregado al carrito</span></div>
+<div class="aviso" id="toast" role="status" aria-live="polite"><svg class="icono" aria-hidden="true"><use href="#i-check"/></svg><span id="toastText">Agregado al carrito</span></div>
 
 <script src="js/products.js"></script>
 <script src="js/config.js"></script>

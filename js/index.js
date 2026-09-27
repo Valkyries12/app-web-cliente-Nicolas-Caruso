@@ -8,7 +8,7 @@ const renderFeatured = () => {
   const featuredProducts = PRODUCT_CATALOG.filter((product) => product.featured);
 
   document.getElementById('featuredGrid').innerHTML = featuredProducts
-    .map(productCardHTMLWithBadge)
+    .map((product) => `<li>${productCardHTMLWithBadge(product)}</li>`)
     .join('');
 };
 

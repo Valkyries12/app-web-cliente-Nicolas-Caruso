@@ -3,12 +3,22 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>KIHAP — Equipamiento de Taekwondo</title>
+<title>KIHAP — Equipamiento de Taekwondo | Doboks y Protecciones WT/ITF</title>
+<meta name="description" content="KIHAP: doboks, protecciones, cinturones y accesorios de taekwondo homologados WT/ITF. Envíos a todo el país, talles para niños y adultos.">
+<meta name="theme-color" content="#16171a">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="es_AR">
+<meta property="og:title" content="KIHAP — Equipamiento de Taekwondo">
+<meta property="og:description" content="Doboks, protecciones y accesorios homologados WT/ITF para entrenar y competir.">
+<meta property="og:image" content="assets/img/hero-taekwondo.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='4' fill='%2316171a'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-family='sans-serif' font-weight='bold' font-size='16' fill='white'%3EK%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+<a class="enlace-salto" href="#contenido">Saltar al contenido principal</a>
 
 <svg style="display:none" aria-hidden="true">
   <symbol id="i-cart" viewBox="0 0 24 24"><path d="M3 3h2l.4 2M7 13h10l3-8H6.4M7 13L5.4 5M7 13l-1.5 6h11"/><circle cx="9" cy="20" r="1.4"/><circle cx="17" cy="20" r="1.4"/></symbol>
@@ -37,8 +47,8 @@
   <div class="contenedor cabecera__interior">
     <a href="index.html" class="marca"><span>KIH</span><em class="marca__acento">A</em><span>P</span></a>
     <button class="cabecera__menu" id="hamburgerBtn" aria-label="Abrir menú" aria-expanded="false" aria-controls="mainNav"><svg class="icono"><use href="#i-menu"/></svg></button>
-    <nav class="navegacion" id="mainNav">
-      <a class="navegacion__enlace navegacion__enlace--activo" href="index.html">Inicio</a>
+    <nav class="navegacion" id="mainNav" aria-label="Navegación principal">
+      <a class="navegacion__enlace navegacion__enlace--activo" href="index.html" aria-current="page">Inicio</a>
       <a class="navegacion__enlace" href="catalogo.html">Catálogo</a>
       <a class="navegacion__enlace" href="contacto.html">Contacto</a>
     </nav>
@@ -52,109 +62,116 @@
   </div>
 </header>
 
-<main>
-  <div class="contenedor portada">
+<main id="contenido">
+  <section class="contenedor portada" aria-labelledby="titulo-portada">
     <div class="portada__grilla">
       <div>
         <p class="portada__antetitulo">Equipamiento oficial de Taekwondo</p>
-        <h1 class="portada__titulo">Cada movimiento<br>cuenta.</h1>
+        <h1 class="portada__titulo" id="titulo-portada">Cada movimiento<br>cuenta.</h1>
         <p class="portada__bajada">Doboks, protecciones y accesorios homologados WT/ITF para entrenar todos los días y competir con confianza, del blanco al negro.</p>
         <div class="portada__acciones">
           <a class="boton boton--primario" href="catalogo.html">Ver catálogo</a>
           <a class="boton boton--borde" href="#categorias">Explorar categorías</a>
         </div>
       </div>
-      <div class="portada__figura">
-        <img class="portada__foto" src="assets/img/hero-taekwondo.jpg" alt="Combate de taekwondo con dobok y protecciones">
-        <div class="portada__velo"></div>
-       
-      </div>
+      <figure class="portada__figura" style="margin:0;">
+        <img class="portada__foto" src="assets/img/hero-taekwondo.jpg" alt="Dos competidores de taekwondo con dobok blanco y protecciones rojas y azules en combate" width="640" height="480" fetchpriority="high">
+        <div class="portada__velo" aria-hidden="true"></div>
+      </figure>
     </div>
 
-    <div class="confianza">
-      <div class="confianza__item"><svg class="icono"><use href="#i-truck"/></svg> Envíos a todo el país</div>
-      <div class="confianza__item"><svg class="icono"><use href="#i-ruler"/></svg> Talles para niños y adultos</div>
-      <div class="confianza__item"><svg class="icono"><use href="#i-shield-check"/></svg> Productos homologados WT/ITF</div>
-    </div>
-  </div>
+    <ul class="confianza" aria-label="Beneficios de la tienda">
+      <li class="confianza__item"><svg class="icono" aria-hidden="true"><use href="#i-truck"/></svg> Envíos a todo el país</li>
+      <li class="confianza__item"><svg class="icono" aria-hidden="true"><use href="#i-ruler"/></svg> Talles para niños y adultos</li>
+      <li class="confianza__item"><svg class="icono" aria-hidden="true"><use href="#i-shield-check"/></svg> Productos homologados WT/ITF</li>
+    </ul>
+  </section>
 
-  <div class="contenedor seccion seccion--compacta" id="categorias">
+  <section class="contenedor seccion seccion--compacta" id="categorias" aria-labelledby="titulo-categorias">
     <div class="seccion__encabezado">
-      <h2>Comprá por categoría</h2>
+      <h2 id="titulo-categorias">Comprá por categoría</h2>
     </div>
-    <div class="grilla-categorias">
-      <a class="tarjeta-categoria" href="catalogo.html?cat=doboks">
-        <div class="tarjeta-categoria__icono-contenedor tarjeta-categoria__icono-contenedor--oscuro"><svg class="icono"><use href="#i-cat-dobok"/></svg></div>
-        <h3 class="tarjeta-categoria__titulo">Doboks</h3>
-        <span class="tarjeta-categoria__subtitulo">Entrenamiento y competición</span>
-      </a>
-      <a class="tarjeta-categoria" href="catalogo.html?cat=protecciones">
-        <div class="tarjeta-categoria__icono-contenedor tarjeta-categoria__icono-contenedor--rojo"><svg class="icono"><use href="#i-cat-shield"/></svg></div>
-        <h3 class="tarjeta-categoria__titulo">Protecciones</h3>
-        <span class="tarjeta-categoria__subtitulo">Petos, cascos, guantines</span>
-      </a>
-      <a class="tarjeta-categoria" href="catalogo.html?cat=cinturones">
-        <div class="tarjeta-categoria__icono-contenedor tarjeta-categoria__icono-contenedor--cinturon"><svg class="icono"><use href="#i-cat-belt"/></svg></div>
-        <h3 class="tarjeta-categoria__titulo">Cinturones</h3>
-        <span class="tarjeta-categoria__subtitulo">Todos los grados</span>
-      </a>
-      <a class="tarjeta-categoria" href="catalogo.html?cat=accesorios">
-        <div class="tarjeta-categoria__icono-contenedor tarjeta-categoria__icono-contenedor--azul"><svg class="icono"><use href="#i-cat-pad"/></svg></div>
-        <h3 class="tarjeta-categoria__titulo">Accesorios</h3>
-        <span class="tarjeta-categoria__subtitulo">Paos, sacos y bolsos</span>
-      </a>
-    </div>
-  </div>
+    <ul class="grilla-categorias">
+      <li>
+        <a class="tarjeta-categoria" href="catalogo.html?cat=doboks">
+          <span class="tarjeta-categoria__icono-contenedor tarjeta-categoria__icono-contenedor--oscuro" aria-hidden="true"><svg class="icono"><use href="#i-cat-dobok"/></svg></span>
+          <h3 class="tarjeta-categoria__titulo">Doboks</h3>
+          <span class="tarjeta-categoria__subtitulo">Entrenamiento y competición</span>
+        </a>
+      </li>
+      <li>
+        <a class="tarjeta-categoria" href="catalogo.html?cat=protecciones">
+          <span class="tarjeta-categoria__icono-contenedor tarjeta-categoria__icono-contenedor--rojo" aria-hidden="true"><svg class="icono"><use href="#i-cat-shield"/></svg></span>
+          <h3 class="tarjeta-categoria__titulo">Protecciones</h3>
+          <span class="tarjeta-categoria__subtitulo">Petos, cascos, guantines</span>
+        </a>
+      </li>
+      <li>
+        <a class="tarjeta-categoria" href="catalogo.html?cat=cinturones">
+          <span class="tarjeta-categoria__icono-contenedor tarjeta-categoria__icono-contenedor--cinturon" aria-hidden="true"><svg class="icono"><use href="#i-cat-belt"/></svg></span>
+          <h3 class="tarjeta-categoria__titulo">Cinturones</h3>
+          <span class="tarjeta-categoria__subtitulo">Todos los grados</span>
+        </a>
+      </li>
+      <li>
+        <a class="tarjeta-categoria" href="catalogo.html?cat=accesorios">
+          <span class="tarjeta-categoria__icono-contenedor tarjeta-categoria__icono-contenedor--azul" aria-hidden="true"><svg class="icono"><use href="#i-cat-pad"/></svg></span>
+          <h3 class="tarjeta-categoria__titulo">Accesorios</h3>
+          <span class="tarjeta-categoria__subtitulo">Paos, sacos y bolsos</span>
+        </a>
+      </li>
+    </ul>
+  </section>
 
-  <div class="contenedor seccion seccion--compacta">
+  <section class="contenedor seccion seccion--compacta" aria-labelledby="titulo-destacados">
     <div class="seccion__encabezado">
-      <h2>Más elegidos</h2>
+      <h2 id="titulo-destacados">Más elegidos</h2>
       <a class="boton boton--fantasma boton--pequeno" href="catalogo.html">Ver todo el catálogo</a>
     </div>
-    <div class="grilla-productos grilla-productos--lista" id="featuredGrid"></div>
-  </div>
+    <ul class="grilla-productos grilla-productos--lista" id="featuredGrid" aria-label="Productos más elegidos"></ul>
+  </section>
 </main>
 
 <footer class="pie">
   <div class="contenedor pie__grilla">
-    <div>
+    <section aria-label="Acerca de KIHAP">
       <div class="marca marca--clara"><span>KIH</span><em class="marca__acento">A</em><span>P</span></div>
       <p>Equipamiento de taekwondo para cada cinturón: doboks, protecciones y accesorios homologados WT/ITF.</p>
-    </div>
-    <div>
-      <h4>Tienda</h4>
+    </section>
+    <nav aria-label="Tienda">
+      <h2>Tienda</h2>
       <ul>
         <li><a href="catalogo.html?cat=doboks">Doboks</a></li>
         <li><a href="catalogo.html?cat=protecciones">Protecciones</a></li>
         <li><a href="catalogo.html?cat=cinturones">Cinturones</a></li>
         <li><a href="catalogo.html?cat=accesorios">Accesorios</a></li>
       </ul>
-    </div>
-    <div>
-      <h4>Ayuda</h4>
+    </nav>
+    <nav aria-label="Ayuda">
+      <h2>Ayuda</h2>
       <ul>
         <li><a href="contacto.html">Contacto</a></li>
         <li><a href="guia-talles.html">Guía de talles</a></li>
         <li><a href="#">Envíos</a></li>
         <li><a href="#">Cambios y devoluciones</a></li>
       </ul>
-    </div>
-    <div>
-      <h4>Novedades</h4>
+    </nav>
+    <section aria-labelledby="titulo-novedades">
+      <h2 id="titulo-novedades">Novedades</h2>
       <p>Enterate de nuevos productos y promociones.</p>
-      <div class="pie__promo">
-        <input type="email" placeholder="Tu email">
-        <button class="boton boton--primario boton--pequeno">Sumarme</button>
-      </div>
-    </div>
+      <form class="pie__promo" action="#" method="post">
+        <label class="visualmente-oculto" for="newsletter-email">Tu email</label>
+        <input type="email" id="newsletter-email" name="email" placeholder="Tu email" required autocomplete="email">
+        <button class="boton boton--primario boton--pequeno" type="submit">Sumarme</button>
+      </form>
+    </section>
   </div>
   <div class="contenedor pie__inferior">
     <span>© 2026 KIHAP. Todos los derechos reservados.</span>
-      
   </div>
 </footer>
 
-<div class="aviso" id="toast"><svg class="icono"><use href="#i-check"/></svg><span id="toastText">Agregado al carrito</span></div>
+<div class="aviso" id="toast" role="status" aria-live="polite"><svg class="icono" aria-hidden="true"><use href="#i-check"/></svg><span id="toastText">Agregado al carrito</span></div>
 
 <script src="js/products.js"></script>
 <script src="js/config.js"></script>
