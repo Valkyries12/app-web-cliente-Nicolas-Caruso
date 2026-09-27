@@ -8,8 +8,9 @@
  * @property {number} qty
  */
 
-// Compat: el tope vive en CONFIG (ver js/config.js)
-const MAX_QTY_POR_PRODUCTO = CONFIG.MAX_QTY;
+// Mensajes (el tope de unidades vive en CONFIG, ver js/config.js)
+const MSG_MAX_QTY = 'Máximo 10 unidades por producto';
+const MSG_ADDED = 'Agregado al carrito';
 
 /** @type {ShoppingCartItem[]} */
 let shoppingCart = [
@@ -43,6 +44,50 @@ const calculateShippingCost = () =>
   shoppingCart.length ? CONFIG.SHIPPING_FLAT_RATE : 0;
 
 // ─────────────────────────────────────────────
+// Helpers internos (no cambian la API pública)
+// ─────────────────────────────────────────────
+
+/**
+ * Busca un ítem por identidad exacta de variante.
+ */
+const findCartItem = (productId, size, color) =>
+  shoppingCart.find(
+    (cartItem) =>
+      cartItem.product.id === productId && cartItem.size === size && cartItem.color === color
+  );
+
+/**
+ * Fuente de verdad del detalle (producto.js).
+ * La guarda typeof cubre las páginas que no cargan producto.js.
+ */
+const resolverDetalle = () => (typeof DetailState !== 'undefined' ? DetailState : null);
+
+/**
+ * Confirma un agregado: badge + toast.
+ * Sin re-render: el agregado ocurre fuera de carrito/checkout
+ * y esas páginas se pintan al cargarse.
+ */
+const confirmCartAdd = (mensaje) => {
+  updateCartBadge();
+  showToast(mensaje);
+};
+
+/**
+ * Sincroniza badge + vistas tras quitar o cambiar cantidad.
+ */
+const notifyCartChange = () => {
+  updateCartBadge();
+
+  if (typeof renderCart === 'function') {
+    renderCart();
+  }
+
+  if (typeof renderCheckoutSummary === 'function') {
+    renderCheckoutSummary();
+  }
+};
+
+// ─────────────────────────────────────────────
 // Cart mutations
 // ─────────────────────────────────────────────
 
@@ -50,13 +95,14 @@ const calculateShippingCost = () =>
  * @param {import("./products.js").Product} product
  */
 const quickAddToCart = (product) => {
+  // Agrupa solo ítems sin variante (size/color falsy), como antes.
   const existingCartItem = shoppingCart.find(
     (cartItem) => cartItem.product.id === product.id && !cartItem.size && !cartItem.color
   );
 
   if (existingCartItem) {
     if (existingCartItem.qty + 1 > CONFIG.MAX_QTY) {
-      showToast('Máximo 10 unidades por producto');
+      showToast(MSG_MAX_QTY);
       return;
     }
 
@@ -70,42 +116,31 @@ const quickAddToCart = (product) => {
     });
   }
 
-  updateCartBadge();
-  showToast('Agregado al carrito');
+  confirmCartAdd(MSG_ADDED);
 };
 
 /**
  * Agrega la selección de detalle al carrito.
  * Firma fija: (product, size, color, qty). Si product es null,
  * usa DetailState (producto.js, única fuente de verdad del detalle).
- * La guarda typeof cubre las páginas que no cargan producto.js.
  */
 const addDetailToCart = (targetProduct, selectedSize, selectedColor, requestedQuantity) => {
-  const detail = typeof DetailState !== 'undefined' ? DetailState : null;
+  const detail = resolverDetalle();
   const effectiveProduct = targetProduct || detail?.product || null;
-
-  const effectiveSize =
-    selectedSize !== undefined && selectedSize !== null ? selectedSize : detail?.size || null;
-  const effectiveColor =
-    selectedColor !== undefined && selectedColor !== null ? selectedColor : detail?.color || null;
+  const effectiveSize = selectedSize ?? (detail?.size || null);
+  const effectiveColor = selectedColor ?? (detail?.color || null);
   const effectiveQuantity = requestedQuantity || detail?.qty || 1;
 
   if (!effectiveProduct) {
     return;
   }
 
-  const existingCartItem = shoppingCart.find(
-    (cartItem) =>
-      cartItem.product.id === effectiveProduct.id &&
-      cartItem.size === effectiveSize &&
-      cartItem.color === effectiveColor
-  );
+  const existingCartItem = findCartItem(effectiveProduct.id, effectiveSize, effectiveColor);
 
   if (existingCartItem) {
     if (existingCartItem.qty + effectiveQuantity > CONFIG.MAX_QTY) {
       existingCartItem.qty = CONFIG.MAX_QTY;
-      updateCartBadge();
-      showToast('Máximo 10 unidades por producto');
+      confirmCartAdd(MSG_MAX_QTY);
       return;
     }
 
@@ -119,14 +154,12 @@ const addDetailToCart = (targetProduct, selectedSize, selectedColor, requestedQu
     });
 
     if (effectiveQuantity > CONFIG.MAX_QTY) {
-      updateCartBadge();
-      showToast('Máximo 10 unidades por producto');
+      confirmCartAdd(MSG_MAX_QTY);
       return;
     }
   }
 
-  updateCartBadge();
-  showToast('Agregado al carrito');
+  confirmCartAdd(MSG_ADDED);
 };
 
 /**
@@ -134,15 +167,7 @@ const addDetailToCart = (targetProduct, selectedSize, selectedColor, requestedQu
  */
 const removeFromCart = (itemIndex) => {
   shoppingCart.splice(itemIndex, 1);
-  updateCartBadge();
-
-  if (typeof renderCart === 'function') {
-    renderCart();
-  }
-
-  if (typeof renderCheckoutSummary === 'function') {
-    renderCheckoutSummary();
-  }
+  notifyCartChange();
 };
 
 /**
@@ -153,20 +178,12 @@ const changeCartQty = (itemIndex, quantityDelta) => {
   const nuevaCantidad = shoppingCart[itemIndex].qty + quantityDelta;
 
   if (nuevaCantidad > CONFIG.MAX_QTY) {
-    showToast('Máximo 10 unidades por producto');
+    showToast(MSG_MAX_QTY);
     return;
   }
 
   shoppingCart[itemIndex].qty = Math.max(1, nuevaCantidad);
-  updateCartBadge();
-
-  if (typeof renderCart === 'function') {
-    renderCart();
-  }
-
-  if (typeof renderCheckoutSummary === 'function') {
-    renderCheckoutSummary();
-  }
+  notifyCartChange();
 };
 
 // ─────────────────────────────────────────────
