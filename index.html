@@ -161,43 +161,6 @@
 <script src="js/cart.js"></script>
 <script src="js/ui.js"></script>
 <script src="js/main.js"></script>
-<script>
-// Home page - vanilla global (usa PRODUCT_CATALOG + ui.js compartido) | ES6+
-
-/**
- * Renderiza la grilla de productos destacados en la página de inicio.
- */
-const renderFeatured = () => {
-  const featuredProducts = PRODUCT_CATALOG.filter((product) => product.featured);
-
-  document.getElementById('featuredGrid').innerHTML = featuredProducts
-    .map(productCardHTMLWithBadge)
-    .join('');
-}
-
-document.body.addEventListener('click', (clickEvent) => {
-  const quickAddButton = clickEvent.target.closest('[data-quickadd]');
-
-  if (quickAddButton) {
-    clickEvent.preventDefault();
-    clickEvent.stopPropagation();
-
-    const productToAdd = PRODUCT_CATALOG.find(
-      (catalogProduct) => catalogProduct.id === Number(quickAddButton.dataset.quickadd)
-    );
-
-    quickAddToCart(productToAdd);
-    return;
-  }
-
-  const productCardElement = clickEvent.target.closest('.tarjeta-producto');
-
-  if (productCardElement) {
-    location.href = 'producto.html?id=' + productCardElement.dataset.id;
-  }
-});
-
-renderFeatured();
-</script>
+<script src="js/index.js"></script>
 </body>
 </html>
