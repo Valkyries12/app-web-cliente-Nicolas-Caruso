@@ -1,24 +1,24 @@
-/* KIHAP - checkout.js vanilla global - validaciones de envío y pago */
+/* KIHAP - checkout.js vanilla global - validaciones de envío y pago | ES6+ */
 
 // Solo números de un texto (ignora puntos, espacios, guiones y +)
-function soloNumeros(texto) {
+const soloNumeros = (texto) => {
   return String(texto || '').replace(/\D/g, '');
 }
 
 // Solo letras permitidas: letras con tilde, ñ, espacio, apóstrofe y guion
-function soloLetras(texto) {
+const soloLetras = (texto) => {
   return String(texto || '').replace(/[^A-Za-zÁÉÍÓÚáéíóúÑñÜü\s'-]/g, '');
 }
 
 // Quita espacios del inicio/fin y colapsa espacios dobles intermedios
-function normalizarEspacios(texto) {
+const normalizarEspacios = (texto) => {
   return String(texto || '')
     .replace(/\s+/g, ' ')
     .trim();
 }
 
 // Muestra un error debajo del campo
-function mostrarError(inputId, mensaje) {
+const mostrarError = (inputId, mensaje) => {
   const input = document.getElementById(inputId);
   const error = document.getElementById('err-' + inputId);
 
@@ -33,7 +33,7 @@ function mostrarError(inputId, mensaje) {
 }
 
 // Limpia el error de un campo
-function limpiarError(inputId) {
+const limpiarError = (inputId) => {
   const input = document.getElementById(inputId);
   const error = document.getElementById('err-' + inputId);
 
@@ -48,7 +48,7 @@ function limpiarError(inputId) {
 }
 
 // Valida un campo de solo letras: obligatorio + rango + sin números
-function validarSoloLetras(inputId, nombreCampo, min, max) {
+const validarSoloLetras = (inputId, nombreCampo, min, max) => {
   const valor = normalizarEspacios(document.getElementById(inputId).value);
 
   if (!valor) {
@@ -74,7 +74,7 @@ function validarSoloLetras(inputId, nombreCampo, min, max) {
 }
 
 // Valida los datos de envío. Devuelve true si todo está bien.
-function validarEnvio() {
+const validarEnvio = () => {
   let valido = true;
   let primerError = null;
 
@@ -192,13 +192,13 @@ function validarEnvio() {
 }
 
 // Dice si el método elegido es tarjeta
-function pagaConTarjeta() {
+const pagaConTarjeta = () => {
   const elegido = document.querySelector('input[name="pago"]:checked');
   return !elegido || elegido.value === 'tarjeta';
 }
 
 // Valida el vencimiento MM/AA y que no esté vencido
-function vencimientoValido(valor) {
+const vencimientoValido = (valor) => {
   const partes = String(valor || '').split('/');
 
   if (partes.length !== 2) {
@@ -220,7 +220,7 @@ function vencimientoValido(valor) {
 }
 
 // Valida los datos de pago. Si no es tarjeta, no pide nada más.
-function validarPago() {
+const validarPago = () => {
   if (!pagaConTarjeta()) {
     return true;
   }
@@ -288,7 +288,7 @@ function validarPago() {
 
 // Selecciona un método de pago: sincroniza radio, estilo visual y campos visibles.
 // Única fuente de verdad: evita que el estado visual y los campos se desincronicen.
-function seleccionarMetodoPago(opcionLabel) {
+const seleccionarMetodoPago = (opcionLabel) => {
   const radio = opcionLabel.querySelector('input[name="pago"]');
 
   if (radio) {
@@ -303,7 +303,7 @@ function seleccionarMetodoPago(opcionLabel) {
 }
 
 // Muestra u oculta los campos de tarjeta según el método elegido
-function actualizarCamposTarjeta() {
+const actualizarCamposTarjeta = () => {
   const esTarjeta = pagaConTarjeta();
   const campos = document.getElementById('payCardFields');
   const mensaje = document.getElementById('payAltMessage');

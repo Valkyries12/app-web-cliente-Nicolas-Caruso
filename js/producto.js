@@ -1,94 +1,26 @@
-/* KIHAP - producto.js vanilla global - dynamic detail ?id= */
+/* KIHAP - producto.js vanilla global - dynamic detail ?id= | ES6+ */
+// Cards (productMediaHTML / productCardHTML / productCardHTMLWithBadge) viven en js/ui.js
 
 // ─────────────────────────────────────────────
-// Product detail state
-// ─────────────────────────────────------------
-
-/** @type {import("./products.js").Product} */
-let selectedProduct = PRODUCT_CATALOG[0];
-
-/** @type {string|null} */
-let selectedSize = null;
-
-/** @type {string|null} */
-let selectedColor = null;
-
-/** @type {number} */
-let selectedQuantity = 1;
-
-// Legacy aliases for cart.js compatibility (vanilla global)
-let currentProduct = selectedProduct;
-let detailSize = selectedSize;
-let detailColor = selectedColor;
-let detailQty = selectedQuantity;
-
+// Product detail state (fuente única)
 // ─────────────────────────────────────────────
-// Product card helpers (detail page)
-// ─────────────────────────────────------------
 
-/**
- * Genera el markup del bloque visual de una tarjeta de producto.
- * @param {import("./products.js").Product} product - Producto a renderizar
- * @returns {string} HTML del área visual
- */
-function productMediaHTML(product) {
-  const iconColor = product.category === 'cinturones' ? 'var(--ink)' : '#fff';
-  const imageMarkup = product.image
-    ? `<img src="${product.image}" alt="${product.name}" loading="lazy" onerror="this.remove()">`
-    : '';
-
-  return `<div class="tarjeta-producto__media ${CATEGORY_STYLE_MAP[product.category]}">${imageMarkup}<svg class="icono" style="color:${iconColor}"><use href="#${CATEGORY_ICON_MAP[product.category]}"/></svg></div>`;
-}
-
-/**
- * Genera el markup completo de la tarjeta de producto.
- * @param {import("./products.js").Product} product - Producto a renderizar
- * @returns {string} HTML de la tarjeta
- */
-function productCardHTML(product) {
-  const imageMarkup = product.image
-    ? `<img src="${product.image}" alt="${product.name}" loading="lazy" onerror="this.remove()">`
-    : '';
-  const mediaMarkup = `<div class="tarjeta-producto__media ${CATEGORY_STYLE_MAP[product.category]}">${imageMarkup}<svg class="icono" style="color:${product.category === 'cinturones' ? 'var(--ink)' : '#fff'}"><use href="#${CATEGORY_ICON_MAP[product.category]}"/></svg></div>`;
-
-  return `<div class="tarjeta-producto" data-id="${product.id}">
-    ${mediaMarkup}
-    <div class="tarjeta-producto__cuerpo">
-      <span class="tarjeta-producto__categoria">${CATEGORY_LABELS[product.category]}</span>
-      <span class="tarjeta-producto__nombre">${product.name}</span>
-      <span class="tarjeta-producto__precio">${formatPrice(product.price)}</span>
-      <button class="tarjeta-producto__accion" data-quickadd="${product.id}"><svg class="icono" style="width:14px;height:14px"><use href="#i-cart"/></svg> Agregar</button>
-    </div>
-  </div>`;
-}
-
-/**
- * Genera el markup de la tarjeta incluyendo la etiqueta promocional cuando existe.
- * @param {import("./products.js").Product} product - Producto a renderizar
- * @returns {string} HTML de la tarjeta con etiqueta
- */
-function productCardHTMLWithBadge(product) {
-  let cardMarkup = productCardHTML(product);
-
-  if (product.badge && !cardMarkup.includes('tarjeta-producto__etiqueta')) {
-    cardMarkup = cardMarkup.replace(
-      '<svg class="icono"',
-      '<span class="tarjeta-producto__etiqueta">' + product.badge + '</span><svg class="icono"'
-    );
-  }
-
-  return cardMarkup;
-}
+const DetailState = {
+  product: PRODUCT_CATALOG[0],
+  size: null,
+  color: null,
+  qty: 1,
+};
 
 // ─────────────────────────────────────────────
 // Detail rendering
-// ─────────────────────────────────------------
+// ─────────────────────────────────────────────
 
 /**
- * Renderiza el contenido de la página de detalle para el producto actualmente seleccionado.
+ * Renderiza el detalle del producto seleccionado.
  */
-function renderProductDetail() {
-  const product = selectedProduct;
+const renderProductDetail = () => {
+  const product = DetailState.product;
 
   document.getElementById('breadcrumbName').textContent = product.name;
   document.getElementById('detalleCat').textContent = CATEGORY_LABELS[product.category];
@@ -107,8 +39,7 @@ function renderProductDetail() {
   galleryMainElement.innerHTML =
     `${galleryImageMarkup}<svg class="icono" style="color:${iconColor}"><use href="#${CATEGORY_ICON_MAP[product.category]}"/></svg>`;
 
-  const thumbnailNumbers = [1, 2, 3];
-  document.getElementById('galleryThumbs').innerHTML = thumbnailNumbers
+  document.getElementById('galleryThumbs').innerHTML = [1, 2, 3]
     .map(
       (thumbnailNumber, thumbnailIndex) =>
         `<div class="galeria__miniatura ${mediaBackgroundClass} ${thumbnailIndex === 0 ? 'galeria__miniatura--activo' : ''}">${thumbnailIndex === 0 ? galleryImageMarkup : ''}<svg class="icono" style="color:${iconColor}"><use href="#${CATEGORY_ICON_MAP[product.category]}"/></svg></div>`
@@ -122,7 +53,7 @@ function renderProductDetail() {
     document.getElementById('sizeRow').innerHTML = product.sizes
       .map(
         (sizeOption) =>
-          `<button class="opcion ${sizeOption === selectedSize ? 'opcion--seleccionada' : ''}" data-size="${sizeOption}">${sizeOption}</button>`
+          `<button class="opcion ${sizeOption === DetailState.size ? 'opcion--seleccionada' : ''}" data-size="${sizeOption}">${sizeOption}</button>`
       )
       .join('');
   } else {
@@ -136,14 +67,14 @@ function renderProductDetail() {
     document.getElementById('colorRow').innerHTML = product.colors
       .map(
         (colorOption) =>
-          `<button class="muestra-color ${colorOption === selectedColor ? 'muestra-color--seleccionada' : ''}" data-color="${colorOption}" style="${colorOption === '#FFFFFF' ? 'border-color:#DDD9CF' : ''}"><i style="background:${colorOption}"></i></button>`
+          `<button class="muestra-color ${colorOption === DetailState.color ? 'muestra-color--seleccionada' : ''}" data-color="${colorOption}" style="${colorOption === '#FFFFFF' ? 'border-color:#DDD9CF' : ''}"><i style="background:${colorOption}"></i></button>`
       )
       .join('');
   } else {
     colorBlockElement.style.display = 'none';
   }
 
-  document.getElementById('detailQty').textContent = selectedQuantity;
+  document.getElementById('detailQty').textContent = DetailState.qty;
 
   const relatedProducts = PRODUCT_CATALOG.filter(
     (catalogProduct) => catalogProduct.category === product.category && catalogProduct.id !== product.id
@@ -157,101 +88,70 @@ function renderProductDetail() {
   document.getElementById('relatedGrid').innerHTML = fallbackProducts
     .map(productCardHTMLWithBadge)
     .join('');
+};
 
-  // Keep legacy globals in sync
-  currentProduct = selectedProduct;
-  detailSize = selectedSize;
-  detailColor = selectedColor;
-  detailQty = selectedQuantity;
-}
-
-// Backwards-compatible alias
-function renderDetalle() {
-  renderProductDetail();
-}
+// Compat
+const renderDetalle = () => renderProductDetail();
 
 // ─────────────────────────────────────────────
 // Detail actions
-// ─────────────────────────────────------------
+// ─────────────────────────────────────────────
 
 /**
- * Cambia la cantidad seleccionada según un delta, mínimo 1 y máximo 10.
- * Mismo tope que en el carrito (MAX_QTY_POR_PRODUCTO de cart.js).
- * @param {number} quantityDelta - Cantidad a sumar (negativa para restar)
+ * @param {number} quantityDelta
  */
-function changeDetailQty(quantityDelta) {
-  const topeCantidad =
-    typeof MAX_QTY_POR_PRODUCTO !== 'undefined' ? MAX_QTY_POR_PRODUCTO : 10;
+const changeDetailQty = (quantityDelta) => {
+  const topeCantidad = CONFIG.MAX_QTY;
 
-  if (selectedQuantity + quantityDelta > topeCantidad) {
+  if (DetailState.qty + quantityDelta > topeCantidad) {
     showToast('Máximo 10 unidades por producto');
     return;
   }
 
-  selectedQuantity = Math.max(1, selectedQuantity + quantityDelta);
-  document.getElementById('detailQty').textContent = selectedQuantity;
+  DetailState.qty = Math.max(1, DetailState.qty + quantityDelta);
+  document.getElementById('detailQty').textContent = DetailState.qty;
+};
 
-  // Keep legacy global in sync
-  detailQty = selectedQuantity;
-}
+const addDetailToCartHandler = () => {
+  addDetailToCart(DetailState.product, DetailState.size, DetailState.color, DetailState.qty);
+};
 
-/**
- * Agrega el detalle del producto actualmente seleccionado al carrito.
- */
-function addDetailToCartHandler() {
-  addDetailToCart(selectedProduct, selectedSize, selectedColor, selectedQuantity);
-}
-
-/**
- * Agrega la selección actual al carrito y navega a la página del carrito.
- */
-function buyNow() {
-  addDetailToCart(selectedProduct, selectedSize, selectedColor, selectedQuantity);
+const buyNow = () => {
+  addDetailToCart(DetailState.product, DetailState.size, DetailState.color, DetailState.qty);
   location.href = 'carrito.html';
-}
+};
 
 // ─────────────────────────────────────────────
 // Page initialization
-// ─────────────────────────────────------------
+// ─────────────────────────────────────────────
 
-document.addEventListener('DOMContentLoaded', () => {
+const initProductoPage = () => {
   const urlParams = new URLSearchParams(location.search);
   const productIdFromUrl = Number(urlParams.get('id')) || 1;
 
-  selectedProduct =
+  DetailState.product =
     PRODUCT_CATALOG.find((catalogProduct) => catalogProduct.id === productIdFromUrl) ||
     PRODUCT_CATALOG[0];
-
-  selectedSize = selectedProduct.sizes ? selectedProduct.sizes[0] : null;
-  selectedColor = selectedProduct.colors ? selectedProduct.colors[0] : null;
-  selectedQuantity = 1;
-
-  // Sync legacy globals
-  currentProduct = selectedProduct;
-  detailSize = selectedSize;
-  detailColor = selectedColor;
-  detailQty = selectedQuantity;
+  DetailState.size = DetailState.product.sizes ? DetailState.product.sizes[0] : null;
+  DetailState.color = DetailState.product.colors ? DetailState.product.colors[0] : null;
+  DetailState.qty = 1;
 
   renderProductDetail();
 
-  const sizeRowElement = document.getElementById('sizeRow');
-  sizeRowElement.addEventListener('click', (clickEvent) => {
+  document.getElementById('sizeRow').addEventListener('click', (clickEvent) => {
     const optionButton = clickEvent.target.closest('[data-size]');
 
     if (optionButton) {
-      selectedSize = optionButton.dataset.size;
-      detailSize = selectedSize;
+      DetailState.size = optionButton.dataset.size;
       renderProductDetail();
     }
   });
 
-  const colorRowElement = document.getElementById('colorRow');
-  colorRowElement.addEventListener('click', (clickEvent) => {
+  document.getElementById('colorRow').addEventListener('click', (clickEvent) => {
     const optionButton = clickEvent.target.closest('[data-color]');
 
     if (optionButton) {
-      selectedColor = optionButton.dataset.color;
-      detailColor = selectedColor;
+      DetailState.color = optionButton.dataset.color;
       renderProductDetail();
     }
   });
@@ -267,11 +167,23 @@ document.addEventListener('DOMContentLoaded', () => {
       });
 
       tabButton.classList.add('pestanas__boton--activo');
-
-      const targetPanelSelector = `[data-tabpanel="${tabButton.dataset.tab}"]`;
-      document.querySelector(targetPanelSelector).classList.add('pestanas__panel--activo');
+      document
+        .querySelector(`[data-tabpanel="${tabButton.dataset.tab}"]`)
+        .classList.add('pestanas__panel--activo');
     });
   });
+
+  // Acciones antes inline (onclick) -> data-action
+  const bindAction = (action, handler) => {
+    document.querySelectorAll(`[data-action="${action}"]`).forEach((btn) => {
+      btn.addEventListener('click', handler);
+    });
+  };
+
+  bindAction('qty-minus', () => changeDetailQty(-1));
+  bindAction('qty-plus', () => changeDetailQty(1));
+  bindAction('add-cart', addDetailToCartHandler);
+  bindAction('buy-now', buyNow);
 
   document.body.addEventListener('click', (clickEvent) => {
     const quickAddButton = clickEvent.target.closest('[data-quickadd]');
@@ -294,4 +206,6 @@ document.addEventListener('DOMContentLoaded', () => {
       location.href = 'producto.html?id=' + productCardElement.dataset.id;
     }
   });
-});
+};
+
+document.addEventListener('DOMContentLoaded', initProductoPage);

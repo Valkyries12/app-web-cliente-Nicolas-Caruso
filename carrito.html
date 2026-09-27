@@ -112,15 +112,17 @@
 <div class="aviso" id="toast"><svg class="icono"><use href="#i-check"/></svg><span id="toastText">Agregado al carrito</span></div>
 
 <script src="js/products.js"></script>
+<script src="js/config.js"></script>
 <script src="js/cart.js"></script>
+<script src="js/ui.js"></script>
 <script src="js/main.js"></script>
 <script>
-// Cart page - vanilla global (uses shoppingCart global)
+// Cart page - vanilla global (usa shoppingCart + ui.js compartido) | ES6+
 
 /**
  * Renderiza el contenido de la página del carrito.
  */
-function renderCart() {
+const renderCart = () => {
   const cartItemsListElement = document.getElementById('cartItemsList');
   const cartLayoutElement = document.getElementById('cartLayout');
 
@@ -163,7 +165,7 @@ function renderCart() {
   }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+const initCarritoPage = () => {
   const cartItemsListElement = document.getElementById('cartItemsList');
 
   if (cartItemsListElement) {
@@ -229,7 +231,9 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
   });
-});
+};
+
+document.addEventListener('DOMContentLoaded', initCarritoPage);
 </script>
 </body>
 </html>

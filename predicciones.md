@@ -13,3 +13,4 @@ Se cambiará el SVG del hero por una imágen representativa
 9- Se corregira el doble boton de compra en las versiones mobile
 10- Se agrega mas espaciado para dar una sensacion de respiro
 11- Se agrega pagina de guia de talles
+12- Se refactoriza acia Es6+

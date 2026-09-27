@@ -81,15 +81,15 @@
       <div class="opciones">
         <h4 class="opciones__titulo">Cantidad</h4>
         <div class="cantidad">
-          <button class="cantidad__boton" onclick="changeDetailQty(-1)"><svg class="icono"><use href="#i-minus"/></svg></button>
+          <button class="cantidad__boton" data-action="qty-minus" type="button"><svg class="icono"><use href="#i-minus"/></svg></button>
           <span class="cantidad__valor" id="detailQty">1</span>
-          <button class="cantidad__boton" onclick="changeDetailQty(1)"><svg class="icono"><use href="#i-plus"/></svg></button>
+          <button class="cantidad__boton" data-action="qty-plus" type="button"><svg class="icono"><use href="#i-plus"/></svg></button>
         </div>
       </div>
 
       <div class="detalle__acciones">
-        <button class="boton boton--primario" onclick="addDetailToCartHandler()">Agregar al carrito</button>
-        <button class="boton boton--oscuro" onclick="buyNow()">Comprar ahora</button>
+        <button class="boton boton--primario" data-action="add-cart" type="button">Agregar al carrito</button>
+        <button class="boton boton--oscuro" data-action="buy-now" type="button">Comprar ahora</button>
       </div>
 
       <div class="detalle__stock"><svg class="icono"><use href="#i-check"/></svg> En stock — envío en 24/48 h hábiles</div>
@@ -162,7 +162,9 @@
 <div class="aviso" id="toast"><svg class="icono"><use href="#i-check"/></svg><span id="toastText">Agregado al carrito</span></div>
 
 <script src="js/products.js"></script>
+<script src="js/config.js"></script>
 <script src="js/cart.js"></script>
+<script src="js/ui.js"></script>
 <script src="js/main.js"></script>
 <script src="js/producto.js"></script>
 </body>

@@ -72,7 +72,7 @@
         <div class="confirmacion__circulo"><svg class="icono"><use href="#i-check"/></svg></div>
         <h3 style="font-size:20px;margin-bottom:8px;">Mensaje enviado</h3>
         <p>Gracias por escribirnos. Te vamos a contestar dentro de las próximas 24 horas hábiles.</p>
-        <button class="boton boton--fantasma boton--pequeno" style="margin-top:18px;" onclick="resetContactForm()">Enviar otro mensaje</button>
+        <button class="boton boton--fantasma boton--pequeno" style="margin-top:18px;" data-action="reset-contact" type="button">Enviar otro mensaje</button>
       </div>
     </div>
 
@@ -168,7 +168,9 @@
 <div class="aviso" id="toast"><svg class="icono"><use href="#i-check"/></svg><span id="toastText">Agregado al carrito</span></div>
 
 <script src="js/products.js"></script>
+<script src="js/config.js"></script>
 <script src="js/cart.js"></script>
+<script src="js/ui.js"></script>
 <script src="js/main.js"></script>
 <script src="js/contacto.js"></script>
 </body>
