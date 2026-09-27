@@ -1,10 +1,23 @@
-/* KIHAP - contacto.js vanilla global */
+/* KIHAP - contacto.js vanilla global | ES6+ */
 
 // ─────────────────────────────────────────────
 // Contact form handling
-// ─────────────────────────────────------------
+// ─────────────────────────────────────────────
 
-document.addEventListener('DOMContentLoaded', () => {
+/**
+ * Restablece el formulario de contacto a su estado inicial.
+ * Vuelve a mostrar el formulario y oculta el mensaje de éxito.
+ */
+const resetContactForm = () => {
+  const contactForm = document.getElementById('contactForm');
+  const successMessageBox = document.getElementById('successBox');
+
+  contactForm.reset();
+  contactForm.style.display = 'block';
+  successMessageBox.classList.remove('contacto__exito--visible');
+};
+
+const initContactoPage = () => {
   const contactForm = document.getElementById('contactForm');
   const successMessageBox = document.getElementById('successBox');
 
@@ -16,17 +29,10 @@ document.addEventListener('DOMContentLoaded', () => {
       successMessageBox.classList.add('contacto__exito--visible');
     });
   }
-});
 
-/**
- * Restablece el formulario de contacto a su estado inicial.
- * Vuelve a mostrar el formulario y oculta el mensaje de éxito.
- */
-function resetContactForm() {
-  const contactForm = document.getElementById('contactForm');
-  const successMessageBox = document.getElementById('successBox');
+  document.querySelectorAll('[data-action="reset-contact"]').forEach((btn) => {
+    btn.addEventListener('click', resetContactForm);
+  });
+};
 
-  contactForm.reset();
-  contactForm.style.display = 'block';
-  successMessageBox.classList.remove('contacto__exito--visible');
-}
+document.addEventListener('DOMContentLoaded', initContactoPage);

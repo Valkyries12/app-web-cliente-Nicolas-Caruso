@@ -1,22 +1,15 @@
-/* KIHAP - Shopping cart (vanilla global) - in-memory, no localStorage yet */
-
-// ─────────────────────────────────────────────
-// Shopping cart state
-// ─────────────────────────────────------------
+/* KIHAP - Shopping cart (vanilla global) - ES6+ */
 
 /**
  * @typedef {Object} ShoppingCartItem
- * @property {import("./products.js").Product} product - Producto referenciado
- * @property {string|null} size - Talle seleccionado
- * @property {string|null} color - Color hexadecimal seleccionado
- * @property {number} qty - Cantidad en el carrito
+ * @property {import("./products.js").Product} product
+ * @property {string|null} size
+ * @property {string|null} color
+ * @property {number} qty
  */
 
-const SHIPPING_FLAT_RATE = 4500;
-const TOAST_VISIBLE_DURATION_MS = 2000;
-
-// Tope de unidades por producto, compartido con producto.html y carrito.html
-const MAX_QTY_POR_PRODUCTO = 10;
+// Compat: el tope vive en CONFIG (ver js/config.js)
+const MAX_QTY_POR_PRODUCTO = CONFIG.MAX_QTY;
 
 /** @type {ShoppingCartItem[]} */
 let shoppingCart = [
@@ -26,158 +19,76 @@ let shoppingCart = [
 
 // ─────────────────────────────────────────────
 // Cart calculations
-// ─────────────────────────────────------------
+// ─────────────────────────────────────────────
 
 /**
- * Obtiene la cantidad total de unidades en el carrito.
- * @returns {number} Cantidad total de productos
+ * @returns {number}
  */
-function getCartItemCount() {
-  return shoppingCart.reduce((totalAccumulator, cartItem) => totalAccumulator + cartItem.qty, 0);
-}
+const getCartItemCount = () =>
+  shoppingCart.reduce((totalAccumulator, cartItem) => totalAccumulator + cartItem.qty, 0);
 
 /**
- * Calcula el subtotal de todos los ítems del carrito.
- * @returns {number} Monto del subtotal en ARS
+ * @returns {number}
  */
-function calculateCartSubtotal() {
-  return shoppingCart.reduce(
+const calculateCartSubtotal = () =>
+  shoppingCart.reduce(
     (totalAccumulator, cartItem) => totalAccumulator + cartItem.qty * cartItem.product.price,
     0
   );
-}
 
 /**
- * Calcula el costo de envío con tarifa plana.
- * @returns {number} Monto del envío en ARS
+ * @returns {number}
  */
-function calculateShippingCost() {
-  return shoppingCart.length ? SHIPPING_FLAT_RATE : 0;
-}
-
-// Backwards-compatible aliases for inline page scripts
-function cartCount() {
-  return getCartItemCount();
-}
-
-function cartSubtotal() {
-  return calculateCartSubtotal();
-}
-
-function shippingCost() {
-  return calculateShippingCost();
-}
-
-// ─────────────────────────────────────────────
-// Cart UI helpers
-// ─────────────────────────────────------------
-
-/**
- * Actualiza el contador de la insignia del carrito en el encabezado.
- */
-function updateCartBadge() {
-  const cartBadgeElement = document.getElementById('cartBadge');
-
-  if (cartBadgeElement) {
-    cartBadgeElement.textContent = getCartItemCount();
-  }
-}
-
-/**
- * Muestra una notificación toast temporal.
- * @param {string} messageText - Texto a mostrar en el toast
- */
-function showToast(messageText) {
-  const toastElement = document.getElementById('toast');
-
-  if (!toastElement) {
-    return;
-  }
-
-  const toastTextElement = document.getElementById('toastText');
-  toastTextElement.textContent = messageText;
-
-  toastElement.classList.add('aviso--visible');
-
-  clearTimeout(window._toastTimer);
-  window._toastTimer = setTimeout(
-    () => toastElement.classList.remove('aviso--visible'),
-    TOAST_VISIBLE_DURATION_MS
-  );
-}
+const calculateShippingCost = () =>
+  shoppingCart.length ? CONFIG.SHIPPING_FLAT_RATE : 0;
 
 // ─────────────────────────────────────────────
 // Cart mutations
-// ─────────────────────────────────------------
+// ─────────────────────────────────────────────
 
 /**
- * Agrega rápidamente un producto al carrito usando su talle y color por defecto.
- * @param {import("./products.js").Product} product - Producto a agregar
+ * @param {import("./products.js").Product} product
  */
-function quickAddToCart(product) {
+const quickAddToCart = (product) => {
   const existingCartItem = shoppingCart.find(
     (cartItem) => cartItem.product.id === product.id && !cartItem.size && !cartItem.color
   );
 
   if (existingCartItem) {
-    if (existingCartItem.qty + 1 > MAX_QTY_POR_PRODUCTO) {
+    if (existingCartItem.qty + 1 > CONFIG.MAX_QTY) {
       showToast('Máximo 10 unidades por producto');
       return;
     }
 
     existingCartItem.qty += 1;
   } else {
-    const defaultSize = product.sizes ? product.sizes[0] : null;
-    const defaultColor = product.colors ? product.colors[0] : null;
-
     shoppingCart.push({
-      product: product,
-      size: defaultSize,
-      color: defaultColor,
+      product,
+      size: product.sizes ? product.sizes[0] : null,
+      color: product.colors ? product.colors[0] : null,
       qty: 1,
     });
   }
 
   updateCartBadge();
   showToast('Agregado al carrito');
-}
+};
 
 /**
- * Agrega la selección de detalle de producto al carrito.
- * Mantiene compatibilidad con las globales de producto.js
- * (currentProduct / detailSize / detailColor / detailQty).
- * @param {import("./products.js").Product|null} targetProduct - Producto a agregar
- * @param {string|null} selectedSize - Talle elegido
- * @param {string|null} selectedColor - Color hexadecimal elegido
- * @param {number} requestedQuantity - Cantidad a agregar
+ * Agrega la selección de detalle al carrito.
+ * Firma fija: (product, size, color, qty). Si product es null,
+ * usa DetailState (producto.js, única fuente de verdad del detalle).
+ * La guarda typeof cubre las páginas que no cargan producto.js.
  */
-function addDetailToCart(targetProduct, selectedSize, selectedColor, requestedQuantity) {
-  const effectiveProduct =
-    targetProduct || (typeof selectedProduct !== 'undefined' ? selectedProduct : null) ||
-    (typeof currentProduct !== 'undefined' ? currentProduct : null);
+const addDetailToCart = (targetProduct, selectedSize, selectedColor, requestedQuantity) => {
+  const detail = typeof DetailState !== 'undefined' ? DetailState : null;
+  const effectiveProduct = targetProduct || detail?.product || null;
 
   const effectiveSize =
-    selectedSize !== undefined
-      ? selectedSize
-      : typeof selectedSize !== 'undefined' && selectedSize !== null
-        ? selectedSize
-        : typeof detailSize !== 'undefined'
-          ? detailSize
-          : null;
-
+    selectedSize !== undefined && selectedSize !== null ? selectedSize : detail?.size || null;
   const effectiveColor =
-    selectedColor !== undefined
-      ? selectedColor
-      : typeof selectedColor !== 'undefined' && selectedColor !== null
-        ? selectedColor
-        : typeof detailColor !== 'undefined'
-          ? detailColor
-          : null;
-
-  const effectiveQuantity =
-    requestedQuantity ||
-    (typeof selectedQuantity !== 'undefined' ? selectedQuantity : null) ||
-    (typeof detailQty !== 'undefined' ? detailQty : 1);
+    selectedColor !== undefined && selectedColor !== null ? selectedColor : detail?.color || null;
+  const effectiveQuantity = requestedQuantity || detail?.qty || 1;
 
   if (!effectiveProduct) {
     return;
@@ -191,8 +102,8 @@ function addDetailToCart(targetProduct, selectedSize, selectedColor, requestedQu
   );
 
   if (existingCartItem) {
-    if (existingCartItem.qty + effectiveQuantity > MAX_QTY_POR_PRODUCTO) {
-      existingCartItem.qty = MAX_QTY_POR_PRODUCTO;
+    if (existingCartItem.qty + effectiveQuantity > CONFIG.MAX_QTY) {
+      existingCartItem.qty = CONFIG.MAX_QTY;
       updateCartBadge();
       showToast('Máximo 10 unidades por producto');
       return;
@@ -204,10 +115,10 @@ function addDetailToCart(targetProduct, selectedSize, selectedColor, requestedQu
       product: effectiveProduct,
       size: effectiveSize,
       color: effectiveColor,
-      qty: Math.min(effectiveQuantity, MAX_QTY_POR_PRODUCTO),
+      qty: Math.min(effectiveQuantity, CONFIG.MAX_QTY),
     });
 
-    if (effectiveQuantity > MAX_QTY_POR_PRODUCTO) {
+    if (effectiveQuantity > CONFIG.MAX_QTY) {
       updateCartBadge();
       showToast('Máximo 10 unidades por producto');
       return;
@@ -216,13 +127,12 @@ function addDetailToCart(targetProduct, selectedSize, selectedColor, requestedQu
 
   updateCartBadge();
   showToast('Agregado al carrito');
-}
+};
 
 /**
- * Elimina un ítem del carrito por índice.
- * @param {number} itemIndex - Posición en el arreglo shoppingCart
+ * @param {number} itemIndex
  */
-function removeFromCart(itemIndex) {
+const removeFromCart = (itemIndex) => {
   shoppingCart.splice(itemIndex, 1);
   updateCartBadge();
 
@@ -233,18 +143,16 @@ function removeFromCart(itemIndex) {
   if (typeof renderCheckoutSummary === 'function') {
     renderCheckoutSummary();
   }
-}
+};
 
 /**
- * Cambia la cantidad de un ítem del carrito según un delta.
- * Tope simple: mínimo 1 y máximo 10 por producto (igual que en producto.html).
- * @param {number} itemIndex - Posición en el arreglo shoppingCart
- * @param {number} quantityDelta - Cantidad a sumar (negativa para restar)
+ * @param {number} itemIndex
+ * @param {number} quantityDelta
  */
-function changeCartQty(itemIndex, quantityDelta) {
+const changeCartQty = (itemIndex, quantityDelta) => {
   const nuevaCantidad = shoppingCart[itemIndex].qty + quantityDelta;
 
-  if (nuevaCantidad > MAX_QTY_POR_PRODUCTO) {
+  if (nuevaCantidad > CONFIG.MAX_QTY) {
     showToast('Máximo 10 unidades por producto');
     return;
   }
@@ -259,51 +167,15 @@ function changeCartQty(itemIndex, quantityDelta) {
   if (typeof renderCheckoutSummary === 'function') {
     renderCheckoutSummary();
   }
-}
+};
 
 // ─────────────────────────────────────────────
-// Cart item markup
-// ─────────────────────────────────------------
+// Facade para ui.js / badge
+// ─────────────────────────────────────────────
 
-/**
- * Genera el markup HTML para un ítem del carrito.
- * @param {ShoppingCartItem} cartItem - Ítem del carrito a renderizar
- * @param {number} itemIndex - Índice usado para los data attributes
- * @returns {string} HTML de la fila del carrito
- */
-function cartItemRowHTML(cartItem, itemIndex) {
-  const product = cartItem.product;
-  const iconColor = product.category === 'cinturones' ? 'var(--ink)' : '#fff';
-  const metadataParts = [];
-
-  if (cartItem.size) {
-    metadataParts.push('Talle ' + cartItem.size);
-  }
-
-  if (cartItem.color) {
-    metadataParts.push(
-      `<span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:${cartItem.color};vertical-align:middle;margin-right:4px;border:1px solid #ddd"></span>Color`
-    );
-  }
-
-  const imageMarkup = product.image
-    ? `<img src="${product.image}" alt="${product.name}" loading="lazy" onerror="this.remove()">`
-    : '';
-
-  return `<div class="carrito__item">
-    <div class="carrito__miniatura ${CATEGORY_STYLE_MAP[product.category]}">${imageMarkup}<svg class="icono" style="color:${iconColor}"><use href="#${CATEGORY_ICON_MAP[product.category]}"/></svg></div>
-    <div class="carrito__detalle">
-      <div class="carrito__nombre">${product.name}</div>
-      <div class="carrito__meta">${metadataParts.join(' · ') || '&nbsp;'}</div>
-      <button class="carrito__quitar" data-remove="${itemIndex}">Quitar</button>
-    </div>
-    <div class="carrito__cantidad cantidad" style="height:40px;">
-      <button class="cantidad__boton" data-qtyminus="${itemIndex}"><svg class="icono"><use href="#i-minus"/></svg></button>
-      <span class="cantidad__valor">${cartItem.qty}</span>
-      <button class="cantidad__boton" data-qtyplus="${itemIndex}"><svg class="icono"><use href="#i-plus"/></svg></button>
-    </div>
-    <div class="carrito__precio">${formatPrice(cartItem.qty * product.price)}</div>
-  </div>`;
-}
-
-
+const CartStore = {
+  all: () => shoppingCart,
+  count: getCartItemCount,
+  subtotal: calculateCartSubtotal,
+  shipping: calculateShippingCost,
+};

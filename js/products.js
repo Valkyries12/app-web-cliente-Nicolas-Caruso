@@ -274,8 +274,6 @@ const CATEGORY_ICON_MAP = {
  * @param {number} priceAmount - Valor del precio en ARS
  * @returns {string} Precio formateado (ej. "$45.000")
  */
-function formatPrice(priceAmount) {
-  return '$' + priceAmount.toLocaleString('es-AR');
-}
+const formatPrice = (priceAmount) => '$' + priceAmount.toLocaleString('es-AR');
 
 

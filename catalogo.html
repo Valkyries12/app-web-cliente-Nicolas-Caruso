@@ -73,7 +73,7 @@
           <button class="filtro__chip">Más de $60.000</button>
         </div>
       </div>
-      <button class="filtro__limpiar" onclick="clearFilters()">Limpiar filtros</button>
+      <button class="filtro__limpiar" id="clearFiltersBtn" data-action="clear-filters" type="button">Limpiar filtros</button>
     </aside>
 
     <div class="catalogo__contenido">
@@ -133,7 +133,9 @@
 <div class="aviso" id="toast"><svg class="icono"><use href="#i-check"/></svg><span id="toastText">Agregado al carrito</span></div>
 
 <script src="js/products.js"></script>
+<script src="js/config.js"></script>
 <script src="js/cart.js"></script>
+<script src="js/ui.js"></script>
 <script src="js/main.js"></script>
 <script src="js/catalogo.js"></script>
 </body>

@@ -1,6 +1,6 @@
-/* KIHAP - main.js vanilla global - header hamburger + badge init */
+/* KIHAP - main.js vanilla global - header hamburger + badge init | ES6+ */
 
-document.addEventListener('DOMContentLoaded', () => {
+const initMainPage = () => {
   const hamburgerButton = document.getElementById('hamburgerBtn');
   const mainNavigation = document.getElementById('mainNav');
 
@@ -23,4 +23,6 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   updateCartBadge();
-});
+};
+
+document.addEventListener('DOMContentLoaded', initMainPage);

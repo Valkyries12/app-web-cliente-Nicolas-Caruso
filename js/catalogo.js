@@ -1,92 +1,36 @@
-/* KIHAP - catalog.js vanilla global | BEM español */
-
-// ─────────────────────────────────────────────
-// Product card markup (catalog page)
-// ─────────────────────────────────------------
-
-/**
- * Genera el markup del bloque visual de una tarjeta de producto.
- * @param {import("./products.js").Product} product - Producto a renderizar
- * @returns {string} HTML del área visual
- */
-function productMediaHTML(product) {
-  const iconColor = product.category === 'cinturones' ? 'var(--ink)' : '#fff';
-  const imageMarkup = product.image
-    ? `<img src="${product.image}" alt="${product.name}" loading="lazy" onerror="this.remove()">`
-    : '';
-
-  return `<div class="tarjeta-producto__media ${CATEGORY_STYLE_MAP[product.category]}">${imageMarkup}<svg class="icono" style="color:${iconColor}"><use href="#${CATEGORY_ICON_MAP[product.category]}"/></svg></div>`;
-}
-
-/**
- * Genera el markup completo de la tarjeta de producto.
- * @param {import("./products.js").Product} product - Producto a renderizar
- * @returns {string} HTML de la tarjeta
- */
-function productCardHTML(product) {
-  return `<div class="tarjeta-producto" data-id="${product.id}">
-    ${productMediaHTML(product)}
-    <div class="tarjeta-producto__cuerpo">
-      <span class="tarjeta-producto__categoria">${CATEGORY_LABELS[product.category]}</span>
-      <span class="tarjeta-producto__nombre">${product.name}</span>
-      <span class="tarjeta-producto__precio">${formatPrice(product.price)}</span>
-      <button class="tarjeta-producto__accion" data-quickadd="${product.id}"><svg class="icono" style="width:14px;height:14px"><use href="#i-cart"/></svg> Agregar</button>
-    </div>
-  </div>`;
-}
-
-/**
- * Genera el markup de la tarjeta incluyendo la etiqueta promocional cuando existe.
- * @param {import("./products.js").Product} product - Producto a renderizar
- * @returns {string} HTML de la tarjeta con etiqueta
- */
-function productCardHTMLWithBadge(product) {
-  let cardMarkup = productCardHTML(product);
-
-  if (product.badge) {
-    if (!cardMarkup.includes('tarjeta-producto__etiqueta')) {
-      cardMarkup = cardMarkup.replace(
-        '<svg class="icono"',
-        '<span class="tarjeta-producto__etiqueta">' + product.badge + '</span><svg class="icono"'
-      );
-    }
-  }
-
-  return cardMarkup;
-}
+/* KIHAP - catalog.js vanilla global | BEM español | ES6+ */
+// Cards (productMediaHTML / productCardHTML / productCardHTMLWithBadge) viven en js/ui.js
 
 // ─────────────────────────────────────────────
 // Catalog filters & sorting
-// ─────────────────────────────────------------
+// ─────────────────────────────────────────────
 
 /**
- * Obtiene la lista de valores de filtros de categoría actualmente seleccionados.
- * @returns {string[]} Claves de categorías activas
+ * @returns {string[]}
  */
-function getActiveCategoryFilters() {
-  return Array.from(document.querySelectorAll('.cat-filter:checked')).map(
+const getActiveCategoryFilters = () =>
+  Array.from(document.querySelectorAll('.cat-filter:checked')).map(
     (filterCheckbox) => filterCheckbox.value
   );
-}
 
 /**
- * Limpia todos los filtros de categoría y vuelve a renderizar el catálogo.
+ * Limpia todos los filtros de categoría y vuelve a renderizar.
  */
-function clearFilters() {
+const clearFilters = () => {
   document.querySelectorAll('.cat-filter').forEach((filterCheckbox) => {
     filterCheckbox.checked = false;
   });
 
   renderCatalog();
-}
+};
 
 /**
- * Renderiza la grilla del catálogo según los filtros activos y el orden elegido.
+ * Renderiza la grilla del catálogo según filtros y orden.
  */
-function renderCatalog() {
+const renderCatalog = () => {
   const activeCategoryFilters = getActiveCategoryFilters();
 
-  let filteredProductList = activeCategoryFilters.length
+  const filteredProductList = activeCategoryFilters.length
     ? PRODUCT_CATALOG.filter((product) => activeCategoryFilters.includes(product.category))
     : PRODUCT_CATALOG.slice();
 
@@ -109,16 +53,15 @@ function renderCatalog() {
     .join('');
 
   const resultCountElement = document.getElementById('resultCount');
-  const countText =
+  resultCountElement.textContent =
     filteredProductList.length + (filteredProductList.length === 1 ? ' producto' : ' productos');
-  resultCountElement.textContent = countText;
-}
+};
 
 // ─────────────────────────────────────────────
 // Page initialization
-// ─────────────────────────────────------------
+// ─────────────────────────────────────────────
 
-document.addEventListener('DOMContentLoaded', () => {
+const initCatalogoPage = () => {
   // Pre-filter by ?cat= doboks|protecciones|cinturones|accesorios
   const urlParams = new URLSearchParams(location.search);
   const categoryFromUrl = urlParams.get('cat');
@@ -137,6 +80,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (sortSelectElement) {
     sortSelectElement.addEventListener('change', renderCatalog);
+  }
+
+  const clearFiltersBtn = document.getElementById('clearFiltersBtn');
+
+  if (clearFiltersBtn) {
+    clearFiltersBtn.addEventListener('click', clearFilters);
   }
 
   document.body.addEventListener('click', (clickEvent) => {
@@ -162,4 +111,6 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   renderCatalog();
-});
+};
+
+document.addEventListener('DOMContentLoaded', initCatalogoPage);
