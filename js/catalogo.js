@@ -14,12 +14,74 @@ const getActiveCategoryFilters = () =>
   );
 
 /**
- * Limpia todos los filtros de categoría y vuelve a renderizar.
+ * Lee el chip de precio activo (selección única).
+ * @returns {{min: number, max: number|null}|null} Rango activo o null si no hay filtro
+ */
+const getActivePriceFilter = () => {
+  const priceChip = document.querySelector(
+    '.filtro__chip[data-min][aria-pressed="true"]'
+  );
+
+  if (!priceChip) {
+    return null;
+  }
+
+  return {
+    min: Number(priceChip.dataset.min),
+    max: priceChip.dataset.max === '' ? null : Number(priceChip.dataset.max),
+  };
+};
+
+/**
+ * Indica si un producto coincide con el rango de precio activo.
+ * @param {import("./products.js").Product} product - Producto a evaluar
+ * @param {{min: number, max: number|null}|null} priceFilter - Rango activo o null
+ * @returns {boolean} Verdadero si coincide o no hay filtro
+ */
+const matchesPrice = (product, priceFilter) => {
+  if (!priceFilter) {
+    return true;
+  }
+
+  if (product.price < priceFilter.min) {
+    return false;
+  }
+
+  if (priceFilter.max !== null && product.price > priceFilter.max) {
+    return false;
+  }
+
+  return true;
+};
+
+/**
+ * Selecciona un chip de precio en modo único y vuelve a renderizar.
+ * @param {HTMLElement} priceChip - Chip de precio presionado
+ */
+const selectPriceChip = (priceChip) => {
+  const wasActive = priceChip.getAttribute('aria-pressed') === 'true';
+
+  document
+    .querySelectorAll('.filtro__chip[data-min]')
+    .forEach((chip) => chip.setAttribute('aria-pressed', 'false'));
+
+  priceChip.setAttribute('aria-pressed', String(!wasActive));
+  renderCatalog();
+};
+
+/**
+ * Limpia todos los filtros (categoría, precio) y restaura el orden.
  */
 const clearFilters = () => {
   document.querySelectorAll('.cat-filter').forEach((filterCheckbox) => {
     filterCheckbox.checked = false;
   });
+
+  document.querySelectorAll('.filtro__chip[aria-pressed="true"]').forEach((chip) => {
+    chip.setAttribute('aria-pressed', 'false');
+  });
+
+  document.getElementById('sortSelect').value = 'relevancia';
 
   renderCatalog();
 };
@@ -29,12 +91,21 @@ const clearFilters = () => {
  */
 const renderCatalog = () => {
   const activeCategoryFilters = getActiveCategoryFilters();
+  const activePriceFilter = getActivePriceFilter();
 
-  const filteredProductList = activeCategoryFilters.length
-    ? PRODUCT_CATALOG.filter((product) => activeCategoryFilters.includes(product.category))
-    : PRODUCT_CATALOG.slice();
+  const filteredProductList = PRODUCT_CATALOG.filter(
+    (product) =>
+      (!activeCategoryFilters.length || activeCategoryFilters.includes(product.category)) &&
+      matchesPrice(product, activePriceFilter)
+  );
 
   const sortOrder = document.getElementById('sortSelect').value;
+
+  if (sortOrder === 'relevancia') {
+    filteredProductList.sort(
+      (productA, productB) => Number(productB.featured) - Number(productA.featured)
+    );
+  }
 
   if (sortOrder === 'menor') {
     filteredProductList.sort((productA, productB) => productA.price - productB.price);
@@ -75,6 +146,18 @@ const initCatalogoPage = () => {
   document.querySelectorAll('.cat-filter').forEach((filterCheckbox) => {
     filterCheckbox.addEventListener('change', renderCatalog);
   });
+
+  const filtrosForm = document.getElementById('filtrosForm');
+
+  if (filtrosForm) {
+    filtrosForm.addEventListener('click', (clickEvent) => {
+      const priceChip = clickEvent.target.closest('.filtro__chip[data-min]');
+
+      if (priceChip) {
+        selectPriceChip(priceChip);
+      }
+    });
+  }
 
   const sortSelectElement = document.getElementById('sortSelect');
 

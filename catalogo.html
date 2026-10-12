@@ -74,19 +74,11 @@
           <label class="filtro__opcion"><input type="checkbox" class="cat-filter" value="accesorios"> Accesorios</label>
         </fieldset>
         <fieldset class="filtro">
-          <legend class="filtro__titulo">Talla</legend>
-          <div class="filtro__chips">
-            <button class="filtro__chip" type="button">XS</button><button class="filtro__chip" type="button">S</button>
-            <button class="filtro__chip" type="button">M</button><button class="filtro__chip" type="button">L</button>
-            <button class="filtro__chip" type="button">XL</button>
-          </div>
-        </fieldset>
-        <fieldset class="filtro">
           <legend class="filtro__titulo">Precio</legend>
           <div class="filtro__chips">
-            <button class="filtro__chip" type="button">Hasta $20.000</button>
-            <button class="filtro__chip" type="button">$20.000–$60.000</button>
-            <button class="filtro__chip" type="button">Más de $60.000</button>
+            <button class="filtro__chip" type="button" data-min="0" data-max="20000" aria-pressed="false">Hasta $20.000</button>
+            <button class="filtro__chip" type="button" data-min="20000" data-max="60000" aria-pressed="false">$20.000–$60.000</button>
+            <button class="filtro__chip" type="button" data-min="60000" data-max="" aria-pressed="false">Más de $60.000</button>
           </div>
         </fieldset>
         <button class="filtro__limpiar" id="clearFiltersBtn" data-action="clear-filters" type="button">Limpiar filtros</button>

@@ -1265,6 +1265,12 @@ a {
   color: var(--ink);
 }
 
+.filtro__chip[aria-pressed="true"] {
+  border-color: var(--ink);
+  background: var(--ink);
+  color: #fff;
+}
+
 .filtro__limpiar {
   font-size: 13px;
   color: var(--red);
