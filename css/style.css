@@ -1184,6 +1184,177 @@ a {
   }
 }
 
+/* ---------- 12b Buscador del catálogo ---------- */
+.buscador {
+  position: relative;
+  margin-top: 16px;
+  max-width: 640px;
+}
+
+.buscador__icono {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 18px;
+  height: 18px;
+  color: var(--stone);
+  pointer-events: none;
+  z-index: 2;
+}
+
+.buscador__input {
+  font-family: var(--font-body);
+  font-size: 16px;
+  width: 100%;
+  min-height: 44px;
+  padding: 9px 40px 9px 38px;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  background: #fff;
+  color: var(--ink);
+}
+
+.buscador__input::placeholder {
+  color: var(--stone);
+}
+
+.buscador__input:focus {
+  border-color: var(--ink);
+  outline: none;
+}
+
+.buscador:focus-within .buscador__icono {
+  color: var(--ink);
+}
+
+.buscador__input::-webkit-search-cancel-button {
+  display: none;
+}
+
+.buscador__limpiar {
+  position: absolute;
+  right: 6px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 32px;
+  height: 32px;
+  min-height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  border-radius: 3px;
+  color: var(--stone);
+  font-size: 14px;
+}
+
+.buscador__limpiar:hover {
+  color: var(--ink);
+  background: var(--paper-2);
+}
+
+.buscador__sugerencias {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  z-index: 40;
+  margin: 0;
+  padding: 6px;
+  list-style: none;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  box-shadow: 0 12px 32px rgba(22, 23, 26, 0.14);
+  max-height: 320px;
+  overflow-y: auto;
+}
+
+.buscador__item a,
+.buscador__vacio {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 10px;
+  border-radius: 3px;
+  text-decoration: none;
+  color: inherit;
+}
+
+.buscador__item a:hover,
+.buscador__item--activo a {
+  background: var(--paper-2);
+}
+
+.buscador__miniatura {
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+
+.buscador__miniatura img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
+}
+
+.buscador__miniatura .icono {
+  width: 20px;
+  height: 20px;
+}
+
+.buscador__textos {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.buscador__nombre {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.buscador__nombre mark {
+  background: none;
+  color: var(--red);
+}
+
+.buscador__meta {
+  font-size: 12.5px;
+  color: var(--stone);
+}
+
+.buscador__vacio {
+  font-size: 14px;
+  color: var(--ink-soft);
+  justify-content: space-between;
+}
+
+.buscador__vacio button {
+  background: none;
+  border: none;
+  color: var(--red);
+  font-weight: 600;
+  font-size: 13px;
+  min-height: 32px;
+}
+
 /* ---------- 13 Catálogo y filtros ---------- */
 .catalogo__distribucion {
   display: grid;

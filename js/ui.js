@@ -39,6 +39,33 @@ const updateCartBadge = () => {
 };
 
 // ─────────────────────────────────────────────
+// Texto y sanitización (helpers compartidos)
+// ─────────────────────────────────────────────
+
+/**
+ * Normaliza un texto para comparaciones sin tildes ni mayúsculas.
+ * @param {string} texto - Texto a normalizar
+ * @returns {string} Texto normalizado
+ */
+const normalizarTexto = (texto) =>
+  String(texto || '')
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '');
+
+/**
+ * Escapa HTML para interpolar texto seguro en plantillas.
+ * @param {string} texto - Texto a escapar
+ * @returns {string} Texto escapado
+ */
+const escaparHTML = (texto) =>
+  String(texto || '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+
+// ─────────────────────────────────────────────
 // Product cards (fuente única, antes triplicada)
 // ─────────────────────────────────────────────
 
@@ -49,7 +76,7 @@ const updateCartBadge = () => {
 const productMediaHTML = (product) => {
   const iconColor = product.category === 'cinturones' ? 'var(--ink)' : '#fff';
   const imageMarkup = product.image
-    ? `<img src="${product.image}" alt="${product.name}" loading="lazy" onerror="this.remove()">`
+    ? `<img src="${product.image}" alt="${escaparHTML(product.name)}" loading="lazy" onerror="this.remove()">`
     : '';
 
   return `<div class="tarjeta-producto__media ${CATEGORY_STYLE_MAP[product.category]}">${imageMarkup}<svg class="icono" style="color:${iconColor}"><use href="#${CATEGORY_ICON_MAP[product.category]}"/></svg></div>`;
@@ -63,9 +90,9 @@ const productCardHTML = (product) => `<article class="tarjeta-producto" data-id=
     ${productMediaHTML(product)}
     <div class="tarjeta-producto__cuerpo">
       <p class="tarjeta-producto__categoria">${CATEGORY_LABELS[product.category]}</p>
-      <h3 class="tarjeta-producto__nombre"><a class="tarjeta-producto__enlace" href="producto.html?id=${product.id}">${product.name}</a></h3>
+      <h3 class="tarjeta-producto__nombre"><a class="tarjeta-producto__enlace" href="producto.html?id=${product.id}">${escaparHTML(product.name)}</a></h3>
       <p class="tarjeta-producto__precio">${formatPrice(product.price)}</p>
-      <button class="tarjeta-producto__accion" data-quickadd="${product.id}" type="button" aria-label="Agregar ${product.name} al carrito"><svg class="icono" style="width:14px;height:14px" aria-hidden="true"><use href="#i-cart"/></svg> Agregar</button>
+      <button class="tarjeta-producto__accion" data-quickadd="${product.id}" type="button" aria-label="Agregar ${escaparHTML(product.name)} al carrito"><svg class="icono" style="width:14px;height:14px" aria-hidden="true"><use href="#i-cart"/></svg> Agregar</button>
     </div>
   </article>`;
 
@@ -107,13 +134,13 @@ const cartItemRowHTML = (cartItem, itemIndex) => {
   }
 
   const imageMarkup = product.image
-    ? `<img src="${product.image}" alt="${product.name}" loading="lazy" onerror="this.remove()">`
+    ? `<img src="${product.image}" alt="${escaparHTML(product.name)}" loading="lazy" onerror="this.remove()">`
     : '';
 
   return `<article class="carrito__item">
     <div class="carrito__miniatura ${CATEGORY_STYLE_MAP[product.category]}">${imageMarkup}<svg class="icono" style="color:${iconColor}"><use href="#${CATEGORY_ICON_MAP[product.category]}"/></svg></div>
     <div class="carrito__detalle">
-      <h3 class="carrito__nombre">${product.name}</h3>
+      <h3 class="carrito__nombre">${escaparHTML(product.name)}</h3>
       <p class="carrito__meta">${metadataParts.join(' · ') || '&nbsp;'}</p>
       <button class="carrito__quitar" data-remove="${itemIndex}" type="button">Quitar</button>
     </div>
