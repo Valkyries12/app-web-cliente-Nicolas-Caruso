@@ -26,13 +26,13 @@ const renderProductDetail = () => {
   document.getElementById('detalleCat').textContent = CATEGORY_LABELS[product.category];
   document.getElementById('detalleName').textContent = product.name;
   document.getElementById('detallePrice').textContent = formatPrice(product.price);
-  document.getElementById('tabDescripcion').innerHTML = `<p>${product.desc}</p>`;
+  document.getElementById('tabDescripcion').innerHTML = `<p>${escaparHTML(product.desc)}</p>`;
 
   const mediaBackgroundClass = CATEGORY_STYLE_MAP[product.category];
   const iconColor = product.category === 'cinturones' ? 'var(--ink)' : '#fff';
 
   const galleryImageMarkup = product.image
-    ? `<img src="${product.image}" alt="${product.name}" onerror="this.remove()">`
+    ? `<img src="${product.image}" alt="${escaparHTML(product.name)}" onerror="this.remove()">`
     : '';
   const galleryMainElement = document.getElementById('galleryMain');
   galleryMainElement.className = 'galeria__principal ' + mediaBackgroundClass;
@@ -53,7 +53,7 @@ const renderProductDetail = () => {
     document.getElementById('sizeRow').innerHTML = product.sizes
       .map(
         (sizeOption) =>
-          `<button class="opcion ${sizeOption === DetailState.size ? 'opcion--seleccionada' : ''}" data-size="${sizeOption}">${sizeOption}</button>`
+          `<button class="opcion ${sizeOption === DetailState.size ? 'opcion--seleccionada' : ''}" data-size="${escaparHTML(sizeOption)}">${escaparHTML(sizeOption)}</button>`
       )
       .join('');
   } else {
