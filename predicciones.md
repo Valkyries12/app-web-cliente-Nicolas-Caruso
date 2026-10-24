@@ -18,3 +18,4 @@ Se cambiará el SVG del hero por una imágen representativa
 14 - Se va a agregar validaciones al formulario del contacto
 15 - Se va a agregar lógica para los filtros para la página de catálogo. Los filtros a implementar son categoria, talla, precio , relevancia
 16 - Se creará un buscador con sugerencias
+17 - Se va a quitar los productos hardcodeados en el carrito y tambien su persistencia en memoria.Quiero implementar localStorage para persistir durante la sesión los productso del carrito
