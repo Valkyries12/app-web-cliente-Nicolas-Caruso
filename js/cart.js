@@ -8,15 +8,88 @@
  * @property {number} qty
  */
 
+/**
+ * @typedef {Object} StoredCartItem
+ * @property {number} productId
+ * @property {string|null} size
+ * @property {string|null} color
+ * @property {number} qty
+ */
+
 // Mensajes (el tope de unidades vive en CONFIG, ver js/config.js)
 const MSG_MAX_QTY = 'Máximo 10 unidades por producto';
 const MSG_ADDED = 'Agregado al carrito';
 
 /** @type {ShoppingCartItem[]} */
-let shoppingCart = [
-  { product: PRODUCT_CATALOG[0], size: '160', color: null, qty: 1 },
-  { product: PRODUCT_CATALOG[2], size: 'M', color: '#C41E3A', qty: 1 },
-];
+let shoppingCart = [];
+
+// ─────────────────────────────────────────────
+// Persistencia (localStorage)
+// ─────────────────────────────────────────────
+
+const CART_STORAGE_KEY = 'kihap_shoppingCart';
+
+/**
+ * Lee el carrito guardado y rehidrata los productos desde el catálogo.
+ * @returns {ShoppingCartItem[]}
+ */
+const loadCartFromStorage = () => {
+  try {
+    const rawCart = localStorage.getItem(CART_STORAGE_KEY);
+
+    if (!rawCart) {
+      return [];
+    }
+
+    const storedItems = JSON.parse(rawCart);
+
+    if (!Array.isArray(storedItems)) {
+      return [];
+    }
+
+    return storedItems
+      .map((storedItem) => {
+        const product = PRODUCT_CATALOG.find(
+          (catalogProduct) => catalogProduct.id === storedItem.productId
+        );
+
+        if (!product) {
+          return null;
+        }
+
+        return {
+          product,
+          size: storedItem.size ?? null,
+          color: storedItem.color ?? null,
+          qty: Math.min(Math.max(Number(storedItem.qty) || 1, 1), CONFIG.MAX_QTY),
+        };
+      })
+      .filter(Boolean);
+  } catch (error) {
+    console.warn('KIHAP: no se pudo leer el carrito', error);
+    return [];
+  }
+};
+
+/**
+ * Guarda el carrito actual en localStorage.
+ */
+const saveCartToStorage = () => {
+  try {
+    const storedItems = shoppingCart.map(({ product, size, color, qty }) => ({
+      productId: product.id,
+      size,
+      color,
+      qty,
+    }));
+
+    localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(storedItems));
+  } catch (error) {
+    console.warn('KIHAP: no se pudo guardar el carrito', error);
+  }
+};
+
+shoppingCart = loadCartFromStorage();
 
 // ─────────────────────────────────────────────
 // Cart calculations
@@ -68,6 +141,7 @@ const resolverDetalle = () => (typeof DetailState !== 'undefined' ? DetailState 
  * y esas páginas se pintan al cargarse.
  */
 const confirmCartAdd = (mensaje) => {
+  saveCartToStorage();
   updateCartBadge();
   showToast(mensaje);
 };
@@ -76,6 +150,7 @@ const confirmCartAdd = (mensaje) => {
  * Sincroniza badge + vistas tras quitar o cambiar cantidad.
  */
 const notifyCartChange = () => {
+  saveCartToStorage();
   updateCartBadge();
 
   if (typeof renderCart === 'function') {
@@ -183,6 +258,14 @@ const changeCartQty = (itemIndex, quantityDelta) => {
   }
 
   shoppingCart[itemIndex].qty = Math.max(1, nuevaCantidad);
+  notifyCartChange();
+};
+
+/**
+ * Vacía el carrito por completo (ej. tras confirmar la compra).
+ */
+const clearCart = () => {
+  shoppingCart.splice(0, shoppingCart.length);
   notifyCartChange();
 };
 
