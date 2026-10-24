@@ -68,7 +68,12 @@
     </ol>
   </div>
 
-  <div class="contenedor compra__distribucion">
+  <div class="contenedor cargador" id="checkoutLoader" role="status" aria-live="polite">
+    <span class="cargador__circulo" aria-hidden="true"></span>
+    <span class="cargador__texto">Cargando tu pedido…</span>
+  </div>
+
+  <div class="contenedor compra__distribucion" id="checkoutLayout" hidden>
     <div class="compra__contenido">
       <!-- Paso 1: envío -->
       <section class="compra__panel compra__panel--activo" id="checkoutStep1" aria-labelledby="titulo-envio">

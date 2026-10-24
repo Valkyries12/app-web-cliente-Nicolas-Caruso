@@ -104,7 +104,12 @@
         </nav>
       </div>
 
-      <article class="contenedor detalle__grilla" aria-labelledby="detalleName">
+      <div class="contenedor cargador" id="detailLoader" role="status" aria-live="polite">
+        <span class="cargador__circulo" aria-hidden="true"></span>
+        <span class="cargador__texto">Cargando producto…</span>
+      </div>
+
+      <article class="contenedor detalle__grilla" id="detailContent" aria-labelledby="detalleName" hidden>
         <figure class="detalle__galeria" style="margin:0;" aria-label="Galería del producto">
           <div class="galeria__principal" id="galleryMain"></div>
           <div class="galeria__lista" id="galleryThumbs"></div>
@@ -187,7 +192,7 @@
         </section>
       </article>
 
-      <section class="contenedor" aria-labelledby="titulo-relacionados">
+      <section class="contenedor" id="relatedSection" aria-labelledby="titulo-relacionados" hidden>
         <div class="detalle__relacionados">
           <div class="seccion__encabezado">
             <h2 id="titulo-relacionados" style="font-size: 28px">También te puede interesar</h2>

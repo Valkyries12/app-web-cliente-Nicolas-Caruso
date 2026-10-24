@@ -39,6 +39,76 @@ const updateCartBadge = () => {
 };
 
 // ─────────────────────────────────────────────
+// Cargador (spinner)
+// ─────────────────────────────────────────────
+
+/**
+ * Espera la cantidad de milisegundos indicada.
+ * @param {number} milliseconds - Milisegundos a esperar
+ * @returns {Promise<void>}
+ */
+const delay = (milliseconds) =>
+  new Promise((resolve) => setTimeout(resolve, milliseconds));
+
+/**
+ * Muestra el cargador indicado.
+ * @param {string} loaderId - ID del elemento cargador
+ */
+const showLoader = (loaderId) => {
+  const loaderElement = document.getElementById(loaderId);
+
+  if (loaderElement) {
+    loaderElement.hidden = false;
+  }
+};
+
+/**
+ * Oculta el cargador indicado.
+ * @param {string} loaderId - ID del elemento cargador
+ */
+const hideLoader = (loaderId) => {
+  const loaderElement = document.getElementById(loaderId);
+
+  if (loaderElement) {
+    loaderElement.hidden = true;
+  }
+};
+
+/**
+ * Muestra u oculta los contenedores de contenido indicados.
+ * @param {string[]} contentIds - IDs de los contenedores
+ * @param {boolean} isVisible - Verdadero para mostrarlos
+ */
+const setContentVisibility = (contentIds, isVisible) => {
+  contentIds.forEach((contentId) => {
+    const contentElement = document.getElementById(contentId);
+
+    if (contentElement) {
+      contentElement.hidden = !isVisible;
+    }
+  });
+};
+
+/**
+ * Carga el catálogo mostrando un cargador con una duración mínima.
+ * @param {string} loaderId - ID del elemento cargador
+ * @param {string[]} contentIds - IDs de los contenedores a ocultar mientras carga
+ * @returns {Promise<import("./products.js").Product[]>}
+ */
+const loadCatalogWithLoader = async (loaderId, contentIds = []) => {
+  showLoader(loaderId);
+  setContentVisibility(contentIds, false);
+
+  try {
+    const [catalog] = await Promise.all([loadCatalog(), delay(CONFIG.LOADER_MIN_MS)]);
+    return catalog;
+  } finally {
+    hideLoader(loaderId);
+    setContentVisibility(contentIds, true);
+  }
+};
+
+// ─────────────────────────────────────────────
 // Texto y sanitización (helpers compartidos)
 // ─────────────────────────────────────────────
 

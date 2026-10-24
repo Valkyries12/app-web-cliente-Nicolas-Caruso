@@ -96,7 +96,7 @@
     <section class="catalogo__contenido" aria-labelledby="titulo-catalogo">
       <h2 class="visualmente-oculto" id="titulo-catalogo">Productos del catálogo</h2>
       <div class="catalogo__barra">
-        <span class="catalogo__contador" id="resultCount" role="status" aria-live="polite">18 productos</span>
+        <span class="catalogo__contador" id="resultCount" role="status" aria-live="polite">Cargando productos…</span>
         <label class="visualmente-oculto" for="sortSelect">Ordenar productos</label>
         <select class="catalogo__selector" id="sortSelect">
           <option value="relevancia">Ordenar por: Relevancia</option>
@@ -105,7 +105,11 @@
           <option value="nuevos">Más nuevos</option>
         </select>
       </div>
-      <ul class="grilla-productos grilla-productos--lista" id="catalogGrid" aria-label="Listado de productos"></ul>
+      <div class="cargador" id="catalogLoader" role="status" aria-live="polite">
+        <span class="cargador__circulo" aria-hidden="true"></span>
+        <span class="cargador__texto">Cargando productos…</span>
+      </div>
+      <ul class="grilla-productos grilla-productos--lista" id="catalogGrid" aria-label="Listado de productos" hidden></ul>
     </section>
   </div>
 </main>

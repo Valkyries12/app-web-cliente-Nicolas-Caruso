@@ -128,7 +128,11 @@
       <h2 id="titulo-destacados">Más elegidos</h2>
       <a class="boton boton--fantasma boton--pequeno" href="catalogo.html">Ver todo el catálogo</a>
     </div>
-    <ul class="grilla-productos grilla-productos--lista" id="featuredGrid" aria-label="Productos más elegidos"></ul>
+    <div class="cargador" id="featuredLoader" role="status" aria-live="polite">
+      <span class="cargador__circulo" aria-hidden="true"></span>
+      <span class="cargador__texto">Cargando productos…</span>
+    </div>
+    <ul class="grilla-productos grilla-productos--lista" id="featuredGrid" aria-label="Productos más elegidos" hidden></ul>
   </section>
 </main>
 

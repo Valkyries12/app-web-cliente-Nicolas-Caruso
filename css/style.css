@@ -106,6 +106,10 @@ a {
   outline-offset: 2px;
 }
 
+[hidden] {
+  display: none !important;
+}
+
 /* ---------- 02 Icono ---------- */
 .icono {
   width: 20px;
@@ -2594,6 +2598,47 @@ a {
 @media (prefers-reduced-motion: reduce) {
   .aviso {
     transition: none;
+  }
+}
+
+/* ---------- 20b Cargador (spinner) ---------- */
+.cargador {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 56px 20px;
+  min-height: 260px;
+  text-align: center;
+}
+
+.cargador__circulo {
+  width: 44px;
+  height: 44px;
+  border: 3px solid var(--line);
+  border-top-color: var(--red);
+  border-radius: 50%;
+  animation: girar-cargador 0.8s linear infinite;
+}
+
+.cargador__texto {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--stone);
+}
+
+@keyframes girar-cargador {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cargador__circulo {
+    animation: none;
+    border-top-color: var(--line);
+    border-left-color: var(--red);
   }
 }
 

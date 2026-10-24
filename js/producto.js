@@ -211,7 +211,7 @@ const initProductoPage = () => {
 };
 
 const bootstrapProductoPage = async () => {
-  await loadCatalog();
+  await loadCatalogWithLoader('detailLoader', ['detailContent', 'relatedSection']);
   hydrateCart();
   initProductoPage();
 };
