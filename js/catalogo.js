@@ -518,7 +518,7 @@ const initCatalogoPage = () => {
 };
 
 const bootstrapCatalogoPage = async () => {
-  await loadCatalog();
+  await loadCatalogWithLoader('catalogLoader', ['catalogGrid']);
   hydrateCart();
   initCatalogoPage();
 };

@@ -39,7 +39,7 @@ const initHomePage = () => {
 };
 
 const bootstrapHomePage = async () => {
-  await loadCatalog();
+  await loadCatalogWithLoader('featuredLoader', ['featuredGrid']);
   hydrateCart();
   initHomePage();
 };

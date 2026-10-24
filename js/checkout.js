@@ -437,7 +437,7 @@ const initCheckoutPage = () => {
 };
 
 const bootstrapCheckoutPage = async () => {
-  await loadCatalog();
+  await loadCatalogWithLoader('checkoutLoader', ['checkoutLayout']);
   hydrateCart();
   initCheckoutPage();
 };

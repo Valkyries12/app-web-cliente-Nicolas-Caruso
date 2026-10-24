@@ -60,7 +60,12 @@
     <h1 class="encabezado-pagina__titulo">Tu carrito</h1>
   </div>
 
-  <div class="contenedor carrito__distribucion" id="cartLayout">
+  <div class="contenedor cargador" id="cartLoader" role="status" aria-live="polite">
+    <span class="cargador__circulo" aria-hidden="true"></span>
+    <span class="cargador__texto">Cargando tu carrito…</span>
+  </div>
+
+  <div class="contenedor carrito__distribucion" id="cartLayout" hidden>
     <section class="carrito__lista" aria-labelledby="titulo-carrito">
       <h2 class="visualmente-oculto" id="titulo-carrito">Productos en tu carrito</h2>
       <div id="cartItemsList" aria-live="polite" aria-label="Ítems del carrito"></div>
