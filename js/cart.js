@@ -29,11 +29,39 @@ let shoppingCart = [];
 
 const CART_STORAGE_KEY = 'kihap_shoppingCart';
 
+/** @type {StoredCartItem[]} */
+let storedCartItems = [];
+let cartHydrated = false;
+
 /**
- * Lee el carrito guardado y rehidrata los productos desde el catálogo.
- * @returns {ShoppingCartItem[]}
+ * Normaliza un ítem guardado en localStorage.
+ * @param {unknown} storedItem
+ * @returns {StoredCartItem|null}
  */
-const loadCartFromStorage = () => {
+const normalizeStoredItem = (storedItem) => {
+  if (!storedItem || typeof storedItem !== 'object') {
+    return null;
+  }
+
+  const productId = Number(storedItem.productId);
+
+  if (!Number.isFinite(productId)) {
+    return null;
+  }
+
+  return {
+    productId,
+    size: storedItem.size ?? null,
+    color: storedItem.color ?? null,
+    qty: Math.min(Math.max(Number(storedItem.qty) || 1, 1), CONFIG.MAX_QTY),
+  };
+};
+
+/**
+ * Lee el carrito guardado (solo IDs y variantes, sin productos hidratados).
+ * @returns {StoredCartItem[]}
+ */
+const loadStoredCartItems = () => {
   try {
     const rawCart = localStorage.getItem(CART_STORAGE_KEY);
 
@@ -41,30 +69,13 @@ const loadCartFromStorage = () => {
       return [];
     }
 
-    const storedItems = JSON.parse(rawCart);
+    const parsedItems = JSON.parse(rawCart);
 
-    if (!Array.isArray(storedItems)) {
+    if (!Array.isArray(parsedItems)) {
       return [];
     }
 
-    return storedItems
-      .map((storedItem) => {
-        const product = PRODUCT_CATALOG.find(
-          (catalogProduct) => catalogProduct.id === storedItem.productId
-        );
-
-        if (!product) {
-          return null;
-        }
-
-        return {
-          product,
-          size: storedItem.size ?? null,
-          color: storedItem.color ?? null,
-          qty: Math.min(Math.max(Number(storedItem.qty) || 1, 1), CONFIG.MAX_QTY),
-        };
-      })
-      .filter(Boolean);
+    return parsedItems.map(normalizeStoredItem).filter(Boolean);
   } catch (error) {
     console.warn('KIHAP: no se pudo leer el carrito', error);
     return [];
@@ -72,24 +83,58 @@ const loadCartFromStorage = () => {
 };
 
 /**
+ * Rehidrata shoppingCart contra el catálogo ya cargado.
+ * Llamar después de loadCatalog().
+ * @returns {ShoppingCartItem[]}
+ */
+const hydrateCart = () => {
+  shoppingCart = storedCartItems
+    .map((storedItem) => {
+      const product = PRODUCT_CATALOG.find(
+        (catalogProduct) => catalogProduct.id === storedItem.productId
+      );
+
+      if (!product) {
+        return null;
+      }
+
+      return {
+        product,
+        size: storedItem.size,
+        color: storedItem.color,
+        qty: storedItem.qty,
+      };
+    })
+    .filter(Boolean);
+
+  cartHydrated = true;
+
+  if (typeof updateCartBadge === 'function') {
+    updateCartBadge();
+  }
+
+  return shoppingCart;
+};
+
+/**
  * Guarda el carrito actual en localStorage.
  */
 const saveCartToStorage = () => {
   try {
-    const storedItems = shoppingCart.map(({ product, size, color, qty }) => ({
+    storedCartItems = shoppingCart.map(({ product, size, color, qty }) => ({
       productId: product.id,
       size,
       color,
       qty,
     }));
 
-    localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(storedItems));
+    localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(storedCartItems));
   } catch (error) {
     console.warn('KIHAP: no se pudo guardar el carrito', error);
   }
 };
 
-shoppingCart = loadCartFromStorage();
+storedCartItems = loadStoredCartItems();
 
 // ─────────────────────────────────────────────
 // Cart calculations
@@ -99,7 +144,10 @@ shoppingCart = loadCartFromStorage();
  * @returns {number}
  */
 const getCartItemCount = () =>
-  shoppingCart.reduce((totalAccumulator, cartItem) => totalAccumulator + cartItem.qty, 0);
+  (cartHydrated ? shoppingCart : storedCartItems).reduce(
+    (totalAccumulator, cartItem) => totalAccumulator + cartItem.qty,
+    0
+  );
 
 /**
  * @returns {number}

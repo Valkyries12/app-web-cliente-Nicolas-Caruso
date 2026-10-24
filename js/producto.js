@@ -6,7 +6,7 @@
 // ─────────────────────────────────────────────
 
 const DetailState = {
-  product: PRODUCT_CATALOG[0],
+  product: null,
   size: null,
   color: null,
   qty: 1,
@@ -210,4 +210,10 @@ const initProductoPage = () => {
   });
 };
 
-document.addEventListener('DOMContentLoaded', initProductoPage);
+const bootstrapProductoPage = async () => {
+  await loadCatalog();
+  hydrateCart();
+  initProductoPage();
+};
+
+document.addEventListener('DOMContentLoaded', bootstrapProductoPage);

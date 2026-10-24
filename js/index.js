@@ -38,4 +38,10 @@ const initHomePage = () => {
   renderFeatured();
 };
 
-document.addEventListener('DOMContentLoaded', initHomePage);
+const bootstrapHomePage = async () => {
+  await loadCatalog();
+  hydrateCart();
+  initHomePage();
+};
+
+document.addEventListener('DOMContentLoaded', bootstrapHomePage);
