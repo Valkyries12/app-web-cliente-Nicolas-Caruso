@@ -2,7 +2,7 @@
 // Usa PRODUCT_CATALOG (products.js), cards (ui.js) y carrito (cart.js)
 
 /**
- * Renderiza la grilla de productos destacados en la página de inicio.
+ * Renderiza la grilla de productos "Más elegidos" en la página de inicio.
  */
 const renderFeatured = () => {
   const featuredProducts = PRODUCT_CATALOG.filter((product) => product.featured);

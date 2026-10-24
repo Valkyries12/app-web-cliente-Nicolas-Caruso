@@ -319,6 +319,7 @@ const initCheckoutPage = () => {
 
       if (validarPago()) {
         setCheckoutStep(3);
+        clearCart();
       }
     });
   }
@@ -339,6 +340,7 @@ const initCheckoutPage = () => {
         }
       } else if (validarPago()) {
         setCheckoutStep(3);
+        clearCart();
       }
     });
   }
