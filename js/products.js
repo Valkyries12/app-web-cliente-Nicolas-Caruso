@@ -27,7 +27,7 @@
  */
 
 /** @type {Product[]} */
-const PRODUCT_CATALOG = [
+let PRODUCT_CATALOG = [
   {
     id: 1,
     name: 'Dobok Kukkiwon Trainer',

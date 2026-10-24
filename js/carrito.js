@@ -156,4 +156,10 @@ const initCarritoPage = () => {
   initCheckoutGuard();
 };
 
-document.addEventListener('DOMContentLoaded', initCarritoPage);
+const bootstrapCarritoPage = async () => {
+  await loadCatalog();
+  hydrateCart();
+  initCarritoPage();
+};
+
+document.addEventListener('DOMContentLoaded', bootstrapCarritoPage);

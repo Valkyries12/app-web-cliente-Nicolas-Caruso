@@ -436,4 +436,10 @@ const initCheckoutPage = () => {
   actualizarCamposTarjeta();
 };
 
-document.addEventListener('DOMContentLoaded', initCheckoutPage);
+const bootstrapCheckoutPage = async () => {
+  await loadCatalog();
+  hydrateCart();
+  initCheckoutPage();
+};
+
+document.addEventListener('DOMContentLoaded', bootstrapCheckoutPage);

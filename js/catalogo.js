@@ -517,4 +517,10 @@ const initCatalogoPage = () => {
   renderCatalog();
 };
 
-document.addEventListener('DOMContentLoaded', initCatalogoPage);
+const bootstrapCatalogoPage = async () => {
+  await loadCatalog();
+  hydrateCart();
+  initCatalogoPage();
+};
+
+document.addEventListener('DOMContentLoaded', bootstrapCatalogoPage);
