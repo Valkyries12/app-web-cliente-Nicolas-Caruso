@@ -115,10 +115,46 @@ const highlightSearchMatch = (productName, searchTerm) => {
 };
 
 /**
+ * Desmarca visualmente todos los filtros de categoría y precio.
+ */
+const resetFilterControls = () => {
+  document.querySelectorAll('.cat-filter').forEach((filterCheckbox) => {
+    filterCheckbox.checked = false;
+  });
+
+  document.querySelectorAll('.filtro__chip[aria-pressed="true"]').forEach((chip) => {
+    chip.setAttribute('aria-pressed', 'false');
+  });
+};
+
+/**
+ * Limpia el término de búsqueda, sus sugerencias y el parámetro ?q= de la URL.
+ */
+const clearSearchTerm = () => {
+  const searchInput = document.getElementById('searchInput');
+  const clearButton = document.getElementById('searchClear');
+
+  if (searchInput) {
+    searchInput.value = '';
+  }
+
+  if (clearButton) {
+    clearButton.hidden = true;
+  }
+
+  closeSearchSuggestions();
+  syncSearchUrl('');
+};
+
+/**
  * Selecciona un chip de precio en modo único y vuelve a renderizar.
  * @param {HTMLElement} priceChip - Chip de precio presionado
  */
 const selectPriceChip = (priceChip) => {
+  if (getActiveSearchTerm()) {
+    clearSearchTerm();
+  }
+
   const wasActive = priceChip.getAttribute('aria-pressed') === 'true';
 
   document
@@ -133,24 +169,9 @@ const selectPriceChip = (priceChip) => {
  * Limpia todos los filtros (categoría, precio) y restaura el orden.
  */
 const clearFilters = () => {
-  document.querySelectorAll('.cat-filter').forEach((filterCheckbox) => {
-    filterCheckbox.checked = false;
-  });
-
-  document.querySelectorAll('.filtro__chip[aria-pressed="true"]').forEach((chip) => {
-    chip.setAttribute('aria-pressed', 'false');
-  });
-
+  resetFilterControls();
   document.getElementById('sortSelect').value = 'relevancia';
-
-  const searchInput = document.getElementById('searchInput');
-
-  if (searchInput) {
-    searchInput.value = '';
-  }
-
-  closeSearchSuggestions();
-  syncSearchUrl('');
+  clearSearchTerm();
 
   renderCatalog();
 };
@@ -159,9 +180,12 @@ const clearFilters = () => {
  * Renderiza la grilla del catálogo según filtros y orden.
  */
 const renderCatalog = () => {
-  const activeCategoryFilters = getActiveCategoryFilters();
-  const activePriceFilter = getActivePriceFilter();
   const activeSearchTerm = getActiveSearchTerm();
+  const isSearching = activeSearchTerm.length > 0;
+
+  // El buscador es general: mientras haya término, ignora los filtros activos.
+  const activeCategoryFilters = isSearching ? [] : getActiveCategoryFilters();
+  const activePriceFilter = isSearching ? null : getActivePriceFilter();
 
   const filteredProductList = PRODUCT_CATALOG.filter(
     (product) =>
@@ -228,6 +252,7 @@ const syncSearchUrl = (searchTerm) => {
 
   if (searchTerm.trim()) {
     url.searchParams.set('q', searchTerm.trim());
+    url.searchParams.delete('cat');
   } else {
     url.searchParams.delete('q');
   }
@@ -362,6 +387,7 @@ const initSearch = () => {
   }
 
   searchInput.addEventListener('input', () => {
+    resetFilterControls();
     clearTimeout(searchDebounceTimer);
     searchDebounceTimer = setTimeout(() => {
       renderCatalog();
@@ -413,10 +439,8 @@ const initSearch = () => {
     const clearEmpty = clickEvent.target.closest('[data-action="clear-search"]');
 
     if (clearEmpty) {
-      searchInput.value = '';
+      clearSearchTerm();
       searchInput.focus();
-      closeSearchSuggestions();
-      syncSearchUrl('');
       renderCatalog();
       renderSearchSuggestions();
     }
@@ -424,10 +448,8 @@ const initSearch = () => {
 
   if (clearButton) {
     clearButton.addEventListener('click', () => {
-      searchInput.value = '';
+      clearSearchTerm();
       searchInput.focus();
-      closeSearchSuggestions();
-      syncSearchUrl('');
       renderCatalog();
       renderSearchSuggestions();
     });
@@ -460,12 +482,20 @@ const initCatalogoPage = () => {
 
   if (searchFromUrl && searchInput) {
     searchInput.value = searchFromUrl;
+    resetFilterControls();
+    syncSearchUrl(searchFromUrl);
   }
 
   initSearch();
 
   document.querySelectorAll('.cat-filter').forEach((filterCheckbox) => {
-    filterCheckbox.addEventListener('change', renderCatalog);
+    filterCheckbox.addEventListener('change', () => {
+      if (getActiveSearchTerm()) {
+        clearSearchTerm();
+      }
+
+      renderCatalog();
+    });
   });
 
   const filtrosForm = document.getElementById('filtrosForm');
