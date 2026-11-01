@@ -34,20 +34,16 @@ const loadCatalog = () => {
   }
 
   catalogLoadPromise = (async () => {
-    if (!supabaseClient) {
+    if (!hasSupabaseConfig) {
       return PRODUCT_CATALOG;
     }
 
     try {
-      const { data, error } = await supabaseClient
-        .from(PRODUCTS_TABLE)
-        .select(PRODUCTS_COLUMNS)
-        .eq('active', true)
-        .order('id', { ascending: true });
-
-      if (error) {
-        throw error;
-      }
+      const data = await supabaseFetch(PRODUCTS_TABLE, {
+        select: PRODUCTS_COLUMNS,
+        active: 'eq.true',
+        order: 'id.asc',
+      });
 
       if (!Array.isArray(data) || data.length === 0) {
         throw new Error('El catálogo remoto está vacío.');
