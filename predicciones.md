@@ -23,3 +23,4 @@ Se cambiará el SVG del hero por una imágen representativa
 19 - Se va a implementar un spinner para dar un feedback inmediato en peticiones HTTP
 20 - Se implementará que al realizar la búsqueda general de un producto del catálogo, los filtros no se respeten ya que de respetarse no se mostrarian la totalidad de productos buscados. Provocando una mala experiencia de usuario.
 21 - Se cambiará la forma en como se llama a la base de datos. Se hacia con el SDK otorgado por supabase y se decidió cambiarlo al query nativo con fetch
+22 - Se agregará un paginado para los productos del catálogo
