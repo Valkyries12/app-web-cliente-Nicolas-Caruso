@@ -95,7 +95,7 @@
 
     <section class="catalogo__contenido" aria-labelledby="titulo-catalogo">
       <h2 class="visualmente-oculto" id="titulo-catalogo">Productos del catálogo</h2>
-      <div class="catalogo__barra">
+      <div class="catalogo__barra" id="catalogoBarra">
         <span class="catalogo__contador" id="resultCount" role="status" aria-live="polite">Cargando productos…</span>
         <label class="visualmente-oculto" for="sortSelect">Ordenar productos</label>
         <select class="catalogo__selector" id="sortSelect">
@@ -110,6 +110,7 @@
         <span class="cargador__texto">Cargando productos…</span>
       </div>
       <ul class="grilla-productos grilla-productos--lista" id="catalogGrid" aria-label="Listado de productos" hidden></ul>
+      <nav class="catalogo__paginacion" id="catalogPagination" aria-label="Paginación del catálogo" hidden></nav>
     </section>
   </div>
 </main>

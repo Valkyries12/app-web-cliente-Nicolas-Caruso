@@ -29,3 +29,27 @@ create policy "products_public_read"
 -- o para una Edge Function con service_role.
 revoke all on public.products from anon, authenticated;
 grant select on public.products to anon, authenticated;
+
+-- Paginado y búsqueda server-side (PostgREST).
+create extension if not exists pg_trgm;
+
+create index if not exists products_active_category_price_idx
+  on public.products (category, price, id) where active;
+
+create index if not exists products_active_category_id_idx
+  on public.products (category, id) where active;
+
+create index if not exists products_active_price_idx
+  on public.products (price, id) where active;
+
+create index if not exists products_active_featured_idx
+  on public.products (featured desc, id) where active;
+
+create index if not exists products_active_created_idx
+  on public.products (created_at desc, id desc) where active;
+
+create index if not exists products_name_trgm_idx
+  on public.products using gin (name gin_trgm_ops);
+
+create index if not exists products_description_trgm_idx
+  on public.products using gin (description gin_trgm_ops);

@@ -157,8 +157,7 @@ const initCarritoPage = () => {
 };
 
 const bootstrapCarritoPage = async () => {
-  await loadCatalogWithLoader('cartLoader', ['cartLayout']);
-  hydrateCart();
+  await withLoader('cartLoader', ['cartLayout'], () => hydrateCart());
   initCarritoPage();
 };
 

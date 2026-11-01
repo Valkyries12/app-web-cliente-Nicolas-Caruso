@@ -82,17 +82,18 @@ const setContentVisibility = (contentIds, isVisible) => {
 };
 
 /**
- * Carga el catálogo mostrando un cargador con una duración mínima.
+ * Ejecuta una tarea mostrando el cargador y ocultando el contenido indicado.
  * @param {string} loaderId - ID del elemento cargador
  * @param {string[]} contentIds - IDs de los contenedores a ocultar mientras carga
- * @returns {Promise<import("./products.js").Product[]>}
+ * @param {() => Promise<unknown>} task - Tarea a ejecutar
+ * @returns {Promise<unknown>}
  */
-const loadCatalogWithLoader = async (loaderId, contentIds = []) => {
+const withLoader = async (loaderId, contentIds = [], task) => {
   showLoader(loaderId);
   setContentVisibility(contentIds, false);
 
   try {
-    return await loadCatalog();
+    return await task();
   } finally {
     hideLoader(loaderId);
     setContentVisibility(contentIds, true);
