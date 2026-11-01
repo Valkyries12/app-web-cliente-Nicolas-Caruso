@@ -7,6 +7,7 @@
 
 const DetailState = {
   product: null,
+  related: [],
   size: null,
   color: null,
   qty: 1,
@@ -76,17 +77,8 @@ const renderProductDetail = () => {
 
   document.getElementById('detailQty').textContent = DetailState.qty;
 
-  const relatedProducts = PRODUCT_CATALOG.filter(
-    (catalogProduct) => catalogProduct.category === product.category && catalogProduct.id !== product.id
-  ).slice(0, 4);
-
-  const fallbackProducts =
-    relatedProducts.length > 0
-      ? relatedProducts
-      : PRODUCT_CATALOG.filter((catalogProduct) => catalogProduct.id !== product.id).slice(0, 4);
-
-  document.getElementById('relatedGrid').innerHTML = fallbackProducts
-    .map((product) => `<li>${productCardHTMLWithBadge(product)}</li>`)
+  document.getElementById('relatedGrid').innerHTML = DetailState.related
+    .map((relatedProduct) => `<li>${productCardHTMLWithBadge(relatedProduct)}</li>`)
     .join('');
 };
 
@@ -125,13 +117,11 @@ const buyNow = () => {
 // Page initialization
 // ─────────────────────────────────────────────
 
-const initProductoPage = () => {
-  const urlParams = new URLSearchParams(location.search);
-  const productIdFromUrl = Number(urlParams.get('id')) || 1;
-
-  DetailState.product =
-    PRODUCT_CATALOG.find((catalogProduct) => catalogProduct.id === productIdFromUrl) ||
-    PRODUCT_CATALOG[0];
+/**
+ * @param {import("./products.js").Product} product
+ */
+const initProductoPage = (product) => {
+  DetailState.product = product;
   DetailState.size = DetailState.product.sizes ? DetailState.product.sizes[0] : null;
   DetailState.color = DetailState.product.colors ? DetailState.product.colors[0] : null;
   DetailState.qty = 1;
@@ -187,18 +177,20 @@ const initProductoPage = () => {
   bindAction('add-cart', addDetailToCartHandler);
   bindAction('buy-now', buyNow);
 
-  document.body.addEventListener('click', (clickEvent) => {
+  document.body.addEventListener('click', async (clickEvent) => {
     const quickAddButton = clickEvent.target.closest('[data-quickadd]');
 
     if (quickAddButton) {
       clickEvent.preventDefault();
       clickEvent.stopPropagation();
 
-      const productToAdd = PRODUCT_CATALOG.find(
-        (catalogProduct) => catalogProduct.id === Number(quickAddButton.dataset.quickadd)
-      );
+      const productId = Number(quickAddButton.dataset.quickadd);
+      const productToAdd = getCachedProduct(productId) || (await fetchProductById(productId));
 
-      quickAddToCart(productToAdd);
+      if (productToAdd) {
+        quickAddToCart(productToAdd);
+      }
+
       return;
     }
 
@@ -211,9 +203,29 @@ const initProductoPage = () => {
 };
 
 const bootstrapProductoPage = async () => {
-  await loadCatalogWithLoader('detailLoader', ['detailContent', 'relatedSection']);
-  hydrateCart();
-  initProductoPage();
+  const urlParams = new URLSearchParams(location.search);
+  const productIdFromUrl = Number(urlParams.get('id')) || 1;
+  const cartPromise = hydrateCart();
+  const detail = await withLoader('detailLoader', ['detailContent', 'relatedSection'], async () => {
+    const product = await fetchProductById(productIdFromUrl);
+
+    if (!product) {
+      return null;
+    }
+
+    const relatedProducts = await fetchRelatedProducts(product.category, product.id, 4);
+
+    return { product, relatedProducts };
+  });
+
+  if (!detail) {
+    location.replace('catalogo.html');
+    return;
+  }
+
+  DetailState.related = detail.relatedProducts;
+  initProductoPage(detail.product);
+  await cartPromise;
 };
 
 document.addEventListener('DOMContentLoaded', bootstrapProductoPage);

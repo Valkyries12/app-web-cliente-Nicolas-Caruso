@@ -83,16 +83,20 @@ const loadStoredCartItems = () => {
 };
 
 /**
- * Rehidrata shoppingCart contra el catálogo ya cargado.
- * Llamar después de loadCatalog().
- * @returns {ShoppingCartItem[]}
+ * Rehidrata shoppingCart pidiendo al repositorio solo los productos guardados.
+ * @returns {Promise<ShoppingCartItem[]>}
  */
-const hydrateCart = () => {
+const hydrateCart = async () => {
+  const productIds = storedCartItems.map((storedItem) => storedItem.productId);
+  const products =
+    typeof fetchProductsByIds === 'function'
+      ? await fetchProductsByIds(productIds)
+      : PRODUCT_CATALOG.filter((product) => productIds.includes(product.id));
+  const productsById = new Map(products.map((product) => [product.id, product]));
+
   shoppingCart = storedCartItems
     .map((storedItem) => {
-      const product = PRODUCT_CATALOG.find(
-        (catalogProduct) => catalogProduct.id === storedItem.productId
-      );
+      const product = productsById.get(storedItem.productId);
 
       if (!product) {
         return null;

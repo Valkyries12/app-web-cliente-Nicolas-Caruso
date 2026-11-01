@@ -1,30 +1,37 @@
 /* KIHAP - index.js vanilla global - home: destacados + navegación | ES6+ */
-// Usa PRODUCT_CATALOG (products.js), cards (ui.js) y carrito (cart.js)
+// Usa el repositorio de productos (server-side), cards (ui.js) y carrito (cart.js)
 
 /**
  * Renderiza la grilla de productos "Más elegidos" en la página de inicio.
+ * @param {import("./products.js").Product[]} featuredProducts
  */
-const renderFeatured = () => {
-  const featuredProducts = PRODUCT_CATALOG.filter((product) => product.featured);
+const renderFeatured = (featuredProducts) => {
+  const featuredGrid = document.getElementById('featuredGrid');
 
-  document.getElementById('featuredGrid').innerHTML = featuredProducts
+  if (!featuredGrid) {
+    return;
+  }
+
+  featuredGrid.innerHTML = featuredProducts
     .map((product) => `<li>${productCardHTMLWithBadge(product)}</li>`)
     .join('');
 };
 
 const initHomePage = () => {
-  document.body.addEventListener('click', (clickEvent) => {
+  document.body.addEventListener('click', async (clickEvent) => {
     const quickAddButton = clickEvent.target.closest('[data-quickadd]');
 
     if (quickAddButton) {
       clickEvent.preventDefault();
       clickEvent.stopPropagation();
 
-      const productToAdd = PRODUCT_CATALOG.find(
-        (catalogProduct) => catalogProduct.id === Number(quickAddButton.dataset.quickadd)
-      );
+      const productId = Number(quickAddButton.dataset.quickadd);
+      const productToAdd = getCachedProduct(productId) || (await fetchProductById(productId));
 
-      quickAddToCart(productToAdd);
+      if (productToAdd) {
+        quickAddToCart(productToAdd);
+      }
+
       return;
     }
 
@@ -34,14 +41,17 @@ const initHomePage = () => {
       location.href = 'producto.html?id=' + productCardElement.dataset.id;
     }
   });
-
-  renderFeatured();
 };
 
 const bootstrapHomePage = async () => {
-  await loadCatalogWithLoader('featuredLoader', ['featuredGrid']);
-  hydrateCart();
+  const cartPromise = hydrateCart();
+  const featuredProducts = await withLoader('featuredLoader', ['featuredGrid'], () =>
+    fetchFeaturedProducts()
+  );
+
+  renderFeatured(featuredProducts);
   initHomePage();
+  await cartPromise;
 };
 
 document.addEventListener('DOMContentLoaded', bootstrapHomePage);
