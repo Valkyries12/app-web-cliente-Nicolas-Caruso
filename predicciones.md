@@ -21,3 +21,4 @@ Se cambiará el SVG del hero por una imágen representativa
 17 - Se va a quitar los productos hardcodeados en el carrito y tambien su persistencia en memoria.Quiero implementar localStorage para persistir durante la sesión los productso del carrito
 18 - Se va a implementar supabase como base de datos. Tambien se harán variables de entorno para no exponer las apis keys
 19 - Se va a implementar un spinner para dar un feedback inmediato en peticiones HTTP
+20 - Se implementará que al realizar la búsqueda general de un producto del catálogo, los filtros no se respeten ya que de respetarse no se mostrarian la totalidad de productos buscados. Provocando una mala experiencia de usuario.
