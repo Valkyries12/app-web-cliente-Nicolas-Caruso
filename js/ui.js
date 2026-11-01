@@ -43,14 +43,6 @@ const updateCartBadge = () => {
 // ─────────────────────────────────────────────
 
 /**
- * Espera la cantidad de milisegundos indicada.
- * @param {number} milliseconds - Milisegundos a esperar
- * @returns {Promise<void>}
- */
-const delay = (milliseconds) =>
-  new Promise((resolve) => setTimeout(resolve, milliseconds));
-
-/**
  * Muestra el cargador indicado.
  * @param {string} loaderId - ID del elemento cargador
  */
@@ -100,8 +92,7 @@ const loadCatalogWithLoader = async (loaderId, contentIds = []) => {
   setContentVisibility(contentIds, false);
 
   try {
-    const [catalog] = await Promise.all([loadCatalog(), delay(CONFIG.LOADER_MIN_MS)]);
-    return catalog;
+    return await loadCatalog();
   } finally {
     hideLoader(loaderId);
     setContentVisibility(contentIds, true);
