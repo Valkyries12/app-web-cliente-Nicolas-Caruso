@@ -1,5 +1,5 @@
 /* KIHAP - catalog.js vanilla global | BEM español | ES6+ */
-// Cards (productMediaHTML / productCardHTML / productCardHTMLWithBadge) viven en js/ui.js
+// Cards (productMediaHTML / productCardHTML) viven en js/ui.js
 // Paginado, filtros, orden y búsqueda se resuelven en Supabase (PostgREST).
 
 // ─────────────────────────────────────────────
@@ -294,7 +294,7 @@ const renderCatalog = (products, total, searchTerm) => {
   }
 
   catalogGrid.innerHTML = products.length
-    ? products.map((product) => `<li>${productCardHTMLWithBadge(product)}</li>`).join('')
+    ? products.map((product) => `<li>${productCardHTML(product)}</li>`).join('')
     : '<li class="catalogo__vacio">No se encontraron productos con esos filtros.</li>';
 
   const resultCountElement = document.getElementById('resultCount');
@@ -587,45 +587,9 @@ const paintActiveSuggestion = () => {
 };
 
 /**
- * Normaliza texto para comparar sin mayúsculas ni tildes.
- * @param {string} text
- * @returns {string}
- */
-const foldSearchText = (text) =>
-  String(text || '')
-    .toLowerCase()
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '');
-
-/**
- * Genera el texto plegado y el rango original de cada carácter.
- * Permite resaltar coincidencias ignorando tildes sin romper el HTML.
- * @param {string} text
- * @returns {{folded: string, ranges: Array<{start: number, end: number}>}}
- */
-const buildFoldedName = (text) => {
-  let folded = '';
-  const ranges = [];
-  let offset = 0;
-
-  for (const character of String(text || '')) {
-    const start = offset;
-    offset += character.length;
-
-    const foldedCharacter = foldSearchText(character);
-
-    for (let index = 0; index < foldedCharacter.length; index += 1) {
-      folded += foldedCharacter[index];
-      ranges.push({ start, end: offset });
-    }
-  }
-
-  return { folded, ranges };
-};
-
-/**
  * Resalta la primera palabra buscada dentro del nombre del producto,
- * ignorando mayúsculas y tildes.
+ * ignorando mayúsculas y tildes. Usa normalizarTexto (ui.js): en español
+ * plegar un carácter no cambia su longitud, así que los índices coinciden.
  * @param {string} productName
  * @param {string} searchTerm
  * @returns {string}
@@ -633,33 +597,31 @@ const buildFoldedName = (text) => {
 const highlightSearchMatch = (productName, searchTerm) => {
   const name = String(productName || '');
   const firstWord = String(searchTerm || '').trim().split(/\s+/)[0];
-  const foldedTerm = foldSearchText(firstWord);
+  const foldedTerm = normalizarTexto(firstWord);
 
   if (!foldedTerm) {
     return escaparHTML(name);
   }
 
-  const { folded, ranges } = buildFoldedName(name);
-  let originalCursor = 0;
-  let matchIndex = folded.indexOf(foldedTerm);
+  const foldedName = normalizarTexto(name);
+  let cursor = 0;
+  let matchIndex = foldedName.indexOf(foldedTerm);
   let highlightedName = '';
 
   while (matchIndex !== -1) {
-    const matchStart = ranges[matchIndex].start;
-    const matchEnd = ranges[matchIndex + foldedTerm.length - 1].end;
+    highlightedName += escaparHTML(name.slice(cursor, matchIndex));
+    highlightedName +=
+      '<mark>' + escaparHTML(name.slice(matchIndex, matchIndex + foldedTerm.length)) + '</mark>';
 
-    highlightedName += escaparHTML(name.slice(originalCursor, matchStart));
-    highlightedName += '<mark>' + escaparHTML(name.slice(matchStart, matchEnd)) + '</mark>';
-
-    originalCursor = matchEnd;
-    matchIndex = folded.indexOf(foldedTerm, matchIndex + foldedTerm.length);
+    cursor = matchIndex + foldedTerm.length;
+    matchIndex = foldedName.indexOf(foldedTerm, cursor);
   }
 
   if (!highlightedName) {
     return escaparHTML(name);
   }
 
-  return highlightedName + escaparHTML(name.slice(originalCursor));
+  return highlightedName + escaparHTML(name.slice(cursor));
 };
 
 /**
@@ -703,7 +665,7 @@ const renderSearchSuggestions = async () => {
   } else {
     suggestList.innerHTML = matches
       .map((product) => {
-        const iconColor = product.category === 'cinturones' ? 'var(--ink)' : '#fff';
+        const iconColor = productIconColor(product);
         const imageMarkup = product.image
           ? '<img src="' +
             product.image +
@@ -928,32 +890,6 @@ const bindPagination = () => {
   });
 };
 
-const bindProductActions = () => {
-  document.body.addEventListener('click', async (clickEvent) => {
-    const quickAddButton = clickEvent.target.closest('[data-quickadd]');
-
-    if (quickAddButton) {
-      clickEvent.preventDefault();
-      clickEvent.stopPropagation();
-
-      const productId = Number(quickAddButton.dataset.quickadd);
-      const productToAdd = getCachedProduct(productId) || (await fetchProductById(productId));
-
-      if (productToAdd) {
-        quickAddToCart(productToAdd);
-      }
-
-      return;
-    }
-
-    const productCardElement = clickEvent.target.closest('.tarjeta-producto');
-
-    if (productCardElement) {
-      location.href = 'producto.html?id=' + productCardElement.dataset.id;
-    }
-  });
-};
-
 const handlePopState = () => {
   const urlState = readStateFromUrl();
   applyStateToControls(urlState);
@@ -971,7 +907,7 @@ const initCatalogoPage = async () => {
   initSearch();
   bindCatalogControls();
   bindPagination();
-  bindProductActions();
+  initProductCardActions();
   window.addEventListener('popstate', handlePopState);
 
   await withLoader('catalogLoader', ['catalogGrid'], () =>

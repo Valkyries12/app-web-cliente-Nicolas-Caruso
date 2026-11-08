@@ -132,16 +132,27 @@ const escaparHTML = (texto) =>
 // ─────────────────────────────────────────────
 
 /**
+ * Color del ícono según la categoría del producto.
+ * @param {import("./products.js").Product} product
+ * @returns {string}
+ */
+const productIconColor = (product) =>
+  product.category === 'cinturones' ? 'var(--ink)' : '#fff';
+
+/**
  * @param {import("./products.js").Product} product
  * @returns {string}
  */
 const productMediaHTML = (product) => {
-  const iconColor = product.category === 'cinturones' ? 'var(--ink)' : '#fff';
+  const iconColor = productIconColor(product);
   const imageMarkup = product.image
     ? `<img src="${product.image}" alt="${escaparHTML(product.name)}" loading="lazy" onerror="this.remove()">`
     : '';
+  const badgeMarkup = product.badge
+    ? `<span class="tarjeta-producto__etiqueta">${escaparHTML(product.badge)}</span>`
+    : '';
 
-  return `<div class="tarjeta-producto__media ${CATEGORY_STYLE_MAP[product.category]}">${imageMarkup}<svg class="icono" style="color:${iconColor}"><use href="#${CATEGORY_ICON_MAP[product.category]}"/></svg></div>`;
+  return `<div class="tarjeta-producto__media ${CATEGORY_STYLE_MAP[product.category]}">${imageMarkup}${badgeMarkup}<svg class="icono" style="color:${iconColor}"><use href="#${CATEGORY_ICON_MAP[product.category]}"/></svg></div>`;
 };
 
 /**
@@ -159,30 +170,13 @@ const productCardHTML = (product) => `<article class="tarjeta-producto" data-id=
   </article>`;
 
 /**
- * @param {import("./products.js").Product} product
- * @returns {string}
- */
-const productCardHTMLWithBadge = (product) => {
-  const cardMarkup = productCardHTML(product);
-
-  if (product.badge && !cardMarkup.includes('tarjeta-producto__etiqueta')) {
-    return cardMarkup.replace(
-      '<svg class="icono"',
-      '<span class="tarjeta-producto__etiqueta">' + product.badge + '</span><svg class="icono"'
-    );
-  }
-
-  return cardMarkup;
-};
-
-/**
  * @param {object} cartItem - Ítem del carrito
  * @param {number} itemIndex - Índice para data attributes
  * @returns {string}
  */
 const cartItemRowHTML = (cartItem, itemIndex) => {
   const product = cartItem.product;
-  const iconColor = product.category === 'cinturones' ? 'var(--ink)' : '#fff';
+  const iconColor = productIconColor(product);
   const metadataParts = [];
 
   if (cartItem.size) {
@@ -213,4 +207,46 @@ const cartItemRowHTML = (cartItem, itemIndex) => {
     </div>
     <div class="carrito__precio">${formatPrice(cartItem.qty * product.price)}</div>
   </article>`;
+}
+
+// ─────────────────────────────────────────────
+// Acciones comunes de las tarjetas de producto
+// ─────────────────────────────────────────────
+
+let productCardActionsBound = false;
+
+/**
+ * Conecta el "agregar rápido" y la navegación al detalle de las tarjetas.
+ * Se registra una sola vez por página.
+ */
+const initProductCardActions = () => {
+  if (productCardActionsBound) {
+    return;
+  }
+
+  productCardActionsBound = true;
+
+  document.body.addEventListener('click', async (clickEvent) => {
+    const quickAddButton = clickEvent.target.closest('[data-quickadd]');
+
+    if (quickAddButton) {
+      clickEvent.preventDefault();
+      clickEvent.stopPropagation();
+
+      const productId = Number(quickAddButton.dataset.quickadd);
+      const productToAdd = getCachedProduct(productId) || (await fetchProductById(productId));
+
+      if (productToAdd) {
+        quickAddToCart(productToAdd);
+      }
+
+      return;
+    }
+
+    const productCardElement = clickEvent.target.closest('.tarjeta-producto');
+
+    if (productCardElement) {
+      location.href = 'producto.html?id=' + productCardElement.dataset.id;
+    }
+  });
 };
