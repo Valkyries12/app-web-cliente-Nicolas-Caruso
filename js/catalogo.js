@@ -587,6 +587,82 @@ const paintActiveSuggestion = () => {
 };
 
 /**
+ * Normaliza texto para comparar sin mayúsculas ni tildes.
+ * @param {string} text
+ * @returns {string}
+ */
+const foldSearchText = (text) =>
+  String(text || '')
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '');
+
+/**
+ * Genera el texto plegado y el rango original de cada carácter.
+ * Permite resaltar coincidencias ignorando tildes sin romper el HTML.
+ * @param {string} text
+ * @returns {{folded: string, ranges: Array<{start: number, end: number}>}}
+ */
+const buildFoldedName = (text) => {
+  let folded = '';
+  const ranges = [];
+  let offset = 0;
+
+  for (const character of String(text || '')) {
+    const start = offset;
+    offset += character.length;
+
+    const foldedCharacter = foldSearchText(character);
+
+    for (let index = 0; index < foldedCharacter.length; index += 1) {
+      folded += foldedCharacter[index];
+      ranges.push({ start, end: offset });
+    }
+  }
+
+  return { folded, ranges };
+};
+
+/**
+ * Resalta la primera palabra buscada dentro del nombre del producto,
+ * ignorando mayúsculas y tildes.
+ * @param {string} productName
+ * @param {string} searchTerm
+ * @returns {string}
+ */
+const highlightSearchMatch = (productName, searchTerm) => {
+  const name = String(productName || '');
+  const firstWord = String(searchTerm || '').trim().split(/\s+/)[0];
+  const foldedTerm = foldSearchText(firstWord);
+
+  if (!foldedTerm) {
+    return escaparHTML(name);
+  }
+
+  const { folded, ranges } = buildFoldedName(name);
+  let originalCursor = 0;
+  let matchIndex = folded.indexOf(foldedTerm);
+  let highlightedName = '';
+
+  while (matchIndex !== -1) {
+    const matchStart = ranges[matchIndex].start;
+    const matchEnd = ranges[matchIndex + foldedTerm.length - 1].end;
+
+    highlightedName += escaparHTML(name.slice(originalCursor, matchStart));
+    highlightedName += '<mark>' + escaparHTML(name.slice(matchStart, matchEnd)) + '</mark>';
+
+    originalCursor = matchEnd;
+    matchIndex = folded.indexOf(foldedTerm, matchIndex + foldedTerm.length);
+  }
+
+  if (!highlightedName) {
+    return escaparHTML(name);
+  }
+
+  return highlightedName + escaparHTML(name.slice(originalCursor));
+};
+
+/**
  * Renderiza el dropdown de sugerencias debajo del input.
  * Cada sugerencia enlaza directo al detalle del producto.
  */
