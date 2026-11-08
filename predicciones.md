@@ -25,3 +25,4 @@ Se cambiará el SVG del hero por una imágen representativa
 21 - Se cambiará la forma en como se llama a la base de datos. Se hacia con el SDK otorgado por supabase y se decidió cambiarlo al query nativo con fetch
 22 - Se agregará un paginado para los productos del catálogo
 23 - Se corregirá la da desaparicion del feature de sugerencia en la búsqueda del item en el catálogo 
+24 - Se mejorará la lectura del codigo. Se deduplicará funciones repetidas
