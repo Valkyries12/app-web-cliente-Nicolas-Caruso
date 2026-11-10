@@ -1,5 +1,5 @@
 /* KIHAP - producto.js vanilla global - dynamic detail ?id= | ES6+ */
-// Cards (productMediaHTML / productCardHTML / productCardHTMLWithBadge) viven en js/ui.js
+// Cards (productMediaHTML / productCardHTML) viven en js/ui.js
 
 // ─────────────────────────────────────────────
 // Product detail state (fuente única)
@@ -30,20 +30,16 @@ const renderProductDetail = () => {
   document.getElementById('tabDescripcion').innerHTML = `<p>${escaparHTML(product.desc)}</p>`;
 
   const mediaBackgroundClass = CATEGORY_STYLE_MAP[product.category];
-  const iconColor = product.category === 'cinturones' ? 'var(--ink)' : '#fff';
-
-  const galleryImageMarkup = product.image
-    ? `<img src="${product.image}" alt="${escaparHTML(product.name)}" onerror="this.remove()">`
-    : '';
+  const galleryImageMarkup = productImageHTML(product, { loading: null });
+  const galleryIconMarkup = productIconHTML(product);
   const galleryMainElement = document.getElementById('galleryMain');
   galleryMainElement.className = 'galeria__principal ' + mediaBackgroundClass;
-  galleryMainElement.innerHTML =
-    `${galleryImageMarkup}<svg class="icono" style="color:${iconColor}"><use href="#${CATEGORY_ICON_MAP[product.category]}"/></svg>`;
+  galleryMainElement.innerHTML = `${galleryImageMarkup}${galleryIconMarkup}`;
 
   document.getElementById('galleryThumbs').innerHTML = [1, 2, 3]
     .map(
-      (thumbnailNumber, thumbnailIndex) =>
-        `<div class="galeria__miniatura ${mediaBackgroundClass} ${thumbnailIndex === 0 ? 'galeria__miniatura--activo' : ''}">${thumbnailIndex === 0 ? galleryImageMarkup : ''}<svg class="icono" style="color:${iconColor}"><use href="#${CATEGORY_ICON_MAP[product.category]}"/></svg></div>`
+      (_thumbnailNumber, thumbnailIndex) =>
+        `<div class="galeria__miniatura ${mediaBackgroundClass} ${thumbnailIndex === 0 ? 'galeria__miniatura--activo' : ''}">${thumbnailIndex === 0 ? galleryImageMarkup : ''}${galleryIconMarkup}</div>`
     )
     .join('');
 
@@ -78,12 +74,9 @@ const renderProductDetail = () => {
   document.getElementById('detailQty').textContent = DetailState.qty;
 
   document.getElementById('relatedGrid').innerHTML = DetailState.related
-    .map((relatedProduct) => `<li>${productCardHTMLWithBadge(relatedProduct)}</li>`)
+    .map((relatedProduct) => `<li>${productCardHTML(relatedProduct)}</li>`)
     .join('');
 };
-
-// Compat
-const renderDetalle = () => renderProductDetail();
 
 // ─────────────────────────────────────────────
 // Detail actions
@@ -177,29 +170,7 @@ const initProductoPage = (product) => {
   bindAction('add-cart', addDetailToCartHandler);
   bindAction('buy-now', buyNow);
 
-  document.body.addEventListener('click', async (clickEvent) => {
-    const quickAddButton = clickEvent.target.closest('[data-quickadd]');
-
-    if (quickAddButton) {
-      clickEvent.preventDefault();
-      clickEvent.stopPropagation();
-
-      const productId = Number(quickAddButton.dataset.quickadd);
-      const productToAdd = getCachedProduct(productId) || (await fetchProductById(productId));
-
-      if (productToAdd) {
-        quickAddToCart(productToAdd);
-      }
-
-      return;
-    }
-
-    const productCardElement = clickEvent.target.closest('.tarjeta-producto');
-
-    if (productCardElement) {
-      location.href = 'producto.html?id=' + productCardElement.dataset.id;
-    }
-  });
+  initProductCardActions();
 };
 
 const bootstrapProductoPage = async () => {

@@ -32,12 +32,10 @@ const renderCarritoItems = () => {
 };
 
 const renderCarritoTotales = () => {
-  const subtotal = calculateCartSubtotal();
-  const envio = calculateShippingCost();
-  const total = subtotal + envio;
+  const { subtotal, shipping, total } = getCartSummary();
 
   setText('cartSubtotal', formatPrice(subtotal));
-  setText('cartShipping', formatPrice(envio));
+  setText('cartShipping', formatPrice(shipping));
   setText('cartTotal', formatPrice(total));
   setText('cartTotalMovil', formatPrice(total));
 };

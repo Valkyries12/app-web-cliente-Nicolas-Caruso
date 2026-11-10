@@ -34,7 +34,7 @@ const updateCartBadge = () => {
   const badge = document.getElementById('cartBadge');
 
   if (badge) {
-    badge.textContent = CartStore.count();
+    badge.textContent = getCartItemCount();
   }
 };
 
@@ -132,16 +132,47 @@ const escaparHTML = (texto) =>
 // ─────────────────────────────────────────────
 
 /**
+ * Color del ícono según la categoría del producto.
+ * @param {import("./products.js").Product} product
+ * @returns {string}
+ */
+const productIconColor = (product) =>
+  product.category === 'cinturones' ? 'var(--ink)' : '#fff';
+
+/**
+ * Imagen del producto con manejo uniforme de lazy loading y error.
+ * @param {import("./products.js").Product} product
+ * @param {{alt?: string, loading?: string|null}} [options]
+ * @returns {string}
+ */
+const productImageHTML = (product, { alt = product.name, loading = 'lazy' } = {}) => {
+  if (!product.image) {
+    return '';
+  }
+
+  const loadingAttribute = loading ? ` loading="${loading}"` : '';
+
+  return `<img src="${product.image}" alt="${escaparHTML(alt)}"${loadingAttribute} onerror="this.remove()">`;
+};
+
+/**
+ * Ícono SVG según la categoría del producto.
+ * @param {import("./products.js").Product} product
+ * @returns {string}
+ */
+const productIconHTML = (product) =>
+  `<svg class="icono" style="color:${productIconColor(product)}"><use href="#${CATEGORY_ICON_MAP[product.category]}"/></svg>`;
+
+/**
  * @param {import("./products.js").Product} product
  * @returns {string}
  */
 const productMediaHTML = (product) => {
-  const iconColor = product.category === 'cinturones' ? 'var(--ink)' : '#fff';
-  const imageMarkup = product.image
-    ? `<img src="${product.image}" alt="${escaparHTML(product.name)}" loading="lazy" onerror="this.remove()">`
+  const badgeMarkup = product.badge
+    ? `<span class="tarjeta-producto__etiqueta">${escaparHTML(product.badge)}</span>`
     : '';
 
-  return `<div class="tarjeta-producto__media ${CATEGORY_STYLE_MAP[product.category]}">${imageMarkup}<svg class="icono" style="color:${iconColor}"><use href="#${CATEGORY_ICON_MAP[product.category]}"/></svg></div>`;
+  return `<div class="tarjeta-producto__media ${CATEGORY_STYLE_MAP[product.category]}">${productImageHTML(product)}${badgeMarkup}${productIconHTML(product)}</div>`;
 };
 
 /**
@@ -159,30 +190,12 @@ const productCardHTML = (product) => `<article class="tarjeta-producto" data-id=
   </article>`;
 
 /**
- * @param {import("./products.js").Product} product
- * @returns {string}
- */
-const productCardHTMLWithBadge = (product) => {
-  const cardMarkup = productCardHTML(product);
-
-  if (product.badge && !cardMarkup.includes('tarjeta-producto__etiqueta')) {
-    return cardMarkup.replace(
-      '<svg class="icono"',
-      '<span class="tarjeta-producto__etiqueta">' + product.badge + '</span><svg class="icono"'
-    );
-  }
-
-  return cardMarkup;
-};
-
-/**
  * @param {object} cartItem - Ítem del carrito
  * @param {number} itemIndex - Índice para data attributes
  * @returns {string}
  */
 const cartItemRowHTML = (cartItem, itemIndex) => {
   const product = cartItem.product;
-  const iconColor = product.category === 'cinturones' ? 'var(--ink)' : '#fff';
   const metadataParts = [];
 
   if (cartItem.size) {
@@ -195,12 +208,8 @@ const cartItemRowHTML = (cartItem, itemIndex) => {
     );
   }
 
-  const imageMarkup = product.image
-    ? `<img src="${product.image}" alt="${escaparHTML(product.name)}" loading="lazy" onerror="this.remove()">`
-    : '';
-
   return `<article class="carrito__item">
-    <div class="carrito__miniatura ${CATEGORY_STYLE_MAP[product.category]}">${imageMarkup}<svg class="icono" style="color:${iconColor}"><use href="#${CATEGORY_ICON_MAP[product.category]}"/></svg></div>
+    <div class="carrito__miniatura ${CATEGORY_STYLE_MAP[product.category]}">${productImageHTML(product)}${productIconHTML(product)}</div>
     <div class="carrito__detalle">
       <h3 class="carrito__nombre">${escaparHTML(product.name)}</h3>
       <p class="carrito__meta">${metadataParts.join(' · ') || '&nbsp;'}</p>
@@ -213,4 +222,46 @@ const cartItemRowHTML = (cartItem, itemIndex) => {
     </div>
     <div class="carrito__precio">${formatPrice(cartItem.qty * product.price)}</div>
   </article>`;
+}
+
+// ─────────────────────────────────────────────
+// Acciones comunes de las tarjetas de producto
+// ─────────────────────────────────────────────
+
+let productCardActionsBound = false;
+
+/**
+ * Conecta el "agregar rápido" y la navegación al detalle de las tarjetas.
+ * Se registra una sola vez por página.
+ */
+const initProductCardActions = () => {
+  if (productCardActionsBound) {
+    return;
+  }
+
+  productCardActionsBound = true;
+
+  document.body.addEventListener('click', async (clickEvent) => {
+    const quickAddButton = clickEvent.target.closest('[data-quickadd]');
+
+    if (quickAddButton) {
+      clickEvent.preventDefault();
+      clickEvent.stopPropagation();
+
+      const productId = Number(quickAddButton.dataset.quickadd);
+      const productToAdd = getCachedProduct(productId) || (await fetchProductById(productId));
+
+      if (productToAdd) {
+        quickAddToCart(productToAdd);
+      }
+
+      return;
+    }
+
+    const productCardElement = clickEvent.target.closest('.tarjeta-producto');
+
+    if (productCardElement) {
+      location.href = 'producto.html?id=' + productCardElement.dataset.id;
+    }
+  });
 };

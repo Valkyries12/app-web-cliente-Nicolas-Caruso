@@ -13,34 +13,8 @@ const renderFeatured = (featuredProducts) => {
   }
 
   featuredGrid.innerHTML = featuredProducts
-    .map((product) => `<li>${productCardHTMLWithBadge(product)}</li>`)
+    .map((product) => `<li>${productCardHTML(product)}</li>`)
     .join('');
-};
-
-const initHomePage = () => {
-  document.body.addEventListener('click', async (clickEvent) => {
-    const quickAddButton = clickEvent.target.closest('[data-quickadd]');
-
-    if (quickAddButton) {
-      clickEvent.preventDefault();
-      clickEvent.stopPropagation();
-
-      const productId = Number(quickAddButton.dataset.quickadd);
-      const productToAdd = getCachedProduct(productId) || (await fetchProductById(productId));
-
-      if (productToAdd) {
-        quickAddToCart(productToAdd);
-      }
-
-      return;
-    }
-
-    const productCardElement = clickEvent.target.closest('.tarjeta-producto');
-
-    if (productCardElement) {
-      location.href = 'producto.html?id=' + productCardElement.dataset.id;
-    }
-  });
 };
 
 const bootstrapHomePage = async () => {
@@ -50,7 +24,7 @@ const bootstrapHomePage = async () => {
   );
 
   renderFeatured(featuredProducts);
-  initHomePage();
+  initProductCardActions();
   await cartPromise;
 };
 

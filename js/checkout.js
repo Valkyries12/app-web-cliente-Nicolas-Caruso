@@ -3,23 +3,14 @@
 
 // Valida los datos de envío. Devuelve true si todo está bien.
 const validarEnvio = () => {
-  let valido = true;
-  let primerError = null;
-
-  const marcaError = (inputId) => {
-    valido = false;
-
-    if (!primerError) {
-      primerError = document.getElementById(inputId);
-    }
-  };
+  const marcador = crearMarcadorErrores();
 
   if (!validarSoloLetras('envNombre', 'nombre', 2, 40)) {
-    marcaError('envNombre');
+    marcador.marcar('envNombre');
   }
 
   if (!validarSoloLetras('envApellido', 'apellido', 2, 40)) {
-    marcaError('envApellido');
+    marcador.marcar('envApellido');
   }
 
   // DNI Argentina: 7 u 8 dígitos, sin puntos
@@ -27,10 +18,10 @@ const validarEnvio = () => {
 
   if (!dni) {
     mostrarError('envDni', 'El DNI es obligatorio.');
-    marcaError('envDni');
+    marcador.marcar('envDni');
   } else if (dni.length < 7 || dni.length > 8) {
     mostrarError('envDni', 'El DNI no es válido. Ingrese 7 u 8 números, sin puntos. Ej: 30123456.');
-    marcaError('envDni');
+    marcador.marcar('envDni');
   } else {
     limpiarError('envDni');
   }
@@ -44,20 +35,20 @@ const validarEnvio = () => {
 
   if (!telefono) {
     mostrarError('envTelefono', 'El teléfono es obligatorio.');
-    marcaError('envTelefono');
+    marcador.marcar('envTelefono');
   } else if (telefono.length !== 10) {
     mostrarError(
       'envTelefono',
       'El teléfono no es válido. Ingrese 10 números, sin +54 ni espacios. Ej: 2614005566.'
     );
-    marcaError('envTelefono');
+    marcador.marcar('envTelefono');
   } else {
     limpiarError('envTelefono');
   }
 
   // Email: formato básico con ejemplo de corrección (helper compartido)
   if (!validarEmail('envEmail')) {
-    marcaError('envEmail');
+    marcador.marcar('envEmail');
   }
 
   // Dirección: calle y número, 5 a 80 caracteres
@@ -65,23 +56,23 @@ const validarEnvio = () => {
 
   if (!direccion) {
     mostrarError('envDireccion', 'La dirección es obligatoria.');
-    marcaError('envDireccion');
+    marcador.marcar('envDireccion');
   } else if (direccion.length < 5 || direccion.length > 80) {
     mostrarError(
       'envDireccion',
       'La dirección no es válida. Incluya calle y número, entre 5 y 80 caracteres.'
     );
-    marcaError('envDireccion');
+    marcador.marcar('envDireccion');
   } else {
     limpiarError('envDireccion');
   }
 
   if (!validarSoloLetras('envCiudad', 'ciudad', 2, 40)) {
-    marcaError('envCiudad');
+    marcador.marcar('envCiudad');
   }
 
   if (!validarSoloLetras('envProvincia', 'provincia', 2, 40)) {
-    marcaError('envProvincia');
+    marcador.marcar('envProvincia');
   }
 
   // Código postal Argentina: 4 dígitos
@@ -89,19 +80,17 @@ const validarEnvio = () => {
 
   if (!cp) {
     mostrarError('envCp', 'El código postal es obligatorio.');
-    marcaError('envCp');
+    marcador.marcar('envCp');
   } else if (cp.length !== 4) {
     mostrarError('envCp', 'El código postal no es válido. Ingrese 4 números. Ej: 5500.');
-    marcaError('envCp');
+    marcador.marcar('envCp');
   } else {
     limpiarError('envCp');
   }
 
-  if (!valido && primerError) {
-    primerError.focus();
-  }
+  marcador.enfocarPrimerError();
 
-  return valido;
+  return marcador.esValido();
 }
 
 // Dice si el método elegido es tarjeta
@@ -138,26 +127,17 @@ const validarPago = () => {
     return true;
   }
 
-  let valido = true;
-  let primerError = null;
-
-  const marcaError = (inputId) => {
-    valido = false;
-
-    if (!primerError) {
-      primerError = document.getElementById(inputId);
-    }
-  };
+  const marcador = crearMarcadorErrores();
 
   // Número: 16 dígitos (ignora espacios)
   const numero = soloNumeros(document.getElementById('payNum').value);
 
   if (!numero) {
     mostrarError('payNum', 'El número de tarjeta es obligatorio.');
-    marcaError('payNum');
+    marcador.marcar('payNum');
   } else if (numero.length !== 16) {
     mostrarError('payNum', 'El número de tarjeta no es válido. Debe tener 16 dígitos.');
-    marcaError('payNum');
+    marcador.marcar('payNum');
   } else {
     limpiarError('payNum');
   }
@@ -167,10 +147,10 @@ const validarPago = () => {
 
   if (!venc) {
     mostrarError('payVenc', 'El vencimiento es obligatorio.');
-    marcaError('payVenc');
+    marcador.marcar('payVenc');
   } else if (!vencimientoValido(venc)) {
     mostrarError('payVenc', 'El vencimiento no es válido. Use MM/AA vigente. Ej: 12/27.');
-    marcaError('payVenc');
+    marcador.marcar('payVenc');
   } else {
     limpiarError('payVenc');
   }
@@ -180,23 +160,21 @@ const validarPago = () => {
 
   if (!cvv) {
     mostrarError('payCvv', 'El CVV es obligatorio.');
-    marcaError('payCvv');
+    marcador.marcar('payCvv');
   } else if (cvv.length < 3 || cvv.length > 4) {
     mostrarError('payCvv', 'El CVV no es válido. Debe tener 3 o 4 números. Ej: 123.');
-    marcaError('payCvv');
+    marcador.marcar('payCvv');
   } else {
     limpiarError('payCvv');
   }
 
   if (!validarSoloLetras('payTitular', 'titular', 2, 40)) {
-    marcaError('payTitular');
+    marcador.marcar('payTitular');
   }
 
-  if (!valido && primerError) {
-    primerError.focus();
-  }
+  marcador.enfocarPrimerError();
 
-  return valido;
+  return marcador.esValido();
 }
 
 // Selecciona un método de pago: sincroniza radio, estilo visual y campos visibles.
@@ -275,24 +253,24 @@ const renderCheckoutSummary = () => {
       )
       .join('') || `<p style="font-size:13px;">Tu carrito está vacío.</p>`;
 
-  document.getElementById('checkoutSubtotal').textContent = formatPrice(calculateCartSubtotal());
-  document.getElementById('checkoutShipping').textContent = formatPrice(calculateShippingCost());
-  document.getElementById('checkoutTotal').textContent = formatPrice(
-    calculateCartSubtotal() + calculateShippingCost()
-  );
+  const { subtotal, shipping, total } = getCartSummary();
+
+  document.getElementById('checkoutSubtotal').textContent = formatPrice(subtotal);
+  document.getElementById('checkoutShipping').textContent = formatPrice(shipping);
+  document.getElementById('checkoutTotal').textContent = formatPrice(total);
 
   const checkoutTotalMovil = document.getElementById('checkoutTotalMovil');
 
   if (checkoutTotalMovil) {
-    checkoutTotalMovil.textContent = formatPrice(
-      calculateCartSubtotal() + calculateShippingCost()
-    );
+    checkoutTotalMovil.textContent = formatPrice(total);
   }
 };
 
-const initCheckoutPage = () => {
-  renderCheckoutSummary();
+const carritoVacio = () =>
+  typeof shoppingCart !== 'undefined' && shoppingCart.length === 0;
 
+// Botones de avance/retroceso entre los pasos del checkout.
+const bindCheckoutSteps = () => {
   const btnToPago = document.getElementById('btnToPago');
   const btnVolver = document.getElementById('btnBackToEnvio');
   const btnConfirmar = document.getElementById('btnConfirmar');
@@ -312,7 +290,7 @@ const initCheckoutPage = () => {
 
   if (btnConfirmar) {
     btnConfirmar.addEventListener('click', () => {
-      if (typeof shoppingCart !== 'undefined' && shoppingCart.length === 0) {
+      if (carritoVacio()) {
         showToast('Tu carrito está vacío');
         return;
       }
@@ -327,7 +305,7 @@ const initCheckoutPage = () => {
   // Barra móvil: acompaña el paso visible sin saltear validaciones
   if (btnMovil) {
     btnMovil.addEventListener('click', () => {
-      if (typeof shoppingCart !== 'undefined' && shoppingCart.length === 0) {
+      if (carritoVacio()) {
         showToast('Tu carrito está vacío');
         return;
       }
@@ -344,8 +322,11 @@ const initCheckoutPage = () => {
       }
     });
   }
+};
 
-  // Filtro en vivo: campos de solo letras (bloquea números al tipear o pegar)
+// Filtros y normalización mientras el usuario escribe en el formulario.
+const bindLiveInputFilters = () => {
+  // Campos de solo letras (bloquea números al tipear o pegar)
   ['envNombre', 'envApellido', 'envCiudad', 'envProvincia', 'payTitular'].forEach((inputId) => {
     const input = document.getElementById(inputId);
 
@@ -357,7 +338,7 @@ const initCheckoutPage = () => {
     }
   });
 
-  // Filtro en vivo: campos de solo números (DNI, teléfono, CP, tarjeta, CVV)
+  // Campos de solo números (DNI, teléfono, CP, tarjeta, CVV)
   const limitesNumericos = {
     envDni: 10,
     envTelefono: 15,
@@ -393,7 +374,7 @@ const initCheckoutPage = () => {
     });
   }
 
-  // Email y dirección: solo recortan y limpian el error al escribir
+  // Email y dirección: solo limpian el error al escribir
   ['envEmail', 'envDireccion'].forEach((inputId) => {
     const input = document.getElementById(inputId);
 
@@ -414,9 +395,11 @@ const initCheckoutPage = () => {
       }
     }
   );
+};
 
-  // Método de pago: click en la tarjeta/label (mouse y táctil) + change (teclado).
-  // Ambos pasan por seleccionarMetodoPago para no desincronizar.
+// Método de pago: click en la tarjeta/label (mouse y táctil) + change (teclado).
+// Ambos pasan por seleccionarMetodoPago para no desincronizar.
+const bindPaymentMethod = () => {
   document.querySelectorAll('.pago__opcion').forEach((opcionLabel) => {
     opcionLabel.addEventListener('click', () => seleccionarMetodoPago(opcionLabel));
   });
@@ -434,6 +417,13 @@ const initCheckoutPage = () => {
   });
 
   actualizarCamposTarjeta();
+};
+
+const initCheckoutPage = () => {
+  renderCheckoutSummary();
+  bindCheckoutSteps();
+  bindLiveInputFilters();
+  bindPaymentMethod();
 };
 
 const bootstrapCheckoutPage = async () => {

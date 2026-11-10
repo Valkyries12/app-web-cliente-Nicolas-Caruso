@@ -47,6 +47,28 @@ const limpiarError = (inputId) => {
   }
 }
 
+// Lleva el estado de una validación: si hay error y cuál fue el primer campo.
+const crearMarcadorErrores = () => {
+  let valido = true;
+  let primerError = null;
+
+  return {
+    marcar: (inputId) => {
+      valido = false;
+
+      if (!primerError) {
+        primerError = document.getElementById(inputId);
+      }
+    },
+    esValido: () => valido,
+    enfocarPrimerError: () => {
+      if (!valido && primerError) {
+        primerError.focus();
+      }
+    },
+  };
+}
+
 // Valida un campo de solo letras: obligatorio + rango + sin números
 const validarSoloLetras = (inputId, nombreCampo, min, max) => {
   const valor = normalizarEspacios(document.getElementById(inputId).value);

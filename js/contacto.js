@@ -3,23 +3,14 @@
 
 // Valida el formulario de contacto. Devuelve true si todo está bien.
 const validarContacto = () => {
-  let valido = true;
-  let primerError = null;
-
-  const marcaError = (inputId) => {
-    valido = false;
-
-    if (!primerError) {
-      primerError = document.getElementById(inputId);
-    }
-  };
+  const marcador = crearMarcadorErrores();
 
   if (!validarSoloLetras('contacto-nombre', 'nombre y apellido', 2, 40)) {
-    marcaError('contacto-nombre');
+    marcador.marcar('contacto-nombre');
   }
 
   if (!validarEmail('contacto-email')) {
-    marcaError('contacto-email');
+    marcador.marcar('contacto-email');
   }
 
   // Asunto: debe elegir una opción
@@ -27,7 +18,7 @@ const validarContacto = () => {
 
   if (!asunto) {
     mostrarError('contacto-asunto', 'Debe seleccionar un asunto.');
-    marcaError('contacto-asunto');
+    marcador.marcar('contacto-asunto');
   } else {
     limpiarError('contacto-asunto');
   }
@@ -37,22 +28,20 @@ const validarContacto = () => {
 
   if (!mensaje) {
     mostrarError('contacto-mensaje', 'El mensaje es obligatorio.');
-    marcaError('contacto-mensaje');
+    marcador.marcar('contacto-mensaje');
   } else if (mensaje.length < 10 || mensaje.length > 1000) {
     mostrarError(
       'contacto-mensaje',
       'El mensaje no es válido. Debe tener entre 10 y 1000 caracteres.'
     );
-    marcaError('contacto-mensaje');
+    marcador.marcar('contacto-mensaje');
   } else {
     limpiarError('contacto-mensaje');
   }
 
-  if (!valido && primerError) {
-    primerError.focus();
-  }
+  marcador.enfocarPrimerError();
 
-  return valido;
+  return marcador.esValido();
 }
 
 /**
