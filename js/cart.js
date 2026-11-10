@@ -320,14 +320,3 @@ const clearCart = () => {
   shoppingCart.splice(0, shoppingCart.length);
   notifyCartChange();
 };
-
-// ─────────────────────────────────────────────
-// Facade para ui.js / badge
-// ─────────────────────────────────────────────
-
-const CartStore = {
-  all: () => shoppingCart,
-  count: getCartItemCount,
-  subtotal: calculateCartSubtotal,
-  shipping: calculateShippingCost,
-};

@@ -34,7 +34,7 @@ const updateCartBadge = () => {
   const badge = document.getElementById('cartBadge');
 
   if (badge) {
-    badge.textContent = CartStore.count();
+    badge.textContent = getCartItemCount();
   }
 };
 
