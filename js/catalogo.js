@@ -665,13 +665,6 @@ const renderSearchSuggestions = async () => {
   } else {
     suggestList.innerHTML = matches
       .map((product) => {
-        const iconColor = productIconColor(product);
-        const imageMarkup = product.image
-          ? '<img src="' +
-            product.image +
-            '" alt="" loading="lazy" onerror="this.remove()">'
-          : '';
-
         return (
           '<li class="buscador__item" role="option"><a href="producto.html?id=' +
           product.id +
@@ -679,12 +672,9 @@ const renderSearchSuggestions = async () => {
           '<span class="buscador__miniatura ' +
           CATEGORY_STYLE_MAP[product.category] +
           '">' +
-          imageMarkup +
-          '<svg class="icono" style="color:' +
-          iconColor +
-          '"><use href="#' +
-          CATEGORY_ICON_MAP[product.category] +
-          '"/></svg></span>' +
+          productImageHTML(product, { alt: '', loading: 'lazy' }) +
+          productIconHTML(product) +
+          '</span>' +
           '<span class="buscador__textos"><span class="buscador__nombre">' +
           highlightSearchMatch(product.name, searchTerm) +
           '</span><span class="buscador__meta">' +

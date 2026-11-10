@@ -51,6 +51,33 @@ const mapProductRow = (row) =>
     image: row.image ?? null,
   });
 
+/**
+ * Pide productos a Supabase y los mapea al modelo del frontend.
+ * Devuelve null si no hay configuración o si la consulta falla,
+ * para que cada llamador aplique su fallback local.
+ * @param {Record<string, string|number|Array<string|number>>} params
+ * @param {{headers?: Record<string, string>, warning: string}} options
+ * @returns {Promise<{products: import("./products.js").Product[], total: number|null}|null>}
+ */
+const requestRemoteProducts = async (params, { headers, warning }) => {
+  if (!hasSupabaseConfig) {
+    return null;
+  }
+
+  try {
+    const { data, total } = await supabaseFetch(PRODUCTS_TABLE, params, { headers });
+
+    if (!Array.isArray(data)) {
+      throw new Error('Respuesta inválida de Supabase.');
+    }
+
+    return { products: data.map(mapProductRow), total };
+  } catch (error) {
+    console.warn(warning, error);
+    return null;
+  }
+};
+
 const normalizePage = (page) => {
   const numericPage = Number(page);
   return Number.isInteger(numericPage) && numericPage > 0 ? numericPage : 1;
@@ -291,37 +318,30 @@ const fetchCatalogPage = async (options = {}) => {
       sort,
     });
 
-  if (!hasSupabaseConfig) {
-    return localPage();
-  }
-
-  try {
-    const { data, total } = await supabaseFetch(
-      PRODUCTS_TABLE,
-      buildCatalogParams({ page, pageSize, categories, minPrice, maxPrice, search, sort }),
-      { headers: { Prefer: 'count=exact' } }
-    );
-
-    if (!Array.isArray(data)) {
-      throw new Error('Respuesta inválida del catálogo remoto.');
+  const remote = await requestRemoteProducts(
+    buildCatalogParams({ page, pageSize, categories, minPrice, maxPrice, search, sort }),
+    {
+      headers: { Prefer: 'count=exact' },
+      warning: 'KIHAP: no se pudo paginar el catálogo remoto. Se usa el local.',
     }
+  );
 
-    const products = data.map(mapProductRow);
-    const resolvedTotal = Number.isFinite(total)
-      ? total
-      : (page - 1) * pageSize + products.length;
-
-    return {
-      products,
-      total: resolvedTotal,
-      page,
-      pageSize,
-      totalPages: Math.max(1, Math.ceil(resolvedTotal / pageSize)),
-    };
-  } catch (error) {
-    console.warn('KIHAP: no se pudo paginar el catálogo remoto. Se usa el local.', error);
+  if (!remote) {
     return localPage();
   }
+
+  const { products, total } = remote;
+  const resolvedTotal = Number.isFinite(total)
+    ? total
+    : (page - 1) * pageSize + products.length;
+
+  return {
+    products,
+    total: resolvedTotal,
+    page,
+    pageSize,
+    totalPages: Math.max(1, Math.ceil(resolvedTotal / pageSize)),
+  };
 };
 
 /**
@@ -336,28 +356,20 @@ const fetchFeaturedProducts = async (limit = CONFIG.FEATURED_PRODUCTS_LIMIT) => 
       .slice(0, safeLimit)
       .map((product) => cacheProduct(product));
 
-  if (!hasSupabaseConfig) {
-    return localFeatured();
-  }
-
-  try {
-    const { data } = await supabaseFetch(PRODUCTS_TABLE, {
+  const remote = await requestRemoteProducts(
+    {
       select: PRODUCTS_COLUMNS,
       active: 'eq.true',
       featured: 'eq.true',
       order: 'featured.desc,id.asc',
       limit: safeLimit,
-    });
-
-    if (!Array.isArray(data)) {
-      throw new Error('Respuesta inválida de destacados.');
+    },
+    {
+      warning: 'KIHAP: no se pudieron cargar los destacados remotos. Se usan los locales.',
     }
+  );
 
-    return data.map(mapProductRow);
-  } catch (error) {
-    console.warn('KIHAP: no se pudieron cargar los destacados remotos. Se usan los locales.', error);
-    return localFeatured();
-  }
+  return remote ? remote.products : localFeatured();
 };
 
 /**
@@ -372,27 +384,23 @@ const fetchProductById = async (productId) => {
     return null;
   }
 
-  if (!hasSupabaseConfig) {
-    return findLocalProduct(numericId);
-  }
-
-  try {
-    const { data } = await supabaseFetch(PRODUCTS_TABLE, {
+  const remote = await requestRemoteProducts(
+    {
       select: PRODUCTS_COLUMNS,
       active: 'eq.true',
       id: `eq.${numericId}`,
       limit: 1,
-    });
-
-    if (!Array.isArray(data)) {
-      throw new Error('Respuesta inválida del detalle.');
+    },
+    {
+      warning: 'KIHAP: no se pudo cargar el producto remoto. Se usa el local.',
     }
+  );
 
-    return data.length ? mapProductRow(data[0]) : null;
-  } catch (error) {
-    console.warn('KIHAP: no se pudo cargar el producto remoto. Se usa el local.', error);
-    return findLocalProduct(numericId);
+  if (remote) {
+    return remote.products[0] || null;
   }
+
+  return findLocalProduct(numericId);
 };
 
 /**
@@ -408,37 +416,42 @@ const fetchRelatedProducts = async (category, excludeId, limit = 4) => {
   const localRelated = () =>
     findLocalRelatedProducts(category, numericExcludeId, safeLimit);
 
-  if (!hasSupabaseConfig) {
-    return localRelated();
-  }
-
-  try {
-    const { data } = await supabaseFetch(PRODUCTS_TABLE, {
+  const warning =
+    'KIHAP: no se pudieron cargar los relacionados remotos. Se usan los locales.';
+  const primary = await requestRemoteProducts(
+    {
       select: PRODUCTS_COLUMNS,
       active: 'eq.true',
       category: `eq.${category}`,
       id: `neq.${numericExcludeId}`,
       order: 'id.asc',
       limit: safeLimit,
-    });
+    },
+    { warning }
+  );
 
-    if (Array.isArray(data) && data.length) {
-      return data.map(mapProductRow);
-    }
-
-    const { data: fallbackData } = await supabaseFetch(PRODUCTS_TABLE, {
-      select: PRODUCTS_COLUMNS,
-      active: 'eq.true',
-      id: `neq.${numericExcludeId}`,
-      order: 'id.asc',
-      limit: safeLimit,
-    });
-
-    return Array.isArray(fallbackData) ? fallbackData.map(mapProductRow) : [];
-  } catch (error) {
-    console.warn('KIHAP: no se pudieron cargar los relacionados remotos. Se usan los locales.', error);
-    return localRelated();
+  if (primary && primary.products.length) {
+    return primary.products;
   }
+
+  if (primary) {
+    const fallback = await requestRemoteProducts(
+      {
+        select: PRODUCTS_COLUMNS,
+        active: 'eq.true',
+        id: `neq.${numericExcludeId}`,
+        order: 'id.asc',
+        limit: safeLimit,
+      },
+      { warning }
+    );
+
+    if (fallback) {
+      return fallback.products;
+    }
+  }
+
+  return localRelated();
 };
 
 /**
@@ -459,27 +472,20 @@ const fetchProductsByIds = async (productIds) => {
     return [];
   }
 
-  if (!hasSupabaseConfig) {
-    return findLocalProductsByIds(normalizedIds);
-  }
-
-  try {
-    const { data } = await supabaseFetch(PRODUCTS_TABLE, {
+  const remote = await requestRemoteProducts(
+    {
       select: PRODUCTS_COLUMNS,
       active: 'eq.true',
       id: `in.(${normalizedIds.join(',')})`,
       limit: normalizedIds.length,
-    });
-
-    if (!Array.isArray(data)) {
-      throw new Error('Respuesta inválida del carrito.');
+    },
+    {
+      warning:
+        'KIHAP: no se pudieron cargar los productos del carrito. Se usan los locales.',
     }
+  );
 
-    return data.map(mapProductRow);
-  } catch (error) {
-    console.warn('KIHAP: no se pudieron cargar los productos del carrito. Se usan los locales.', error);
-    return findLocalProductsByIds(normalizedIds);
-  }
+  return remote ? remote.products : findLocalProductsByIds(normalizedIds);
 };
 
 /**
@@ -514,22 +520,19 @@ const searchProducts = async (searchTerm, limit = 6) => {
     return [];
   }
 
-  try {
-    const { data } = await supabaseFetch(PRODUCTS_TABLE, {
+  const remote = await requestRemoteProducts(
+    {
       select: PRODUCTS_COLUMNS,
       active: 'eq.true',
       order: 'featured.desc,id.asc',
       limit: safeLimit,
       and: searchFilter,
-    });
-
-    if (!Array.isArray(data)) {
-      throw new Error('Respuesta inválida de sugerencias.');
+    },
+    {
+      warning:
+        'KIHAP: no se pudieron cargar las sugerencias remotas. Se usan las locales.',
     }
+  );
 
-    return data.map(mapProductRow);
-  } catch (error) {
-    console.warn('KIHAP: no se pudieron cargar las sugerencias remotas. Se usan las locales.', error);
-    return localSearch();
-  }
+  return remote ? remote.products : localSearch();
 };

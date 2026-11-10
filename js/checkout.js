@@ -253,18 +253,16 @@ const renderCheckoutSummary = () => {
       )
       .join('') || `<p style="font-size:13px;">Tu carrito está vacío.</p>`;
 
-  document.getElementById('checkoutSubtotal').textContent = formatPrice(calculateCartSubtotal());
-  document.getElementById('checkoutShipping').textContent = formatPrice(calculateShippingCost());
-  document.getElementById('checkoutTotal').textContent = formatPrice(
-    calculateCartSubtotal() + calculateShippingCost()
-  );
+  const { subtotal, shipping, total } = getCartSummary();
+
+  document.getElementById('checkoutSubtotal').textContent = formatPrice(subtotal);
+  document.getElementById('checkoutShipping').textContent = formatPrice(shipping);
+  document.getElementById('checkoutTotal').textContent = formatPrice(total);
 
   const checkoutTotalMovil = document.getElementById('checkoutTotalMovil');
 
   if (checkoutTotalMovil) {
-    checkoutTotalMovil.textContent = formatPrice(
-      calculateCartSubtotal() + calculateShippingCost()
-    );
+    checkoutTotalMovil.textContent = formatPrice(total);
   }
 };
 
